@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>نقاش عام — Hussein Abbas</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root{
+            --bg: #050505;
+            --card: rgba(20,20,20,0.6);
+            --muted: #a0a0a0;
+            --accent: #6366f1;
+            --accent-2: #8b5cf6;
+            --text: #fff;
+            --max-width: 900px;
+            font-family: 'IBM Plex Sans Arabic', 'IBM Plex Sans', sans-serif;
+        }
+        body{background:var(--bg); color:var(--text); min-height:100vh; margin:0; display:flex; flex-direction:column; align-items:center;}
+        header{width:100%; padding:18px 20px; display:flex; justify-content:center; border-bottom:1px solid rgba(255,255,255,0.04);}
+        .container{width:100%; max-width:var(--max-width); padding:28px 20px;}
+        .card{background:var(--card); border:1px solid rgba(255,255,255,0.06); border-radius:14px; padding:18px;}
+        h1{font-size:1.6rem; margin:0 0 8px 0; font-weight:700;}
+        p.lead{color:var(--muted); margin:0 0 16px 0}
+
+        /* messages list */
+        .chat-top{display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:14px}
+        .chat-title{display:flex; align-items:center; gap:12px}
+        .chat-title h1{font-size:1.1rem; margin:0}
+        .chat-meta{color:var(--muted); font-size:0.9rem}
+
+        .messages{height:62vh; overflow:auto; display:flex; flex-direction:column; gap:12px; padding:12px; background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent); border-radius:10px}
+
+        .msg{display:flex; gap:10px; align-items:flex-start; max-width:100%;}
+        .avatar{width:40px; height:40px; border-radius:50%; background:linear-gradient(90deg,var(--accent),var(--accent-2)); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; flex-shrink:0}
+        .bubble{background:rgba(255,255,255,0.03); padding:10px 14px; border-radius:12px; color:var(--text); box-shadow: 0 6px 18px rgba(0,0,0,0.35); max-width:85%}
+        .bubble .meta{font-size:0.78rem; color:var(--muted); margin-bottom:6px}
+        .bubble small{color:var(--muted); display:block; margin-top:8px; font-size:0.75rem}
+
+        /* input area */
+        .composer{display:flex; gap:10px; margin-top:16px; align-items:flex-end}
+        input[name="name"]{width:160px; padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:var(--text)}
+        textarea[name="text"]{flex:1; min-height:64px; resize:none; padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:var(--text); font-size:1rem}
+        .btn{background:linear-gradient(90deg,var(--accent),var(--accent-2)); border:none; color:#fff; padding:12px 18px; border-radius:10px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:8px}
+        .btn:active{transform:translateY(1px)}
+        .composer .note{font-size:0.85rem; color:var(--muted)}
+        .helper{color:var(--muted); font-size:0.85rem; margin-top:8px}
+
+        .notice{background:rgba(255,255,255,0.03); color:var(--muted); font-size:0.9rem; padding:10px; border-radius:8px; margin-bottom:10px}
+
+        .top-actions{display:flex; gap:12px; align-items:center; justify-content:space-between}
+        a.back{color:var(--muted); text-decoration:none}
+
+        /* small responsive tweaks */
+        @media (max-width:600px){ .messages{height:54vh} input[name="name"]{display:none} }
+        .notice{background:rgba(255,255,255,0.03); color:var(--muted); font-size:0.9rem; padding:10px; border-radius:8px; margin-bottom:10px}
+
+        .top-actions{display:flex; gap:12px; align-items:center; justify-content:space-between}
+        a.back{color:var(--muted); text-decoration:none}
+
+        /* small responsive tweaks */
+        @media (max-width:600px){ .messages{height:54vh} input[name="name"]{display:none} }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div style="max-width:var(--max-width); width:100%; display:flex; align-items:center; justify-content:space-between; padding-inline:20px">
+            <div style="display:flex; align-items:center; gap:10px">
+                <a class="brand-link" href="index.html" aria-label="الرجوع للرئيسية">Hussein<span style="color:var(--accent); margin-inline-start:6px">.</span></a>
+                <h1 style="margin:0; font-size:1rem; font-weight:700">نقاش عام (مفتوح)</h1>
+            </div>
+            <div class="top-actions">
+                <a class="back" href="index.html"><i class="fas fa-arrow-right"></i> العودة</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="card">
+            <p class="lead">مكان عام للمراسلة — أي شخص يمكنه إرسال رسالة وسيظهر للجميع فورًا. يُرجى مراعاة الاحترام؛ الصور/الروابط غير مسموح بها.</p>
+            <div id="status" class="notice">جارٍ التحقق من الإعدادات...</div>
+
+            <div class="chat-top">
+                <div class="chat-title">
+                    <h1>نقاش عام</h1>
+                    <div class="chat-meta">رسائل عامة · مرحبًا بالجميع</div>
+                </div>
+                <div class="chat-actions">
+                    <span class="chat-meta">الرسائل: <strong id="msgCount">0</strong></span>
+                    <button id="scrollBottom" class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:8px 10px;font-weight:600">آخر الرسائل</button>
+                </div>
+            </div>
+
+            <div id="messagesArea" class="messages" aria-live="polite" aria-atomic="false"></div>
+
+            <form id="chatForm" class="composer" onsubmit="return false;">
+                <input name="name" placeholder="اسمك (اختياري)" maxlength="30">
+                <textarea name="text" placeholder="اكتب رسالتك هنا..." maxlength="1000" required></textarea>
+                <button id="sendBtn" class="btn" type="submit"><i class="fas fa-paper-plane"></i> إرسال</button>
+            </form>
+            <div class="helper">الرسائل عامة للجميع؛ يتم حفظها في قاعدة بيانات عامة. إن أردت مسح شيء لا يناسب، أخبرني لأضيف أدوات فلترة.</div>
+        </div>
+    </main>
+
+    <script type="module">
+        // Firebase setup (اختَر Firestore). لإنهاء التثبيت: أنشئ مشروع Firebase ثم الصق التكوين أدناه.
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js';
+        import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, limit } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js';
+
+        // تحميل إعدادات Firebase من الملف المشترك إن وُجد
+        let firebaseConfig = {};
+        try {
+            const cfg = await import('./firebase-config.js');
+            firebaseConfig = cfg.firebaseConfig || {};
+        } catch (e) {
+            firebaseConfig = {};
+        }
+
+        // سجّل وقت الزيارة الحالي لحساب الرسائل غير المقروءة
+        try { localStorage.setItem('chat_last_seen', String(Date.now())); } catch(e) {}
+
+        const statusEl = document.getElementById('status');
+        const messagesEl = document.getElementById('messagesArea');
+        const chatForm = document.getElementById('chatForm');
+        const sendBtn = document.getElementById('sendBtn');
+
+        // Shared state (set when Firestore initialized)
+        let firestoreDb = null;
+
+        // --- helpers: sanitization, rate-limit, id gen ---
+        function containsUrl(text){
+            const urlRe = /https?:\/\/[\w\-./?=&%#:]+|www\.[\w\-./?=&%#:]+/i;
+            return urlRe.test(text);
+        }
+        function maskProfanity(text){
+            const bad = ['badword1','badword2','damn']; // أضف كلمات بلغة المحتوى إن رغبت
+            return bad.reduce((t,w)=> t.replace(new RegExp(w, 'gi'), match => '*'.repeat(match.length)), text);
+        }
+        function sanitizeText(text){
+            let t = text.trim();
+            // استبدال الروابط بنص [رابط محذوف]
+            t = t.replace(/https?:\/\/[\w\-./?=&%#:]+/gi, '[رابط محذوف]');
+            t = maskProfanity(t);
+            return t;
+        }
+        function canSend(){
+            try{
+                const last = Number(localStorage.getItem('chat_last_sent') || 0);
+                if (Date.now() - last < 5000) return false; // 5s client-side limit
+            }catch(e){}
+            return true;
+        }
+        function noteSent(){ try{ localStorage.setItem('chat_last_sent', String(Date.now())); } catch(e){} }
+
+        // report click handler (delegation)
+        messagesEl.addEventListener('click', async (ev)=>{
+            const btn = ev.target.closest && ev.target.closest('.report-btn');
+            if (!btn) return;
+            const messageId = btn.dataset.id;
+            const reason = prompt('سبب الإبلاغ (اختياري)');
+            if (reason === null) return;
+
+            // if Firestore available
+            if (firestoreDb) {
+                try{
+                    const reportsCol = (await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js')).collection(firestoreDb, 'reports');
+                    await (await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js')).addDoc(reportsCol, { messageId, reason: reason || '', createdAt: (await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js')).serverTimestamp() });
+                    alert('تم الإبلاغ. شكراً لاهتمامك.');
+                }catch(e){
+                    console.error(e);
+                    alert('تعذّر إرسال الإبلاغ.');
+                }
+            } else {
+                // store local report demo
+                try{
+                    const arr = JSON.parse(localStorage.getItem('public_chat_reports') || '[]');
+                    arr.push({ messageId, reason: reason || '', time: new Date().toLocaleString() });
+                    localStorage.setItem('public_chat_reports', JSON.stringify(arr));
+                    alert('تم تسجيل الإبلاغ محليًا (عرض تجريبي فقط).');
+                }catch(e){ alert('تعذّر تسجيل الإبلاغ.') }
+            }
+        });
+
+        function escapeHtml(text){
+            return text.replace(/[&<>"']/g, (c)=> ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[c]);
+        }
+
+        function showLocalNotice(msg){ statusEl.textContent = msg; }
+
+        if (!firebaseConfig.apiKey) {
+            showLocalNotice('لم يتم تكوين قاعدة البيانات. لإنشاء دردشة عامة مشتركة، استخدم Firebase Firestore والصق التكوين هنا. تم تفعيل وضع العرض المحلي (الرسائل ستُحفظ محليًا فقط).');
+
+            // Fallback: localStorage demo (non-shared)
+            const LS_KEY = 'public_chat_demo_messages';
+            function loadLocal(){
+                const arr = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+                renderMessages(arr);
+            }
+            function saveLocal(msg){
+                const arr = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+                arr.push(msg);
+                localStorage.setItem(LS_KEY, JSON.stringify(arr));
+            }
+            function renderMessages(list){
+                messagesEl.innerHTML = '';
+                const count = list.length || 0;
+                document.getElementById('msgCount').textContent = count;
+                // list is expected chronological (oldest first)
+                list.forEach((m, idx)=>{
+                    const id = m.id || m.time || String(idx);
+                    const row = document.createElement('div'); row.className='msg';
+                    const initial = (m.name || 'مستخدم').trim().charAt(0) || 'م';
+                    const pinned = m.pinned ? '<span style="color:var(--accent); font-weight:700; margin-inline-start:6px">مثبت</span>' : '';
+                    const time = m.time || (m.createdAt && m.createdAt.toDate ? m.createdAt.toDate().toLocaleString() : '');
+                    row.innerHTML = `<div class="avatar">${escapeHtml(initial)}</div><div class="bubble"><div class="meta"><strong>${escapeHtml(m.name || 'مستخدم')}</strong> ${pinned}</div><div>${escapeHtml(m.text)}</div><small>${escapeHtml(time)}</small><div style="margin-top:6px"><button class="report-btn" data-id="${escapeHtml(id)}" style="background:none;border:1px solid rgba(255,255,255,0.04);color:var(--muted);padding:6px;border-radius:6px;cursor:pointer">إبلاغ</button></div></div>`;
+                    messagesEl.appendChild(row);
+                });
+                // autoscroll to bottom
+                setTimeout(()=> messagesEl.scrollTo({ top: messagesEl.scrollHeight, behavior: 'smooth' }), 50);
+            }
+            loadLocal();
+
+            sendBtn.addEventListener('click', ()=>{
+                if (!canSend()) return alert('انتظر قليلاً قبل إرسال رسالة جديدة (5 ثوانٍ).');
+                const name = chatForm.name.value.trim() || 'مستخدم';
+                let text = chatForm.text.value.trim();
+                if (!text) return;
+                text = sanitizeText(text);
+                const now = new Date();
+                const msg = { id: 'local-'+Date.now(), name, text, time: now.toLocaleString() };
+                saveLocal(msg);
+                renderMessages(JSON.parse(localStorage.getItem(LS_KEY)||'[]'));
+                chatForm.text.value = '';
+                sendBtn.disabled = true;
+                noteSent();
+                setTimeout(()=> sendBtn.disabled = false, 1200);
+            });
+
+        } else {
+            // Initialize Firebase, Auth and Firestore
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+            firestoreDb = db; // expose to report handler
+            const msgsRef = collection(db, 'public_messages');
+
+            // initialize anonymous auth so clients can write if rules require auth
+            const authMod = await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js');
+            const auth = authMod.getAuth(app);
+            try {
+                await authMod.signInAnonymously(auth);
+                showLocalNotice('تم تسجيل الدخول (مجهول) — يمكنك الآن إرسال الرسائل.');
+            } catch (e) {
+                console.warn('Anonymous sign-in failed', e);
+            }
+
+            showLocalNotice('متصل بقاعدة البيانات. تظهر الرسائل هنا فور إرسالها.');
+
+            // subscribe to latest messages
+            const q = query(msgsRef, orderBy('createdAt', 'desc'), limit(200));
+            onSnapshot(q, (snapshot) => {
+                const messages = [];
+                snapshot.forEach(doc => {
+                    messages.push(Object.assign({id: doc.id}, doc.data()));
+                });
+                renderMessages(messages);
+            }, (err) => {
+                console.error(err);
+                showLocalNotice('حدث خطأ أثناء الاتصال بقاعدة البيانات. تحقق من الإعدادات.');
+            });
+
+            function renderMessages(list){
+                messagesEl.innerHTML = '';
+                const count = list.length || 0;
+                document.getElementById('msgCount').textContent = count;
+                list.forEach(m=>{
+                    const id = m.id || '';
+                    const row = document.createElement('div'); row.className='msg';
+                    const initial = (m.name || 'مستخدم').trim().charAt(0) || 'م';
+                    const pinned = m.pinned ? '<span style="color:var(--accent); font-weight:700; margin-inline-start:6px">مثبت</span>' : '';
+                    const t = m.createdAt && m.createdAt.toDate ? m.createdAt.toDate().toLocaleString() : (m.time||'');
+                    row.innerHTML = `<div class="avatar">${escapeHtml(initial)}</div><div class="bubble"><div class="meta"><strong>${escapeHtml(m.name || 'مستخدم')}</strong> ${pinned}</div><div>${escapeHtml(m.text || '')}</div><small>${escapeHtml(t)}</small><div style="margin-top:6px"><button class="report-btn" data-id="${escapeHtml(id)}" style="background:none;border:1px solid rgba(255,255,255,0.04);color:var(--muted);padding:6px;border-radius:6px;cursor:pointer">إبلاغ</button></div></div>`;
+                    messagesEl.appendChild(row);
+                });
+                // autoscroll to bottom
+                setTimeout(()=> messagesEl.scrollTo({ top: messagesEl.scrollHeight, behavior: 'smooth' }), 50);
+            }
+
+            sendBtn.addEventListener('click', async ()=>{
+                if (!canSend()) return alert('انتظر قليلاً قبل إرسال رسالة جديدة (5 ثوانٍ).');
+                const name = chatForm.name.value.trim() || 'مستخدم';
+                let text = chatForm.text.value.trim();
+                if (!text) return;
+                text = sanitizeText(text);
+                if (text.length > 1000) return alert('الرسالة طويلة جداً');
+                sendBtn.disabled = true;
+                try {
+                    const uid = auth.currentUser && auth.currentUser.uid ? auth.currentUser.uid : null;
+                    await addDoc(msgsRef, { name, text, createdAt: serverTimestamp(), createdBy: uid, pinned: false });
+                    chatForm.text.value = '';
+                    noteSent();
+                    // simple client-side rate-limit
+                    setTimeout(()=> sendBtn.disabled = false, 1200);
+                } catch (e){
+                    console.error(e);
+                    alert('تعذر إرسال الرسالة');
+                    sendBtn.disabled = false;
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>
