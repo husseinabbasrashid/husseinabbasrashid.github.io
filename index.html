@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;800;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
@@ -33,9 +33,11 @@
             --gradient-btn: linear-gradient(90deg, #6366f1, #8b5cf6);
 
             /* إعدادات أخرى */
-            --font-ar: 'Cairo', sans-serif;
-            --font-en: 'Outfit', sans-serif;
-            --nav-blur: 12px;
+            --font-ar: 'IBM Plex Sans Arabic', 'Cairo', sans-serif;
+            --font-en: 'IBM Plex Sans', 'Outfit', sans-serif;
+            --nav-blur: 12px; /* spacing behind floating nav */
+            --transition: 0.32s;
+            --card-elevation: 0 12px 30px -12px rgba(0,0,0,0.45);
         }
 
         /* وضع الإضاءة (Light Mode) */
@@ -56,8 +58,10 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none; /* إخفاء الماوس الافتراضي */
         }
+        
+        /* تأكّد من ظهور مؤشر الفأرة على العناصر القابلة للنقر لتحسين إمكانية الوصول */
+        .hover-target { cursor: pointer; }
 
         html {
             scroll-behavior: smooth;
@@ -161,8 +165,9 @@
             align-items: center;
             gap: 20px;
             z-index: 1000;
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
-            transition: all 0.3s;
+            box-shadow: var(--card-elevation);
+            transition: all var(--transition);
+            min-width: 320px; /* ensure good layout on wider screens */
         }
         
         body.light .floating-nav {
@@ -223,6 +228,63 @@
             transform: rotate(15deg);
         }
 
+        .icon-btn:focus {
+            outline: 3px solid rgba(99,102,241,0.18);
+            outline-offset: 4px;
+            border-radius: 8px;
+        }
+
+        /* chat badge */
+        .chat-badge{
+            display:inline-block;
+            min-width:18px;
+            height:18px;
+            padding:0 5px;
+            background:#ef4444;
+            color:#fff;
+            font-size:0.72rem;
+            line-height:18px;
+            border-radius:999px;
+            text-align:center;
+            margin-inline-start:6px;
+            box-shadow:0 4px 10px rgba(0,0,0,0.25);
+            transform:translateY(-6px);
+        }
+        .chat-badge[data-dot="true"]{ width:10px; height:10px; min-width:0; padding:0; line-height:10px; transform:translateY(-4px); }
+
+        /* Skip link (accessible) */
+        .skip-link {
+            position: absolute;
+            top: 12px;
+            right: -999px; /* hidden off-screen */
+            background: var(--card-bg);
+            color: var(--text-main);
+            padding: 9px 14px;
+            border-radius: 8px;
+            z-index: 2000;
+            font-weight: 700;
+            text-decoration: none;
+            transition: right 0.22s ease, box-shadow 0.22s ease;
+        }
+        .skip-link:focus {
+            right: 12px;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+        }
+
+        /* Brand in nav */
+        .brand { display:flex; align-items:center; margin-inline-start: 12px; }
+        .brand-link {
+            text-decoration: none;
+            font-family: var(--font-en);
+            font-weight: 800;
+            font-size: 1rem;
+            color: var(--text-main);
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .brand .dot { color: var(--accent-1); margin-inline-start:6px; }
+
         /* =========================================
            6. القسم الرئيسي (Hero Section)
            ========================================= */
@@ -251,22 +313,22 @@
         }
 
         .hero h1 {
-            font-size: 5rem;
+            font-size: clamp(2.4rem, 6vw, 4.5rem);
             font-weight: 900;
-            line-height: 1.1;
+            line-height: 1.05;
             margin-bottom: 20px;
             background: var(--gradient-text);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: -2px;
+            letter-spacing: -0.5px;
         }
 
         .hero p {
-            font-size: 1.5rem;
+            font-size: clamp(1rem, 2vw, 1.25rem);
             color: var(--text-secondary);
             max-width: 700px;
             margin-bottom: 40px;
-            line-height: 1.8;
+            line-height: 1.7;
         }
 
         .cta-group {
@@ -293,8 +355,13 @@
         }
         
         .btn-primary:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px -5px var(--accent-glow);
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 10px 30px -8px var(--accent-glow);
+        }
+        .btn:focus {
+            outline: 3px solid rgba(99,102,241,0.18);
+            outline-offset: 4px;
+            border-radius: 12px;
         }
 
         .btn-outline {
@@ -354,7 +421,10 @@
 
         @keyframes scroll {
             0% { transform: translateX(0); }
-            100% { transform: translateX(50%); } /* RTL logic adjustment needed in JS or use negative for LTR */
+            100% { transform: translateX(-50%); }
+        }
+        .marquee-content {
+            will-change: transform;
         }
 
         /* =========================================
@@ -412,9 +482,9 @@
         }
         
         .bento-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
             border-color: var(--accent-1);
-            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+            box-shadow: 0 16px 36px -12px rgba(0,0,0,0.45);
         }
         
         body.light .bento-card:hover {
@@ -447,12 +517,12 @@
         .card-content h3 {
             font-size: 2rem;
             margin-bottom: 10px;
-            background: linear-gradient(to right, #fff, #ccc);
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         body.light .card-content h3 {
-            background: linear-gradient(to right, #000, #333);
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -472,14 +542,17 @@
 
         .tech-badge {
             font-size: 0.8rem;
-            padding: 5px 12px;
-            background: rgba(255, 255, 255, 0.1);
+            padding: 6px 14px;
+            background: rgba(255, 255, 255, 0.06);
             border-radius: 20px;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(6px);
+            color: var(--text-secondary);
+            font-weight: 600;
         }
         body.light .tech-badge {
-            background: rgba(0, 0, 0, 0.1);
-            font-weight: 600;
+            background: rgba(0, 0, 0, 0.06);
+            color: var(--text-secondary);
+            font-weight:600;
         }
 
         .card-link {
@@ -599,7 +672,7 @@
         #loader {
             position: fixed;
             inset: 0;
-            background: #000;
+            background: var(--bg-dark);
             z-index: 10000;
             display: flex;
             justify-content: center;
@@ -619,6 +692,7 @@
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">تخطي إلى المحتوى</a>
 
     <div class="cursor-dot" data-cursor-dot></div>
     <div class="cursor-outline" data-cursor-outline></div>
@@ -630,6 +704,7 @@
     <canvas id="bg-canvas"></canvas>
 
     <nav class="floating-nav">
+        <div class="brand"><a href="#home" class="brand-link" aria-label="Hussein Abbas">Hussein<span class="dot">.</span></a></div>
         <div class="nav-links">
             <a href="#home" class="nav-link active hover-target" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
             <a href="#projects" class="nav-link hover-target" data-ar="المشاريع" data-en="Work">المشاريع</a>
@@ -637,12 +712,16 @@
             <a href="#about" class="nav-link hover-target" data-ar="عني" data-en="About">عني</a>
         </div>
         <div class="nav-actions">
-            <button class="icon-btn hover-target" id="themeToggle"><i class="fas fa-moon"></i></button>
-            <button class="icon-btn hover-target" id="langToggle"><i class="fas fa-language"></i></button>
+            <button class="icon-btn hover-target" id="openChatBtn" aria-label="الدردشة العامة / Open chat">
+                <i class="fas fa-comments" aria-hidden="true"></i>
+                <span class="chat-badge" aria-hidden="true" hidden></span>
+            </button>
+            <button class="icon-btn hover-target" id="themeToggle" aria-label="تبديل الثيم / Toggle theme" aria-pressed="false"><i class="fas fa-moon" aria-hidden="true"></i></button>
+            <button class="icon-btn hover-target" id="langToggle" aria-label="تبديل اللغة / Toggle language"><i class="fas fa-language" aria-hidden="true"></i></button>
         </div>
     </nav>
 
-    <main>
+    <main id="main-content">
         <section id="home" class="hero">
             <div class="hero-badge" data-aos="fade-down" data-ar="متاح للعمل الحر" data-en="Available for Freelance">✨ متاح للعمل الحر</div>
             <h1 data-aos="fade-up" data-aos-delay="100">
@@ -775,6 +854,9 @@
             loader.style.opacity = '0';
             setTimeout(() => loader.remove(), 500);
             AOS.init({ duration: 800, once: true });
+            // Ensure marquee direction matches current document language
+            const marqueeInit = document.querySelector('.marquee-content');
+            if (marqueeInit) marqueeInit.style.animationDirection = document.documentElement.lang === 'ar' ? 'normal' : 'reverse';
         });
         document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -903,19 +985,111 @@
             marquee.style.animationDirection = newLang === 'ar' ? 'normal' : 'reverse';
         });
 
-        // 6. تبديل الثيم (Theme Switcher)
+        // 6. تبديل الثيم (Theme Switcher) — مع حفظ التفضيل في localStorage وتهيئة حسب نظام المستخدم
         const themeToggle = document.getElementById("themeToggle");
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('light');
+        function applyTheme(theme) {
             const icon = themeToggle.querySelector('i');
-            if (document.body.classList.contains('light')) {
+            if (theme === 'light') {
+                document.body.classList.add('light');
                 icon.classList.remove('fa-moon');
                 icon.classList.add('fa-sun');
+                themeToggle.setAttribute('aria-pressed', 'true');
             } else {
+                document.body.classList.remove('light');
                 icon.classList.remove('fa-sun');
                 icon.classList.add('fa-moon');
+                themeToggle.setAttribute('aria-pressed', 'false');
             }
+        }
+        // تهيئة الثيم عند التحميل: التفضيل المحفوظ → تفضيل النظام → الوضع الداكن افتراضياً
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            applyTheme(savedTheme);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+            applyTheme('light');
+        } else {
+            applyTheme('dark');
+        }
+        themeToggle.addEventListener('click', () => {
+            const newTheme = document.body.classList.contains('light') ? 'dark' : 'light';
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
         });
+
+        // 7. Secret chat trigger: انقر نقطة الشعار 6 مرات لفتح صفحة الدردشة
+        const brandDotEl = document.querySelector('.brand .dot');
+        if (brandDotEl) {
+            let _clicks = 0; let _timer = null;
+            brandDotEl.style.transition = 'transform 0.18s';
+            brandDotEl.addEventListener('click', () => {
+                _clicks++;
+                brandDotEl.style.transform = 'scale(1.08)';
+                clearTimeout(_timer);
+                _timer = setTimeout(() => { _clicks = 0; brandDotEl.style.transform = ''; }, 2500);
+                if (_clicks >= 6) {
+                    // go to public chat page (secret entrance)
+                    window.location.href = 'chat.html';
+                }
+            });
+        }
+
+        // Chat button (opens chat page) and unread indicator (uses Firebase if configured)
+        const openChatBtn = document.getElementById('openChatBtn');
+        const chatBadge = openChatBtn ? openChatBtn.querySelector('.chat-badge') : null;
+        if (openChatBtn) {
+            openChatBtn.addEventListener('click', () => {
+                // open chat; chat page itself will set chat_last_seen in localStorage when loaded
+                window.location.href = 'chat.html';
+            });
+        }
+
+        // Try to load firebase-config and show unread count since last seen
+        (async () => {
+            try {
+                const cfg = await import('./firebase-config.js');
+                const firebaseConfig = cfg.firebaseConfig || {};
+                if (!firebaseConfig.apiKey) return; // not configured
+
+                const appMod = await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js');
+                const fsMod = await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js');
+
+                const app = appMod.initializeApp(firebaseConfig);
+                const db = fsMod.getFirestore(app);
+
+                const lastSeenMs = Number(localStorage.getItem('chat_last_seen') || 0);
+                const sinceTs = lastSeenMs ? fsMod.Timestamp.fromMillis(lastSeenMs) : null;
+
+                let q;
+                if (sinceTs) {
+                    q = fsMod.query(fsMod.collection(db, 'public_messages'), fsMod.where('createdAt', '>', sinceTs));
+                } else {
+                    // if never seen, show recent messages count (lim 30)
+                    q = fsMod.query(fsMod.collection(db, 'public_messages'), fsMod.orderBy('createdAt', 'desc'), fsMod.limit(30));
+                }
+
+                fsMod.onSnapshot(q, (snap) => {
+                    const cnt = snap.size || 0;
+                    if (!chatBadge) return;
+                    if (cnt === 0) { chatBadge.hidden = true; }
+                    else {
+                        chatBadge.hidden = false;
+                        if (cnt > 9) chatBadge.textContent = '9+'; else chatBadge.textContent = String(cnt);
+                    }
+                });
+            } catch (e) {
+                // silent fail — no firebase configured or import blocked
+                // fallback: use localStorage demo count
+                try {
+                    const arr = JSON.parse(localStorage.getItem('public_chat_demo_messages') || '[]');
+                    const lastSeen = Number(localStorage.getItem('chat_last_seen') || 0);
+                    const unread = arr.filter(m => (new Date(m.time)).getTime() > lastSeen).length;
+                    if (chatBadge) {
+                        if (unread > 0) { chatBadge.hidden = false; chatBadge.textContent = unread > 9 ? '9+' : String(unread); }
+                        else chatBadge.hidden = true;
+                    }
+                } catch (e2) { /* ignore */ }
+            }
+        })();
 
         // 7. Active Nav Link
         const sections = document.querySelectorAll('section');
