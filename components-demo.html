@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عرض المكونات - موقع حسين عباس</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .demo-section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .demo-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--text-main);
+            text-align: center;
+        }
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero" style="min-height: 60vh;">
+        <div class="container">
+            <h1 class="hero-title">عرض المكونات المتقدمة</h1>
+            <p style="font-size: 1.2rem; margin: 20px 0;">
+                جميع المكونات الجديدة في مكان واحد
+            </p>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn-primary">زر أساسي</button>
+                <button class="btn-outline">زر محدد</button>
+                <button class="btn-neon">زر نيون</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="demo-section" style="background: var(--bg-card);">
+        <h2 class="demo-title">📊 عداد الإحصائيات</h2>
+        <div class="demo-grid">
+            <div class="stat-card">
+                <div class="stat-number" data-target="150">0</div>
+                <div class="stat-label">مشروع مكتمل</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-target="50">0</div>
+                <div class="stat-label">عميل سعيد</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-target="5">0</div>
+                <div class="stat-label">سنوات خبرة</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Bars -->
+    <section class="demo-section">
+        <h2 class="demo-title">📈 أشرطة التقدم</h2>
+        <div style="max-width: 600px; margin: 0 auto;">
+            <div style="margin-bottom: 30px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <span>HTML & CSS</span>
+                    <span>95%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" data-progress="95"></div>
+                </div>
+            </div>
+            <div style="margin-bottom: 30px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <span>JavaScript</span>
+                    <span>90%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" data-progress="90"></div>
+                </div>
+            </div>
+            <div style="margin-bottom: 30px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <span>React</span>
+                    <span>85%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" data-progress="85"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="demo-section" style="background: var(--bg-card);">
+        <h2 class="demo-title">📅 الخط الزمني</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>2024</h3>
+                    <p>بدأت العمل كمطور ويب محترف مستقل</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>2023</h3>
+                    <p>تخرجت من كلية علوم الحاسوب</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>2022</h3>
+                    <p>بدأت تعلم تطوير الويب</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="demo-section">
+        <h2 class="demo-title">💬 آراء العملاء</h2>
+        <div class="demo-grid">
+            <div class="testimonial-card">
+                <p class="testimonial-text">
+                    "حسين مطور محترف جداً، أنجز المشروع بجودة عالية وفي الوقت المحدد. أنصح بالتعامل معه."
+                </p>
+                <div class="testimonial-author">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--gradient-btn); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                        أ
+                    </div>
+                    <div class="author-info">
+                        <h4>أحمد محمد</h4>
+                        <p>مدير شركة تقنية</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">
+                    "تجربة رائعة! الموقع الذي صممه لي حسين تجاوز توقعاتي. سريع ومتجاوب وجميل."
+                </p>
+                <div class="testimonial-author">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--gradient-gold); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                        س
+                    </div>
+                    <div class="author-info">
+                        <h4>سارة علي</h4>
+                        <p>صاحبة متجر إلكتروني</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Cards -->
+    <section class="demo-section" style="background: var(--bg-card);">
+        <h2 class="demo-title">💰 باقات الأسعار</h2>
+        <div class="demo-grid">
+            <div class="pricing-card">
+                <h3>الباقة الأساسية</h3>
+                <div class="pricing-price">$49</div>
+                <ul class="pricing-features">
+                    <li><i>✓</i> تصميم صفحة واحدة</li>
+                    <li><i>✓</i> تجاوب كامل</li>
+                    <li><i>✓</i> دعم لمدة شهر</li>
+                </ul>
+                <button class="btn-outline">اختر الباقة</button>
+            </div>
+            <div class="pricing-card featured">
+                <h3>الباقة الاحترافية</h3>
+                <div class="pricing-price">$99</div>
+                <ul class="pricing-features">
+                    <li><i>✓</i> تصميم 5 صفحات</li>
+                    <li><i>✓</i> تجاوب كامل</li>
+                    <li><i>✓</i> SEO محسّن</li>
+                    <li><i>✓</i> دعم لمدة 3 أشهر</li>
+                </ul>
+                <button class="btn-primary">اختر الباقة</button>
+            </div>
+            <div class="pricing-card">
+                <h3>الباقة المتقدمة</h3>
+                <div class="pricing-price">$199</div>
+                <ul class="pricing-features">
+                    <li><i>✓</i> تصميم غير محدود</li>
+                    <li><i>✓</i> تطبيق ويب كامل</li>
+                    <li><i>✓</i> لوحة تحكم</li>
+                    <li><i>✓</i> دعم لمدة سنة</li>
+                </ul>
+                <button class="btn-outline">اختر الباقة</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Accordion -->
+    <section class="demo-section">
+        <h2 class="demo-title">❓ الأسئلة الشائعة</h2>
+        <div style="max-width: 800px; margin: 0 auto;">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>ما هي خدماتك؟</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>أقدم خدمات تطوير المواقع والتطبيقات الإلكترونية، تصميم واجهات المستخدم، وتحسين محركات البحث SEO.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>كم تستغرق مدة تطوير الموقع؟</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>تعتمد المدة على حجم المشروع، لكن عادةً تتراوح بين أسبوع إلى شهر للمواقع المتوسطة.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>هل تقدم دعم فني بعد التسليم؟</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>نعم، أقدم دعم فني مجاني لمدة شهر بعد التسليم، مع إمكانية تمديد الدعم حسب الباقة المختارة.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Badges -->
+    <section class="demo-section" style="background: var(--bg-card);">
+        <h2 class="demo-title">🏷️ الشارات</h2>
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <span class="badge badge-primary">جديد</span>
+            <span class="badge badge-success">مكتمل</span>
+            <span class="badge badge-warning">قيد التنفيذ</span>
+            <span class="badge badge-error">ملغي</span>
+        </div>
+    </section>
+
+    <!-- Tooltips -->
+    <section class="demo-section">
+        <h2 class="demo-title">💡 التلميحات</h2>
+        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+            <button class="btn-primary" data-tooltip="هذا زر أساسي">
+                مرر فوقي
+            </button>
+            <button class="btn-outline" data-tooltip="هذا زر محدد">
+                مرر فوقي أيضاً
+            </button>
+            <span data-tooltip="معلومة مفيدة جداً" style="cursor: help; padding: 10px 20px; background: var(--bg-card); border-radius: 10px;">
+                نص مع تلميح
+            </span>
+        </div>
+    </section>
+
+    <!-- Modal Demo -->
+    <section class="demo-section" style="background: var(--bg-card);">
+        <h2 class="demo-title">🪟 النوافذ المنبثقة</h2>
+        <div style="text-align: center;">
+            <button class="btn-primary" data-modal="demoModal">
+                افتح النافذة المنبثقة
+            </button>
+        </div>
+    </section>
+
+    <!-- Toast Demo -->
+    <section class="demo-section">
+        <h2 class="demo-title">🔔 الإشعارات</h2>
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <button class="btn-primary" onclick="showToast('success')">
+                إشعار نجاح
+            </button>
+            <button class="btn-outline" onclick="showToast('error')">
+                إشعار خطأ
+            </button>
+            <button class="btn-neon" onclick="showToast('info')">
+                إشعار معلومات
+            </button>
+            <button class="btn-3d" onclick="showToast('warning')">
+                إشعار تحذير
+            </button>
+        </div>
+    </section>
+
+    <!-- Loading Spinners -->
+    <section class="demo-section" style="background: var(--bg-card);">
+        <h2 class="demo-title">⏳ مؤشرات التحميل</h2>
+        <div style="display: flex; gap: 50px; justify-content: center; align-items: center; flex-wrap: wrap;">
+            <div class="spinner-container">
+                <div class="spinner"></div>
+            </div>
+            <div class="spinner-container">
+                <div class="spinner-dots">
+                    <div class="spinner-dot"></div>
+                    <div class="spinner-dot"></div>
+                    <div class="spinner-dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal HTML -->
+    <div class="modal-overlay" id="demoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>نافذة تجريبية</h2>
+                <button class="modal-close">✕</button>
+            </div>
+            <div class="modal-body">
+                <p>هذه نافذة منبثقة تجريبية تحتوي على محتوى مخصص.</p>
+                <p>يمكنك إضافة أي محتوى تريده هنا: نصوص، صور، نماذج، إلخ.</p>
+                <div style="margin-top: 20px;">
+                    <button class="btn-primary" onclick="window.HusseinAbbasWebsite.modal.close('demoModal')">
+                        حسناً
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+        function showToast(type) {
+            const messages = {
+                success: 'تمت العملية بنجاح! ✓',
+                error: 'حدث خطأ ما! ✕',
+                info: 'معلومة مهمة لك ℹ',
+                warning: 'انتبه! هذا تحذير ⚠'
+            };
+            window.HusseinAbbasWebsite.toast.show(messages[type], type, 3000);
+        }
+    </script>
+</body>
+</html>
