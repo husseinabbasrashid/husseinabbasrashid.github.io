@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Sample Cloud Function (Node.js) to enforce simple rate-limiting per user id using Firestore "writes_log" collection
    Deploy as an onCreate trigger for public_messages to check if the same uid created a message in the last X seconds.
 
@@ -32,3 +33,39 @@ exports.enforceRateLimit = functions.firestore.document('public_messages/{msgId}
 - To use this, include `createdBy: auth.uid` when clients write messages (requires auth).
 - Cloud Functions offer a server-side safe way to enforce rate-limits and other checks (URL detection, blacklist, profanity lists using third-party services).
 */
+=======
+/* Sample Cloud Function (Node.js) to enforce simple rate-limiting per user id using Firestore "writes_log" collection
+   Deploy as an onCreate trigger for public_messages to check if the same uid created a message in the last X seconds.
+
+const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+admin.initializeApp();
+const db = admin.firestore();
+
+exports.enforceRateLimit = functions.firestore.document('public_messages/{msgId}').onCreate(async (snap, context) => {
+  const data = snap.data();
+  const uid = context.auth ? context.auth.uid : null; // best if you require auth to write
+  if (!uid) return null; // unauthenticated: could delete or flag
+
+  const now = admin.firestore.Timestamp.now();
+  const cutoff = admin.firestore.Timestamp.fromMillis(now.toMillis() - 5000); // 5s
+  const recent = await db.collection('public_messages')
+    .where('createdBy', '==', uid)
+    .where('createdAt', '>', cutoff)
+    .get();
+  if (!recent.empty) {
+    // too frequent — delete this message or mark it
+    await snap.ref.delete();
+    return null;
+  }
+
+  // otherwise add a lightweight index/log entry
+  await db.collection('writes_log').add({ uid, ts: now });
+  return null;
+});
+
+/* Notes:
+- To use this, include `createdBy: auth.uid` when clients write messages (requires auth).
+- Cloud Functions offer a server-side safe way to enforce rate-limits and other checks (URL detection, blacklist, profanity lists using third-party services).
+*/
+>>>>>>> 0d0fd81697a8da76faf77354311bf7f0ae9b46ee

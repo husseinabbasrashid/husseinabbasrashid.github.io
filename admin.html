@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -161,3 +162,168 @@
     </script>
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>إدارة الدردشة — Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root{--bg:#050505;--card:rgba(20,20,20,0.6);--muted:#a0a0a0;--accent:#6366f1;--text:#fff;--max:1100px;font-family:'IBM Plex Sans Arabic', 'IBM Plex Sans', sans-serif}
+        body{background:var(--bg);color:var(--text);margin:0;min-height:100vh;}
+        header{padding:18px 20px;border-bottom:1px solid rgba(255,255,255,0.04)}
+        .wrap{max-width:var(--max);margin:28px auto;padding:0 16px}
+        .card{background:var(--card);border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,0.04)}
+        .row{display:flex;gap:12px;align-items:center}
+        .msg{padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);margin-bottom:8px}
+        button{background:linear-gradient(90deg,var(--accent),#8b5cf6);border:none;color:#fff;padding:8px 10px;border-radius:8px;cursor:pointer}
+        .danger{background:#ef4444}
+        input.secret{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.05);background:transparent;color:var(--text)}
+        .muted{color:var(--muted)}
+        .actions{display:flex;gap:8px;margin-top:8px}
+    </style>
+</head>
+<body>
+    <header><div class="wrap"><div class="row"><h2 style="margin:0">لوحة إدارة الدردشة</h2><a href="webb.html" style="margin-inline-start:12px;color:var(--muted);text-decoration:none">العودة</a></div></div></header>
+    <main class="wrap">
+        <div class="card">
+            <p class="muted">أدخل مفتاح المشرف للتحقق أو استخدم الرابط <code>?admin=YOUR_KEY</code></p>
+            <div style="display:flex;gap:8px;margin-bottom:12px"><input id="adminKey" class="secret" placeholder="مفتاح المشرف"><button id="loginBtn">تسجيل دخول</button></div>
+            <div id="adminArea" hidden>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><div><strong>رسائل حديثة</strong><div class="muted">يمكنك حذف أو تثبيت الرسائل، أو عرض تقارير</div></div><div><button id="refreshBtn">تحديث</button></div></div>
+                <div id="msgsList"></div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        let adminKey = null;
+        const adminArea = document.getElementById('adminArea');
+        const loginBtn = document.getElementById('loginBtn');
+        const adminKeyInput = document.getElementById('adminKey');
+        const msgsList = document.getElementById('msgsList');
+        const refreshBtn = document.getElementById('refreshBtn');
+
+        async function initAsAdmin(key){
+            // try reading config
+            let cfg = {};
+            try { cfg = (await import('./firebase-config.js')).firebaseConfig || {}; } catch(e){}
+            const ADMIN_KEY = (await import('./firebase-config.js')).ADMIN_KEY || '';
+            if (key !== ADMIN_KEY) {
+                alert('مفتاح خاطئ. يمكنك إضافة المفتاح في firebase-config.js');
+                return;
+            }
+            adminKey = key;
+            adminArea.hidden = false;
+            adminKeyInput.value = '';
+            // initialize Firestore if configured
+            if (cfg.apiKey) {
+                try{
+                    const appMod = await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js');
+                    const fsMod = await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js');
+                    const app = appMod.initializeApp(cfg);
+                    const db = fsMod.getFirestore(app);
+                    window.__admin_db = db;
+                    fetchMessagesFirestore();
+                }catch(e){ console.error(e); alert('تعذر الاتصال بـ Firebase') }
+            } else {
+                // local fallback
+                fetchMessagesLocal();
+            }
+        }
+
+        function renderList(list){
+            msgsList.innerHTML = '';
+            list.forEach(m=>{
+                const div = document.createElement('div'); div.className='msg';
+                const pinned = m.pinned ? '<strong style="color:#ffd54d">[مثبت]</strong> ' : '';
+                const reports = m._reports || 0;
+                div.innerHTML = `<div><strong>${m.name||'مستخدم'}</strong> ${pinned}<span class="muted">${m.time||''}</span></div><div style="margin-top:6px">${m.text}</div><div class="actions"><button class="pinBtn" data-id="${m.id}">${m.pinned?'إلغاء تثبيت':'تثبيت'}</button><button class="delBtn danger" data-id="${m.id}">حذف</button><button class="viewReports" data-id="${m.id}">التقارير (${reports})</button></div>`;
+                msgsList.appendChild(div);
+            });
+        }
+
+        // local fetch
+        function fetchMessagesLocal(){
+            const arr = JSON.parse(localStorage.getItem('public_chat_demo_messages')||'[]');
+            renderList(arr.reverse());
+        }
+        // firestore fetch
+        async function fetchMessagesFirestore(){
+            const fs = await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js');
+            const db = window.__admin_db;
+            const msgsRef = fs.collection(db, 'public_messages');
+            const q = fs.query(msgsRef, fs.orderBy('createdAt', 'desc'), fs.limit(200));
+            const snap = await fs.getDocs(q);
+            const list = [];
+            snap.forEach(d=> { const data = d.data(); data.id = d.id; list.push(data); });
+            // get report counts
+            const reportsRef = fs.collection(db, 'reports');
+            const repSnap = await fs.getDocs(fs.query(reportsRef));
+            const counts = {};
+            repSnap.forEach(r => { const data = r.data(); counts[data.messageId] = (counts[data.messageId]||0)+1; });
+            list.forEach(i=> i._reports = counts[i.id]||0);
+            renderList(list);
+        }
+
+        msgsList.addEventListener('click', async (ev)=>{
+            const id = ev.target.dataset.id;
+            if (!id) return;
+            if (ev.target.classList.contains('delBtn')){
+                if (!confirm('حذف الرسالة؟')) return;
+                // delete
+                if (window.__admin_db){
+                    const fs = await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js');
+                    await fs.deleteDoc(fs.doc(window.__admin_db, 'public_messages', id));
+                    fetchMessagesFirestore();
+                } else {
+                    const arr = JSON.parse(localStorage.getItem('public_chat_demo_messages')||'[]');
+                    const remaining = arr.filter(m=> m.id !== id);
+                    localStorage.setItem('public_chat_demo_messages', JSON.stringify(remaining));
+                    fetchMessagesLocal();
+                }
+            }
+            if (ev.target.classList.contains('pinBtn')){
+                // toggle pin
+                if (window.__admin_db){
+                    const fs = await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js');
+                    const docRef = fs.doc(window.__admin_db, 'public_messages', id);
+                    const cur = await fs.getDoc(docRef);
+                    const pinned = cur.data().pinned ? false : true;
+                    await fs.updateDoc(docRef, { pinned });
+                    fetchMessagesFirestore();
+                } else {
+                    const arr = JSON.parse(localStorage.getItem('public_chat_demo_messages')||'[]');
+                    const updated = arr.map(m=> m.id===id ? Object.assign({},m,{pinned:!m.pinned}) : m);
+                    localStorage.setItem('public_chat_demo_messages', JSON.stringify(updated));
+                    fetchMessagesLocal();
+                }
+            }
+            if (ev.target.classList.contains('viewReports')){
+                // show local reports or fetch from Firestore
+                if (window.__admin_db){
+                    const fs = await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js');
+                    const repSnap = await fs.getDocs(fs.query(fs.collection(window.__admin_db,'reports'), fs.where('messageId','==', id)));
+                    const arr = [];
+                    repSnap.forEach(r => arr.push(r.data()));
+                    alert('تقارير\n\n' + (arr.length ? arr.map(a=> `${a.reason||'(بدون سبب)'} — ${a.createdAt && a.createdAt.toDate ? a.createdAt.toDate().toLocaleString() : ''}`).join('\n') : 'لا توجد تقارير'));
+                } else {
+                    const arr = JSON.parse(localStorage.getItem('public_chat_reports')||'[]');
+                    const my = arr.filter(r => r.messageId === id);
+                    alert('تقارير\n\n' + (my.length ? my.map(a=> `${a.reason||'(بدون سبب)'} — ${a.time}`).join('\n') : 'لا توجد تقارير'));
+                }
+            }
+        });
+
+        loginBtn.addEventListener('click', ()=> initAsAdmin(adminKeyInput.value.trim()));
+        refreshBtn.addEventListener('click', ()=>{ if (window.__admin_db) fetchMessagesFirestore(); else fetchMessagesLocal(); });
+
+        // auto-login via query string ?admin=KEY
+        (function(){ const qp = new URLSearchParams(location.search); const k = qp.get('admin'); if (k) initAsAdmin(k); })();
+    </script>
+</body>
+</html>
+>>>>>>> 0d0fd81697a8da76faf77354311bf7f0ae9b46ee

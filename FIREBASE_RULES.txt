@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* ⚠️ IMPORTANT: RULES HAVE EXPIRED - UPDATE IMMEDIATELY! */
 /* Replace the rules in Firebase Console with these rules below */
 
@@ -54,3 +55,61 @@ MUST DO:
 6. انقر "Publish"
 7. الآن يجب أن تعمل الرسائل!
 */
+=======
+/* ⚠️ IMPORTANT: RULES HAVE EXPIRED - UPDATE IMMEDIATELY! */
+/* Replace the rules in Firebase Console with these rules below */
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // رسائل عامة - القراءة للجميع، الكتابة للمستخدمين المصادقين
+    match /public_messages/{messageId} {
+      // أي شخص يمكنه قراءة الرسائل
+      allow read: if true;
+      
+      // المستخدمون المصادقين يمكنهم إرسال رسائل جديدة
+      allow create: if request.auth != null
+                    && request.resource.data.keys().hasOnly(['name','text','imageUrl','createdAt','createdBy','clientId','pinned','replyTo','reactions'])
+                    && request.resource.data.text is string
+                    && request.resource.data.text.size() <= 1000;
+      
+      // يمكن تحديث التفاعلات (reactions) فقط
+      allow update: if request.auth != null 
+                    && request.resource.data.keys().hasOnly(['name','text','imageUrl','createdAt','createdBy','clientId','pinned','replyTo','reactions']);
+      
+      // حذف الرسالة - مالك الرسالة أو المشرفين فقط
+      allow delete: if request.auth != null 
+                    && (request.auth.uid == resource.data.createdBy || request.auth.token.admin == true);
+    }
+
+    // تقارير الإبلاغ
+    match /reports/{reportId} {
+      allow create: if request.auth != null;
+      allow read, delete: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // قاعدة افتراضية صارمة - رفض جميع الطلبات الأخرى
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+/*
+ملاحظات أمان:
+✅ رسائل: القراءة عامة، الكتابة للمستخدمين المصادقين فقط (حماية من السبام)
+✅ التحديثات: تفاعلات فقط
+✅ الحذف: مالك الرسالة أو المشرفين فقط
+✅ الرسائل: حد أقصى 1000 حرف
+
+MUST DO:
+1. انسخ القواعس أعلاه
+2. اذهب إلى Firebase Console: https://console.firebase.google.com/
+3. اختر المشروع: "my-public-chat-8cc7f"
+4. اذهب إلى Firestore Database → Rules
+5. استبدل القواعس القديمة مع القواعس الجديدة
+6. انقر "Publish"
+7. الآن يجب أن تعمل الرسائل!
+*/
+>>>>>>> 0d0fd81697a8da76faf77354311bf7f0ae9b46ee
