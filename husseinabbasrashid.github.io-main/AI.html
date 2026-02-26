@@ -206,11 +206,7 @@ maxOutputTokens:2048
 const data = await response.json();
 
 if(data.error){
-if(data.error.message.includes('Quota exceeded')){
-appendMessage('⚠️ تم تجاوز الحد المسموح من الطلبات. يرجى الانتظار دقيقة أو استخدام مفتاح API جديد.','bot');
-}else{
-appendMessage('خطأ: ' + data.error.message,'bot');
-}
+appendMessage(data.error.message,'bot');
 }else{
 const reply = data.candidates[0].content.parts[0].text;
 appendMessage(reply,'bot');
