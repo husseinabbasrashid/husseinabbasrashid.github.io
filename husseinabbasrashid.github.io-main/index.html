@@ -55,11 +55,11 @@
            ========================================= */
         :root {
             /* ألوان أسود وأزرق - تأثير مبرمج/مصمم */
-            --bg-dark: #030712;
-            --bg-card: #0f172a;
-            --bg-card-hover: #1e293b;
-            --card-border: rgba(59, 130, 246, 0.1);
-            --card-border-hover: rgba(59, 130, 246, 0.25);
+            --bg-dark: #020617;
+            --bg-card: #0c1222;
+            --bg-card-hover: #1a1f35;
+            --card-border: rgba(59, 130, 246, 0.15);
+            --card-border-hover: rgba(59, 130, 246, 0.3);
             
             --text-main: #f1f5f9;
             --text-secondary: #94a3b8;
@@ -144,7 +144,7 @@
             color: var(--text-main);
             font-family: var(--font-ar);
             overflow-x: hidden;
-            transition: background-color 0.5s ease;
+            transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             line-height: 1.6;
         }
 
@@ -230,10 +230,34 @@
             height: 100%;
             z-index: -2;
             background-image: 
-                linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
+                linear-gradient(rgba(59, 130, 246, 0.08) 2px, transparent 2px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.08) 2px, transparent 2px);
+            background-size: 50px 50px;
             pointer-events: none;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; }
+        }
+
+        .grid-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+            animation: pulseGlow 8s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
         }
 
         /* Diagonal grid lines */
@@ -291,23 +315,21 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(10, 10, 15, 0.85);
-            backdrop-filter: blur(var(--nav-blur));
-            -webkit-backdrop-filter: blur(var(--nav-blur));
-            border: 1px solid var(--card-border);
-            padding: 6px 12px;
-            border-radius: 14px;
+            background: rgba(12, 18, 34, 0.85);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            padding: 8px 14px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             z-index: 1000;
-            box-shadow: var(--card-shadow);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 
+                        0 0 0 1px rgba(59, 130, 246, 0.15) inset,
+                        0 0 20px rgba(59, 130, 246, 0.1);
             transition: all var(--transition);
             max-width: 98vw;
-            flex-wrap: nowrap;
-            justify-content: center;
-            overflow-x: auto;
-            scrollbar-width: none;
         }
 
         .floating-nav::-webkit-scrollbar {
@@ -361,6 +383,23 @@
             white-space: nowrap;
         }
 
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-btn);
+            transform: translateX(-50%);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 80%;
+        }
+
         .nav-link:hover,
         .nav-link.active {
             color: var(--accent-primary);
@@ -385,7 +424,8 @@
 
         .icon-btn:hover {
             color: var(--accent-primary);
-            transform: rotate(15deg);
+            transform: rotate(360deg) scale(1.3);
+            filter: drop-shadow(0 0 10px var(--accent-primary));
         }
 
         .brand-link {
@@ -417,16 +457,36 @@
             padding: 0 20px;
             position: relative;
             padding-top: 100px;
+            background: radial-gradient(ellipse at top, rgba(59, 130, 246, 0.15), transparent 50%),
+                        radial-gradient(ellipse at bottom, rgba(139, 92, 246, 0.1), transparent 50%);
         }
 
         .hero-avatar {
-            width: 160px;
-            height: 160px;
-            border-radius: 30px;
-            margin-bottom: 30px;
+            width: 220px;
+            height: 220px;
+            border-radius: 45px;
+            margin-bottom: 40px;
             position: relative;
             animation: float-avatar 4s ease-in-out infinite;
-            box-shadow: 0 20px 40px -10px rgba(245, 158, 11, 0.3);
+            box-shadow: 0 35px 70px -18px rgba(59, 130, 246, 0.7),
+                        0 0 0 1px rgba(59, 130, 246, 0.3) inset,
+                        0 0 60px rgba(59, 130, 246, 0.3);
+            transform-style: preserve-3d;
+        }
+
+        .hero-avatar::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 38px;
+            background: var(--gradient-warm);
+            z-index: -1;
+            animation: rotateBorder 4s linear infinite;
+        }
+
+        @keyframes rotateBorder {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .hero-avatar img {
@@ -485,34 +545,76 @@
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
             font-weight: 800;
             line-height: 1.15;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             background: var(--gradient-text);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
+            letter-spacing: -1px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-btn);
+            border-radius: 2px;
+            transform: scaleX(0);
+            animation: expandLine 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes expandLine {
+            to { transform: scaleX(1); }
         }
 
         .hero p {
-            font-size: clamp(1.05rem, 2vw, 1.3rem);
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
             color: var(--text-secondary);
-            max-width: 600px;
-            margin-bottom: 40px;
-            line-height: 1.8;
+            max-width: 650px;
+            margin-bottom: 45px;
+            line-height: 1.9;
         }
 
         .btn-primary {
             background: var(--gradient-btn);
             color: white;
-            box-shadow: 0 8px 24px -4px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 12px 35px -5px rgba(59, 130, 246, 0.6);
             font-weight: 700;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px) scale(1.01);
-            box-shadow: 0 12px 32px -6px rgba(59, 130, 246, 0.5);
+            transform: translateY(-6px) scale(1.08) rotateX(5deg);
+            box-shadow: 0 25px 60px -10px rgba(59, 130, 246, 0.8),
+                        0 0 30px rgba(59, 130, 246, 0.4);
+            filter: brightness(1.2) saturate(1.3);
         }
 
         .btn:focus {
@@ -528,8 +630,9 @@
 
         .skill-tag:hover {
             border-color: var(--accent-primary);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px -4px rgba(59, 130, 246, 0.25);
+            transform: translateY(-5px) scale(1.1) rotateZ(2deg);
+            box-shadow: 0 12px 25px -4px rgba(59, 130, 246, 0.3);
+            filter: brightness(1.15);
         }
 
         .btn-primary:hover {
@@ -675,6 +778,20 @@
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
+        .bento-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(59, 130, 246, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: 1;
+        }
+
+        .bento-card:hover::before {
+            opacity: 1;
+        }
+
         .bento-card.large {
             grid-column: span 2;
         }
@@ -722,9 +839,12 @@
         }
 
         .bento-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-15px) scale(1.04) rotateX(5deg) rotateY(2deg);
             border-color: var(--accent-primary);
-            box-shadow: 0 20px 40px -10px rgba(59, 130, 246, 0.25);
+            box-shadow: 0 30px 80px -20px rgba(59, 130, 246, 0.6),
+                        0 0 0 1px rgba(59, 130, 246, 0.4) inset,
+                        0 0 50px rgba(59, 130, 246, 0.2);
+            filter: brightness(1.1);
         }
 
         /* Card Content */
@@ -1302,8 +1422,8 @@
         }
 
         .back-to-top:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 24px -6px rgba(245, 158, 11, 0.5);
+            transform: translateY(-4px) scale(1.1);
+            box-shadow: 0 15px 35px -6px rgba(59, 130, 246, 0.6);
         }
 
         html[lang="en"] .back-to-top {
@@ -1471,8 +1591,8 @@
             background: var(--accent-primary);
             color: white;
             border-color: var(--accent-primary);
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px -4px rgba(59, 130, 246, 0.4);
+            transform: translateY(-4px) rotate(5deg);
+            box-shadow: 0 10px 25px -4px rgba(59, 130, 246, 0.5);
         }
 
         /* Footer Columns */
@@ -1828,6 +1948,22 @@
             top: 0;
             left: 0;
             width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(59, 130, 246, 0.1), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 3px;
             background: var(--gradient-btn);
             transform: scaleX(0);
@@ -1839,9 +1975,11 @@
         }
 
         .stat-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-15px) scale(1.12) rotateY(8deg) rotateX(5deg);
             border-color: var(--accent-primary);
-            box-shadow: var(--card-shadow-hover);
+            box-shadow: 0 25px 60px -12px rgba(59, 130, 246, 0.5),
+                        0 0 40px rgba(59, 130, 246, 0.3);
+            filter: brightness(1.15) saturate(1.3);
         }
 
         .stat-icon {
@@ -1904,12 +2042,30 @@
 
         .contact-form {
             background: var(--bg-card);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
             border: 1px solid var(--card-border);
             border-radius: var(--card-radius);
             padding: 40px;
             box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-form::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            height: 2px;
+            background: var(--gradient-btn);
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         body.light .contact-form {
@@ -1988,10 +2144,10 @@
         }
 
         .social-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-6px) scale(1.1);
             color: var(--accent-primary);
             border-color: var(--accent-primary);
-            box-shadow: 0 10px 24px -6px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 10px 30px -6px rgba(59, 130, 246, 0.4);
         }
 
         .exp-year {
@@ -2088,8 +2244,8 @@
         }
 
         .gallery-item:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--card-shadow-hover);
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.4);
             border-color: var(--accent-primary);
         }
 
@@ -2282,9 +2438,9 @@
         }
 
         .exp-content:hover {
-            transform: translateY(-4px);
+            transform: translateY(-4px) scale(1.02);
             border-color: var(--accent-primary);
-            box-shadow: var(--card-shadow-hover);
+            box-shadow: 0 12px 35px -8px rgba(59, 130, 246, 0.3);
         }
 
         .exp-year {
@@ -2367,16 +2523,15 @@
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
+            left: -100%;
             width: 100%;
-            height: 3px;
-            background: var(--gradient-btn);
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transition: left 0.5s;
         }
 
         .skill-box:hover::before {
-            transform: scaleX(1);
+            left: 100%;
         }
 
         .skill-box:hover {
@@ -2648,6 +2803,27 @@
             overflow: hidden;
         }
 
+        .service-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, var(--accent-primary), transparent 30%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            animation: rotate 4s linear infinite;
+        }
+
+        .service-card:hover::after {
+            opacity: 0.1;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
         .service-card::before {
             content: '';
             position: absolute;
@@ -2661,10 +2837,12 @@
         }
 
         .service-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-18px) scale(1.08) rotateZ(3deg) rotateX(10deg);
             border-color: var(--accent-primary);
-            box-shadow: var(--card-shadow-hover);
+            box-shadow: 0 35px 70px -15px rgba(59, 130, 246, 0.5),
+                        0 0 60px rgba(59, 130, 246, 0.3);
             background: var(--bg-card-hover);
+            filter: saturate(1.2) brightness(1.1);
         }
 
         .service-card:hover::before {
@@ -2750,12 +2928,32 @@
             padding: 28px;
             position: relative;
             transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 2px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .testimonial-card:hover::before {
+            opacity: 1;
         }
 
         .testimonial-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-6px) scale(1.03);
             border-color: var(--accent-primary);
-            box-shadow: var(--card-shadow-hover);
+            box-shadow: 0 20px 50px -10px rgba(59, 130, 246, 0.35);
         }
 
         .testimonial-quote {
@@ -3133,6 +3331,527 @@
         .hover-sound {
             cursor: pointer;
         }
+
+        /* Floating Action Button */
+        .fab-container {
+            position: fixed;
+            bottom: 100px;
+            left: 30px;
+            z-index: 998;
+        }
+
+        html[lang="en"] .fab-container {
+            left: auto;
+            right: 30px;
+        }
+
+        .fab-main {
+            width: 56px;
+            height: 56px;
+            background: var(--gradient-btn);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .fab-main:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+        }
+
+        .fab-menu {
+            position: absolute;
+            bottom: 70px;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .fab-container.active .fab-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .fab-item {
+            width: 48px;
+            height: 48px;
+            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .fab-item:hover {
+            background: var(--accent-primary);
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            min-width: 280px;
+            box-shadow: var(--card-shadow);
+            z-index: 10000;
+            opacity: 0;
+            transform: translateX(400px);
+            transition: all 0.3s ease;
+        }
+
+        html[lang="ar"] .toast {
+            right: auto;
+            left: 20px;
+            transform: translateX(-400px);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .toast-success { border-left: 4px solid #10b981; }
+        .toast-error { border-left: 4px solid #ef4444; }
+        .toast-info { border-left: 4px solid var(--accent-primary); }
+
+        /* Achievement Badges */
+        .badges-container {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .badge {
+            padding: 14px 26px;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            border-radius: 32px;
+            color: var(--accent-primary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.2);
+        }
+
+        .badge:hover {
+            transform: translateY(-8px) scale(1.15) rotate(-5deg) rotateX(10deg);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4);
+            background: rgba(59, 130, 246, 0.2);
+            filter: brightness(1.2);
+        }
+
+        /* Glassmorphism Effect */
+        .glass-effect {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Neon Text Effect */
+        .neon-text {
+            color: var(--accent-primary);
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.8),
+                         0 0 20px rgba(59, 130, 246, 0.6),
+                         0 0 30px rgba(59, 130, 246, 0.4);
+            animation: neonPulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes neonPulse {
+            from { text-shadow: 0 0 10px rgba(59, 130, 246, 0.8), 0 0 20px rgba(59, 130, 246, 0.6); }
+            to { text-shadow: 0 0 20px rgba(59, 130, 246, 1), 0 0 30px rgba(59, 130, 246, 0.8), 0 0 40px rgba(59, 130, 246, 0.6); }
+        }
+
+        /* Morphing Shapes */
+        .morphing-shape {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            animation: morph 8s ease-in-out infinite;
+            z-index: -1;
+            filter: blur(40px);
+        }
+
+        @keyframes morph {
+            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+        }
+
+        .morphing-shape-1 { top: 10%; right: 10%; }
+        .morphing-shape-2 { bottom: 10%; left: 10%; animation-delay: 4s; }
+
+        /* Particle Effect */
+        .particle-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            opacity: 0.4;
+        }
+
+        /* Enhanced Card Shadows */
+        .shadow-glow {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3),
+                        0 0 40px rgba(59, 130, 246, 0.2),
+                        0 0 60px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Gradient Border Animation */
+        .gradient-border {
+            position: relative;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary));
+            background-size: 300% 300%;
+            animation: gradientShift 3s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* 3D Card Flip */
+        .card-3d {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .card-3d:hover {
+            transform: rotateY(5deg) rotateX(5deg);
+        }
+
+        /* Magnetic Effect */
+        .magnetic {
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* Spotlight Cursor */
+        .spotlight {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .spotlight::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.2), transparent 70%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .spotlight:hover::before {
+            opacity: 1;
+        }
+
+        /* Typing Effect */
+        .typing {
+            overflow: hidden;
+            border-right: 3px solid var(--accent-primary);
+            white-space: nowrap;
+            animation: typing 3s steps(30) 1s forwards, blink 0.75s step-end infinite;
+            width: 0;
+        }
+
+        @keyframes typing {
+            to { width: 100%; }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        /* Parallax Layers */
+        .parallax-slow { transform: translateZ(-1px) scale(2); }
+        .parallax-fast { transform: translateZ(1px) scale(0.5); }
+
+        /* Disable parallax on hero text */
+        .hero h1,
+        .hero p,
+        .hero .hero-avatar {
+            transform: none !important;
+        }
+
+        /* Liquid Button */
+        .btn-liquid {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-liquid::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-liquid:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        /* Holographic Effect */
+        .holographic {
+            background: linear-gradient(45deg, #3b82f6, #06b6d4, #8b5cf6, #3b82f6);
+            background-size: 400% 400%;
+            animation: holographicShift 4s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @keyframes holographicShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Floating Animation */
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Pulse Ring */
+        .pulse-ring {
+            position: relative;
+        }
+
+        .pulse-ring::before {
+            content: '';
+            position: absolute;
+            inset: -10px;
+            border: 2px solid var(--accent-primary);
+            border-radius: inherit;
+            animation: pulseRing 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        @keyframes pulseRing {
+            0% { transform: scale(0.8); opacity: 1; }
+            100% { transform: scale(1.2); opacity: 0; }
+        }
+
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch::before {
+            animation: glitch-1 2s infinite;
+            color: #00ffff;
+            z-index: -1;
+        }
+
+        .glitch::after {
+            animation: glitch-2 2s infinite;
+            color: #ff00ff;
+            z-index: -2;
+        }
+
+        @keyframes glitch-1 {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+
+        @keyframes glitch-2 {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(2px, -2px); }
+            40% { transform: translate(2px, 2px); }
+            60% { transform: translate(-2px, -2px); }
+            80% { transform: translate(-2px, 2px); }
+        }
+
+        /* Scan Line Effect */
+        .scanline {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scanline::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(500px); }
+        }
+
+        /* Matrix Rain */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        /* Enhanced Glow Effects */
+        .glow-text {
+            text-shadow: 0 0 10px var(--accent-primary),
+                         0 0 20px var(--accent-primary),
+                         0 0 30px var(--accent-primary),
+                         0 0 40px var(--accent-primary);
+        }
+
+        /* Animated Underline */
+        .animated-underline {
+            position: relative;
+            display: inline-block;
+        }
+
+        .animated-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-btn);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s;
+        }
+
+        .animated-underline:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Particle System */
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+
+        /* Breathing Animation */
+        .breathing {
+            animation: breathing 4s ease-in-out infinite;
+        }
+
+        @keyframes breathing {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Shake Animation */
+        .shake:hover {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* Rainbow Border */
+        .rainbow-border {
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .rainbow-border::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, #3b82f6, #06b6d4, #8b5cf6, #ec4899, #3b82f6);
+            background-size: 400%;
+            border-radius: inherit;
+            z-index: -1;
+            animation: rainbow 3s linear infinite;
+        }
+
+        @keyframes rainbow {
+            to { background-position: 400%; }
+        }
     </style>
 </head>
 
@@ -3144,6 +3863,10 @@
     <div class="grid-bg"></div>
     <div class="grid-glow grid-glow-1"></div>
     <div class="grid-glow grid-glow-2"></div>
+
+    <!-- Morphing Shapes -->
+    <div class="morphing-shape morphing-shape-1"></div>
+    <div class="morphing-shape morphing-shape-2"></div>
 
     <!-- Animated Gradient Blobs -->
     <div class="gradient-blob blob-1"></div>
@@ -3198,12 +3921,20 @@
 <!-- Profile Avatar -->
             <div class="hero-avatar" data-aos="zoom-in">
                 <img src="image.png"
-                    alt="Hussein Abbas" loading="lazy">
+                    alt="Hussein Abbas" loading="lazy" class="pulse-ring">
             </div>
 
-            <div class="hero-badge" data-aos="fade-down" data-ar="متاح للعمل الحر" data-en="Available for Freelance">✨
+            <div class="hero-badge float-animation" data-aos="fade-down" data-ar="متاح للعمل الحر" data-en="Available for Freelance">✨
                 متاح للعمل الحر</div>
-            <h1 data-aos="fade-up" data-aos-delay="100">
+            
+            <!-- Achievement Badges -->
+            <div class="badges-container" data-aos="fade-up" data-aos-delay="50">
+                <div class="badge card-3d"><i class="fas fa-award"></i> <span data-ar="5+ سنوات خبرة" data-en="5+ Years Experience">5+ سنوات خبرة</span></div>
+                <div class="badge card-3d"><i class="fas fa-trophy"></i> <span data-ar="50+ مشروع" data-en="50+ Projects">50+ مشروع</span></div>
+                <div class="badge card-3d"><i class="fas fa-star"></i> <span data-ar="تقييم 5/5" data-en="5/5 Rating">تقييم 5/5</span></div>
+            </div>
+            
+            <h1 data-aos="fade-up" data-aos-delay="100" class="holographic">
                 <span data-ar="أنا حسين عباس" data-en="I'm Hussein Abbas">أنا حسين عباس</span><br>
                 <span style="color: var(--text-secondary); font-size: 0.6em;" data-ar=" مصمم & مبرمج"
                     data-en="Digital Creator & Dev"> مصمم & مطور</span>
@@ -3214,7 +3945,7 @@
                 أحول الأفكار المعقدة إلى تجارب ويب تفاعلية وسلسة. أدمج بين جماليات التصميم وقوة الأداء البرمجي.
             </p>
             <div class="cta-group" data-aos="fade-up" data-aos-delay="300">
-                <a href="#projects" class="btn btn-primary hover-target" data-ar="تصفح أعمالي"
+                <a href="#projects" class="btn btn-primary btn-liquid hover-target" data-ar="تصفح أعمالي"
                     data-en="View My Work">تصفح أعمالي <i class="fas fa-arrow-left" style="margin-right:5px"></i></a>
 <a href="#contact" class="btn btn-outline hover-target" data-ar="تواصل معي" data-en="Contact Me">تواصل
                     معي</a>
@@ -3240,22 +3971,22 @@
         <!-- Stats Counter Section -->
         <section class="stats-section" id="stats">
             <div class="stats-container">
-                <div class="stat-card hover-target" data-aos="fade-up">
+                <div class="stat-card hover-target card-3d" data-aos="fade-up">
                     <div class="stat-icon"><i class="fas fa-project-diagram"></i></div>
                     <div class="stat-number" data-target="50">0</div>
                     <div class="stat-label" data-ar="مشروع منجز" data-en="Projects Completed">مشروع منجز</div>
                 </div>
-                <div class="stat-card hover-target" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-card hover-target card-3d" data-aos="fade-up" data-aos-delay="100">
                     <div class="stat-icon"><i class="fas fa-users"></i></div>
                     <div class="stat-number" data-target="30">0</div>
                     <div class="stat-label" data-ar="عميل سعيد" data-en="Happy Clients">عميل سعيد</div>
                 </div>
-                <div class="stat-card hover-target" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-card hover-target card-3d" data-aos="fade-up" data-aos-delay="200">
                     <div class="stat-icon"><i class="fas fa-code"></i></div>
                     <div class="stat-number" data-target="100000">0</div>
                     <div class="stat-label" data-ar="سطر برمجي" data-en="Lines of Code">سطر برمجي</div>
                 </div>
-                <div class="stat-card hover-target" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-card hover-target card-3d" data-aos="fade-up" data-aos-delay="300">
                     <div class="stat-icon"><i class="fas fa-coffee"></i></div>
                     <div class="stat-number" data-target="500">0</div>
                     <div class="stat-label" data-ar="فنجان قهوة" data-en="Cups of Coffee">فنجان قهوة</div>
@@ -3299,13 +4030,13 @@
 
         <section id="projects">
             <div class="section-header" data-aos="fade-up">
-                <h2 data-ar="مختارات من أعمالي" data-en="Selected Work">مختارات من أعمالي</h2>
+                <h2 class="glow-text" data-ar="مختارات من أعمالي" data-en="Selected Work">مختارات من أعمالي</h2>
                 <p data-ar="مشاريع مبتكرة تم تنفيذها بأحدث التقنيات" data-en="Innovative projects built with latest technologies">مشاريع مبتكرة تم تنفيذها بأحدث التقنيات</p>
             </div>
 
             <div class="bento-grid">
                 <!-- Project 1 - Large -->
-                <div class="bento-card large hover-target" data-aos="fade-up">
+                <div class="bento-card large hover-target card-3d spotlight" data-aos="fade-up">
                     <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80" 
                          class="project-image" alt="Data Analytics Dashboard" loading="lazy">
                     <div class="project-overlay"></div>
@@ -3325,7 +4056,7 @@
                 </div>
 
                 <!-- Project 2 -->
-                <div class="bento-card hover-target" data-aos="fade-up" data-aos-delay="100">
+                <div class="bento-card hover-target card-3d spotlight" data-aos="fade-up" data-aos-delay="100">
                     <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80" 
                          class="project-image" alt="Mobile App" loading="lazy">
                     <div class="project-overlay"></div>
@@ -3344,7 +4075,7 @@
                 </div>
 
                 <!-- Project 3 -->
-                <div class="bento-card hover-target" data-aos="fade-up" data-aos-delay="200">
+                <div class="bento-card hover-target card-3d spotlight" data-aos="fade-up" data-aos-delay="200">
                     <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" 
                          class="project-image" alt="Business Dashboard" loading="lazy">
                     <div class="project-overlay"></div>
@@ -3363,7 +4094,7 @@
                 </div>
 
                 <!-- Project 4 - Large -->
-                <div class="bento-card large hover-target" data-aos="fade-up" data-aos-delay="300">
+                <div class="bento-card large hover-target card-3d spotlight" data-aos="fade-up" data-aos-delay="300">
                     <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=1200&q=80" 
                          class="project-image" alt="E-Learning Platform" loading="lazy">
                     <div class="project-overlay"></div>
@@ -3387,7 +4118,7 @@
         <!-- Portfolio Gallery Section -->
         <section id="gallery">
             <div class="section-header" data-aos="fade-up">
-                <h2 data-ar="معرض الأعمال" data-en="Portfolio Gallery">معرض الأعمال</h2>
+                <h2 class="glow-text" data-ar="معرض الأعمال" data-en="Portfolio Gallery">معرض الأعمال</h2>
                 <p data-ar="مختارات من أفضل ما أنجزت" data-en="Showcase of my best work">مختارات من أفضل ما أنجزت</p>
             </div>
 
@@ -3457,7 +4188,7 @@
         <!-- Experience Timeline Section -->
         <section id="experience">
             <div class="section-header" data-aos="fade-up">
-                <h2 data-ar="خبراتي وتجاربي" data-en="My Experience">خبراتي وتجاربي</h2>
+                <h2 class="glow-text" data-ar="خبراتي وتجاربي" data-en="My Experience">خبراتي وتجاربي</h2>
                 <p data-ar="رحلتي المهنية والإنجازات" data-en="My professional journey">رحلتي المهنية والإنجازات</p>
             </div>
 
@@ -3514,13 +4245,13 @@
         <!-- Enhanced Skills Section -->
         <section id="advanced-skills">
             <div class="section-header" data-aos="fade-up">
-                <h2 data-ar="مهاراتي التقنية" data-en="Technical Skills">مهاراتي التقنية</h2>
+                <h2 class="glow-text" data-ar="مهاراتي التقنية" data-en="Technical Skills">مهاراتي التقنية</h2>
                 <p data-ar="المهارات والأدوات التي أتقنها" data-en="Technologies and tools I master">المهارات والأدوات
                     التي أتقنها</p>
             </div>
 
             <div class="skills-detailed">
-                <div class="skill-box hover-target" data-aos="fade-up">
+                <div class="skill-box hover-target card-3d breathing" data-aos="fade-up">
                     <div class="skill-icon"><i class="fab fa-html5"></i></div>
                     <div class="skill-name">HTML5</div>
                     <div class="skill-level" data-ar="متقدم جداً" data-en="Expert">متقدم جداً</div>
@@ -3529,7 +4260,7 @@
                     </div>
                 </div>
 
-                <div class="skill-box hover-target" data-aos="fade-up" data-aos-delay="100">
+                <div class="skill-box hover-target card-3d breathing" data-aos="fade-up" data-aos-delay="100">
                     <div class="skill-icon"><i class="fab fa-css3-alt"></i></div>
                     <div class="skill-name">CSS3 & SCSS</div>
                     <div class="skill-level" data-ar="متقدم جداً" data-en="Expert">متقدم جداً</div>
@@ -3538,7 +4269,7 @@
                     </div>
                 </div>
 
-                <div class="skill-box hover-target" data-aos="fade-up" data-aos-delay="200">
+                <div class="skill-box hover-target card-3d breathing" data-aos="fade-up" data-aos-delay="200">
                     <div class="skill-icon"><i class="fab fa-js"></i></div>
                     <div class="skill-name">JavaScript</div>
                     <div class="skill-level" data-ar="متقدم جداً" data-en="Expert">متقدم جداً</div>
@@ -3547,7 +4278,7 @@
                     </div>
                 </div>
 
-                <div class="skill-box hover-target" data-aos="fade-up" data-aos-delay="300">
+                <div class="skill-box hover-target card-3d breathing" data-aos="fade-up" data-aos-delay="300">
                     <div class="skill-icon"><i class="fab fa-react"></i></div>
                     <div class="skill-name">React.js</div>
                     <div class="skill-level" data-ar="متقدم جداً" data-en="Advanced">متقدم جداً</div>
@@ -3556,7 +4287,7 @@
                     </div>
                 </div>
 
-                <div class="skill-box hover-target" data-aos="fade-up" data-aos-delay="400">
+                <div class="skill-box hover-target card-3d breathing" data-aos="fade-up" data-aos-delay="400">
                     <div class="skill-icon"><i class="fab fa-node-js"></i></div>
                     <div class="skill-name">Node.js</div>
                     <div class="skill-level" data-ar="متقدم" data-en="Advanced">متقدم</div>
@@ -3565,7 +4296,7 @@
                     </div>
                 </div>
 
-                <div class="skill-box hover-target" data-aos="fade-up" data-aos-delay="500">
+                <div class="skill-box hover-target card-3d breathing" data-aos="fade-up" data-aos-delay="500">
                     <div class="skill-icon"><i class="fas fa-database"></i></div>
                     <div class="skill-name">Firebase</div>
                     <div class="skill-level" data-ar="متقدم" data-en="Advanced">متقدم</div>
@@ -3574,7 +4305,7 @@
                     </div>
                 </div>
 
-                <div class="skill-box hover-target" data-aos="fade-up" data-aos-delay="600">
+                <div class="skill-box hover-target card-3d breathing" data-aos="fade-up" data-aos-delay="600">
                     <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
                     <div class="skill-name" data-ar="تصميم متجاوب" data-en="Responsive Design">تصميم متجاوب</div>
                     <div class="skill-level" data-ar="خبير" data-en="Expert">خبير</div>
@@ -3583,7 +4314,7 @@
                     </div>
                 </div>
 
-                <div class="skill-box hover-target" data-aos="fade-up" data-aos-delay="700">
+                <div class="skill-box hover-target card-3d breathing" data-aos="fade-up" data-aos-delay="700">
                     <div class="skill-icon"><i class="fas fa-palette"></i></div>
                     <div class="skill-name">UI/UX Design</div>
                     <div class="skill-level" data-ar="متقدم" data-en="Advanced">متقدم</div>
@@ -3597,12 +4328,12 @@
         <!-- Services Section -->
         <section id="services">
             <div class="section-header" data-aos="fade-up">
-                <h2 data-ar="خدماتي المميزة" data-en="My Services">خدماتي المميزة</h2>
+                <h2 class="glow-text" data-ar="خدماتي المميزة" data-en="My Services">خدماتي المميزة</h2>
                 <p data-ar="أقدم حلولاً متكاملة تناسب احتياجاتك" data-en="I provide integrated solutions tailored to your needs">أقدم حلولاً متكاملة تناسب احتياجاتك</p>
             </div>
 
             <div class="services-grid">
-                <div class="service-card spotlight-card" data-aos="fade-up">
+                <div class="service-card spotlight-card scanline" data-aos="fade-up">
                     <div class="service-icon">
                         <i class="fas fa-laptop-code"></i>
                     </div>
@@ -3611,7 +4342,7 @@
                         data-en="Modern responsive websites using latest technologies. From static sites to complex web applications.">تصميم وتطوير مواقع ويب عصرية ومتجاوبة بأحدث التقنيات.</p>
                 </div>
 
-                <div class="service-card spotlight-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="service-card spotlight-card scanline" data-aos="fade-up" data-aos-delay="100">
                     <div class="service-icon">
                         <i class="fas fa-paint-brush"></i>
                     </div>
@@ -3620,7 +4351,7 @@
                         data-en="Attractive and user-friendly interface design. Exceptional UX that converts visitors to customers.">تصميم واجهات مستخدم جذابة وسهلة الاستخدام.</p>
                 </div>
 
-                <div class="service-card spotlight-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-card spotlight-card scanline" data-aos="fade-up" data-aos-delay="200">
                     <div class="service-icon">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
@@ -3629,7 +4360,7 @@
                         data-en="Interactive and scalable web applications. Advanced solutions that grow with your business.">بناء تطبيقات ويب تفاعلية وقابلة للتوسع.</p>
                 </div>
 
-                <div class="service-card spotlight-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="service-card spotlight-card scanline" data-aos="fade-up" data-aos-delay="300">
                     <div class="service-icon">
                         <i class="fas fa-rocket"></i>
                     </div>
@@ -3643,7 +4374,7 @@
         <!-- Testimonials Section -->
         <section id="testimonials">
             <div class="section-header" data-aos="fade-up">
-                <h2 data-ar="آراء العملاء" data-en="Testimonials">آراء العملاء</h2>
+                <h2 class="glow-text" data-ar="آراء العملاء" data-en="Testimonials">آراء العملاء</h2>
                 <p data-ar="ما يقوله عملائي عن تجربتي" data-en="What my clients say about working with me">ما يقوله عملائي عن تجربتي</p>
             </div>
 
@@ -3729,7 +4460,7 @@
 
         <section id="contact">
             <div class="section-header" data-aos="fade-up">
-                <h2 data-ar="تواصل معي" data-en="Get In Touch">تواصل معي</h2>
+                <h2 class="glow-text" data-ar="تواصل معي" data-en="Get In Touch">تواصل معي</h2>
                 <p data-ar="لديك مشروع؟ دعنا نتحدث!" data-en="Have a project? Let's talk!">لديك مشروع؟ دعنا نتحدث!</p>
             </div>
 
@@ -3784,6 +4515,19 @@
     <button class="back-to-top hover-target" id="backToTop" aria-label="العودة للأعلى / Back to top">
         <i class="fas fa-arrow-up"></i>
     </button>
+
+    <!-- Floating Action Button -->
+    <div class="fab-container" id="fabContainer">
+        <button class="fab-main" id="fabMain" aria-label="Quick Actions">
+            <i class="fas fa-plus"></i>
+        </button>
+        <div class="fab-menu">
+            <a href="#contact" class="fab-item" title="تواصل معي"><i class="fas fa-envelope"></i></a>
+            <a href="https://wa.me/9647763001120" target="_blank" class="fab-item" title="واتساب"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://t.me/telhussein" target="_blank" class="fab-item" title="تيليجرام"><i class="fab fa-telegram"></i></a>
+            <button class="fab-item" id="shareBtn" title="مشاركة"><i class="fas fa-share-alt"></i></button>
+        </div>
+    </div>
 
     <!-- Gallery Modal -->
     <div class="modal" id="galleryModal">
@@ -4224,13 +4968,11 @@
             el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
         });
 
-        // 7. Parallax
+        // 7. Parallax - Disabled for hero text
         const parallaxElements = document.querySelectorAll('.hero-avatar, .hero h1, .hero p');
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
-            parallaxElements.forEach((el, index) => {
-                el.style.transform = `translateY(${scrolled * (index + 1) * 0.1}px)`;
-            });
+            // Parallax disabled - text stays fixed
         });
 
         // 8. Gallery and Modal
@@ -4299,10 +5041,7 @@
                 const feedback = document.getElementById('formFeedback');
 
                 if (!name || !email || !subject || !message) {
-                    feedback.style.display = 'block';
-                    feedback.style.background = 'rgba(239, 68, 68, 0.2)';
-                    feedback.style.color = '#ef4444';
-                    feedback.textContent = document.documentElement.lang === 'ar' ? 'ملء جميع الحقول' : 'Fill all fields';
+                    showToast(document.documentElement.lang === 'ar' ? 'ملء جميع الحقول' : 'Fill all fields', 'error');
                     return;
                 }
 
@@ -4315,14 +5054,92 @@
                     contactForm.reset();
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = oldHtml;
-                    feedback.style.display = 'block';
-                    feedback.style.background = 'rgba(34, 197, 94, 0.2)';
-                    feedback.style.color = '#22c55e';
-                    feedback.textContent = document.documentElement.lang === 'ar' ? '✓ تم فتح البريد!' : '✓ Email client opened!';
-                    setTimeout(() => { feedback.style.display = 'none'; }, 5000);
+                    showToast(document.documentElement.lang === 'ar' ? '✓ تم فتح البريد!' : '✓ Email client opened!', 'success');
                 }, 500);
             });
         }
+
+        // 11. Floating Action Button
+        const fabContainer = document.getElementById('fabContainer');
+        const fabMain = document.getElementById('fabMain');
+        if (fabContainer && fabMain) {
+            fabMain.addEventListener('click', () => {
+                fabContainer.classList.toggle('active');
+                const icon = fabMain.querySelector('i');
+                if (fabContainer.classList.contains('active')) {
+                    icon.classList.remove('fa-plus');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-plus');
+                }
+            });
+        }
+
+        // 12. Share Button
+        const shareBtn = document.getElementById('shareBtn');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', async () => {
+                const shareData = {
+                    title: 'حسين عباس - Hussein Abbas',
+                    text: 'مطور ويب ومبدع رقمي | Web Developer & Digital Creator',
+                    url: window.location.href
+                };
+                try {
+                    if (navigator.share) {
+                        await navigator.share(shareData);
+                        showToast('✓ تمت المشاركة', 'success');
+                    } else {
+                        await navigator.clipboard.writeText(window.location.href);
+                        showToast('✓ تم نسخ الرابط', 'success');
+                    }
+                } catch (err) {
+                    console.log('Share failed:', err);
+                }
+            });
+        }
+
+        // 13. Toast Notification Function
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `<div style="display:flex;align-items:center;gap:10px;"><i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i><span>${message}</span></div>`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // 14. Welcome Toast
+        setTimeout(() => {
+            showToast(document.documentElement.lang === 'ar' ? 'مرحباً بك في موقعي! 👋' : 'Welcome to my website! 👋', 'info');
+        }, 1500);
+
+        // 15. Spotlight Effect
+        document.querySelectorAll('.spotlight').forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                el.style.setProperty('--mouse-x', x + 'px');
+                el.style.setProperty('--mouse-y', y + 'px');
+            });
+        });
+
+        // 16. Magnetic Effect
+        document.querySelectorAll('.magnetic').forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = 'translate(0, 0)';
+            });
+        });
 
     </script>
 </body>
