@@ -77,6 +77,16 @@ if (mobileMenuBtn && navLinks) {
             icon.classList.add('fa-bars');
         });
     });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!mobileMenuBtn.contains(e.target) && !navLinks.contains(e.target)) {
+            navLinks.classList.remove('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        }
+    });
 }
 
 // 1.3 Spotlight Effect for Cards

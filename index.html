@@ -85,13 +85,13 @@
         </button>
         <div class="nav-links" id="navLinks">
             <a href="#home" class="nav-link active hover-target" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
+            <a href="#about" class="nav-link hover-target" data-ar="عني" data-en="About">عني</a>
             <a href="#services" class="nav-link hover-target" data-ar="الخدمات" data-en="Services">الخدمات</a>
             <a href="#projects" class="nav-link hover-target" data-ar="المشاريع" data-en="Work">المشاريع</a>
             <a href="#gallery" class="nav-link hover-target" data-ar="المعرض" data-en="Gallery">المعرض</a>
             <a href="#experience" class="nav-link hover-target" data-ar="الخبرة" data-en="Experience">الخبرة</a>
             <a href="#advanced-skills" class="nav-link hover-target" data-ar="المهارات" data-en="Skills">المهارات</a>
             <a href="#testimonials" class="nav-link hover-target" data-ar="آراء" data-en="Reviews">آراء</a>
-            <a href="#about" class="nav-link hover-target" data-ar="عني" data-en="About">عني</a>
         </div>
         <div class="nav-actions">
             <a href="AI.html" class="icon-btn hover-target" aria-label="مساعد Gemini الذكي / Gemini AI Assistant" title="مساعد Gemini الذكي">
@@ -121,9 +121,9 @@
 
             <div class="hero-badge" data-aos="fade-down" data-ar="متاح للعمل الحر" data-en="Available for Freelance">✨
                 متاح للعمل الحر</div>
-            <h1 data-aos="fade-up" data-aos-delay="100">
+            <h1 data-aos="fade-up" data-aos-delay="100" class="hero-title">
                 <span data-ar="أنا حسين عباس" data-en="I'm Hussein Abbas">أنا حسين عباس</span><br>
-                <span style="color: var(--text-secondary); font-size: 0.6em;" data-ar=" مصمم & مبرمج"
+                <span class="hero-subtitle" data-ar=" مصمم & مبرمج"
                     data-en="Digital Creator & Dev"> مصمم & مطور</span>
             </h1>
             <p data-aos="fade-up" data-aos-delay="200"
@@ -133,9 +133,12 @@
             </p>
             <div class="cta-group" data-aos="fade-up" data-aos-delay="300">
                 <a href="#projects" class="btn btn-primary hover-target" data-ar="تصفح أعمالي"
-                    data-en="View My Work">تصفح أعمالي <i class="fas fa-arrow-left" style="margin-right:5px"></i></a>
-<a href="#contact" class="btn btn-outline hover-target" data-ar="تواصل معي" data-en="Contact Me">تواصل
-                    معي</a>
+                    data-en="View My Work">
+                    تصفح أعمالي <i class="fas fa-arrow-left btn-icon"></i>
+                </a>
+                <a href="#contact" class="btn btn-outline hover-target" data-ar="تواصل معي" data-en="Contact Me">
+                    تواصل معي
+                </a>
             </div>
 
             <!-- Scroll Indicator -->
@@ -182,7 +185,7 @@
         </section>
 
         <!-- Wave Divider -->
-        <div class="wave-divider" style="transform: rotate(180deg);">
+        <div class="wave-divider wave-divider--flip">
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
                 preserveAspectRatio="none">
                 <path
@@ -191,7 +194,7 @@
             </svg>
         </div>
 
-        <section id="skills" style="overflow: hidden;">
+        <section id="skills" class="skills-section">
             <div class="skills-marquee">
                 <div class="marquee-content">
                     <div class="skill-tag hover-target"><i class="fab fa-html5"></i> HTML5</div>
@@ -631,9 +634,9 @@
         </section>
 
         <section id="about">
-            <div class="cv-section" data-aos="zoom-in" style="text-align: center;">
+            <div class="cv-section cv-section--simple" data-aos="zoom-in">
                 <h2 data-ar="تريد معرفة المزيد؟" data-en="Want to know more?">تريد معرفة المزيد؟</h2>
-                <p style="margin-bottom: 30px;" data-ar="قم بتحميل سيرتي الذاتية للاطلاع على تفاصيل خبراتي."
+                <p data-ar="قم بتحميل سيرتي الذاتية للاطلاع على تفاصيل خبراتي."
                     data-en="Download my resume to see detailed experience.">قم بتحميل سيرتي الذاتية للاطلاع على تفاصيل
                     خبراتي.</p>
 
@@ -682,18 +685,37 @@
             </div>
 
             <!-- Social Links -->
-            <div class="section-header" style="margin-top: 80px; opacity: 1 !important; visibility: visible !important;" data-aos="fade-up">
+            <div class="section-header compact" data-aos="fade-up">
                 <h2 data-ar="أو تواصل عبر" data-en="Or Connect Via">أو تواصل عبر</h2>
+                <p data-ar="اختر الطريقة الأنسب للتواصل المباشر معي" data-en="Choose the best way to reach me directly">
+                    اختر الطريقة الأنسب للتواصل المباشر معي
+                </p>
             </div>
-            <div class="social-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 600px; margin: 40px auto; padding: 0 20px;">
-                <a href="https://t.me/telhussein" target="_blank" class="social-card hover-target" style="display: flex !important; align-items: center; justify-content: center; padding: 30px; background: #0f172a; border: 1px solid rgba(59, 130, 246, 0.1); border-radius: 16px; font-size: 2rem; color: #f1f5f9; transition: all 0.3s; text-decoration: none; opacity: 1 !important; visibility: visible !important;"><i
-                        class="fab fa-telegram-plane"></i></a>
-                <a href="mailto:huseinabbas49039@gmail.com" class="social-card hover-target" style="display: flex !important; align-items: center; justify-content: center; padding: 30px; background: #0f172a; border: 1px solid rgba(59, 130, 246, 0.1); border-radius: 16px; font-size: 2rem; color: #f1f5f9; transition: all 0.3s; text-decoration: none; opacity: 1 !important; visibility: visible !important;"><i
-                        class="fas fa-envelope"></i></a>
-                <a href="https://wa.me/9647763001120" target="_blank" class="social-card hover-target" style="display: flex !important; align-items: center; justify-content: center; padding: 30px; background: #0f172a; border: 1px solid rgba(59, 130, 246, 0.1); border-radius: 16px; font-size: 2rem; color: #f1f5f9; transition: all 0.3s; text-decoration: none; opacity: 1 !important; visibility: visible !important;"><i
-                        class="fab fa-whatsapp"></i></a>
-                <a href="https://www.instagram.com/hussein.abbas0" target="_blank" class="social-card hover-target" style="display: flex !important; align-items: center; justify-content: center; padding: 30px; background: #0f172a; border: 1px solid rgba(59, 130, 246, 0.1); border-radius: 16px; font-size: 2rem; color: #f1f5f9; transition: all 0.3s; text-decoration: none; opacity: 1 !important; visibility: visible !important;"><i
-                        class="fab fa-instagram"></i></a>
+            <div class="social-grid">
+                <a href="https://t.me/telhussein" target="_blank" class="social-card hover-target" data-platform="telegram" aria-label="Telegram">
+                    <span class="card-icon"><i class="fab fa-telegram-plane"></i></span>
+                    <span class="card-shine"></span>
+                    <span class="card-glow"></span>
+                    <span class="card-tooltip">تيليجرام</span>
+                </a>
+                <a href="mailto:huseinabbas49039@gmail.com" class="social-card hover-target" data-platform="email" aria-label="Email">
+                    <span class="card-icon"><i class="fas fa-envelope"></i></span>
+                    <span class="card-shine"></span>
+                    <span class="card-glow"></span>
+                    <span class="card-tooltip">البريد الإلكتروني</span>
+                </a>
+                <a href="https://wa.me/9647763001120" target="_blank" class="social-card hover-target" data-platform="whatsapp" aria-label="WhatsApp">
+                    <span class="card-icon"><i class="fab fa-whatsapp"></i></span>
+                    <span class="card-shine"></span>
+                    <span class="card-glow"></span>
+                    <span class="card-tooltip">واتساب</span>
+                </a>
+                <a href="https://www.instagram.com/hussein.abbas0" target="_blank" class="social-card hover-target" data-platform="instagram" aria-label="Instagram">
+                    <span class="card-icon"><i class="fab fa-instagram"></i></span>
+                    <span class="card-shine"></span>
+                    <span class="card-glow"></span>
+                    <span class="card-tooltip">إنستغرام</span>
+                </a>
             </div>
         </section>
     </main>
