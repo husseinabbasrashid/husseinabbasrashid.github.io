@@ -2973,7 +2973,7 @@
             if (!confirm(lang === 'ar' ? 'هل أنت متأكد من حذف الرسالة؟' : 'Delete this message?')) return;
 
             const ref = doc(db, 'public_messages', msgId);
-            
+
             // Optimistic UI: Hide immediately
             locallyDeletedIds.add(msgId);
             renderMessages(allMessages);
@@ -2994,12 +2994,12 @@
                     // Revert optimism on failure
                     locallyDeletedIds.delete(msgId);
                     renderMessages(allMessages);
-                    
+
                     console.error('Permission Error:', deleteErr);
                     if (deleteErr.code === 'permission-denied') {
                         showToast('❌ فشل بسبب الصلاحيات! يرجى مراجعة Firestore Rules', 5000, 'error');
-                        alert(lang === 'ar' ? 
-                            'خطأ في Firebase: "Permission Denied".\nيرجى فتح واجهة Firebase Console وتعديل الـ Rules للسماح بالحذف.' : 
+                        alert(lang === 'ar' ?
+                            'خطأ في Firebase: "Permission Denied".\nيرجى فتح واجهة Firebase Console وتعديل الـ Rules للسماح بالحذف.' :
                             'Firebase Permission Denied.\nPlease check your Firestore Rules to allow deletion.');
                     } else {
                         showToast('❌ فشل الحذف: ' + deleteErr.message, 3500, 'error');
