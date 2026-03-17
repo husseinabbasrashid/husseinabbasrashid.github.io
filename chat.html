@@ -1809,24 +1809,41 @@
         }
 
         @keyframes orb3 {
-            from { transform: translateX(-60%) scale(1); }
-            to   { transform: translateX(-40%) scale(1.12); }
+            from {
+                transform: translateX(-60%) scale(1);
+            }
+
+            to {
+                transform: translateX(-40%) scale(1.12);
+            }
         }
 
         /* ═══════════════════════════════════════════
            SOUND BUTTON
         ═══════════════════════════════════════════ */
-        .icon-btn.muted { color: #ef4444 !important; }
-        .icon-btn.muted i { filter: drop-shadow(0 4px 12px rgba(239,68,68,.5)) !important; }
+        .icon-btn.muted {
+            color: #ef4444 !important;
+        }
+
+        .icon-btn.muted i {
+            filter: drop-shadow(0 4px 12px rgba(239, 68, 68, .5)) !important;
+        }
 
         /* ═══════════════════════════════════════════
            MARKDOWN IN BUBBLES
         ═══════════════════════════════════════════ */
-        .bubble-text strong { font-weight: 800; }
-        .bubble-text em     { font-style: italic; opacity: .9; }
-        .bubble-text code   {
+        .bubble-text strong {
+            font-weight: 800;
+        }
+
+        .bubble-text em {
+            font-style: italic;
+            opacity: .9;
+        }
+
+        .bubble-text code {
             font-family: 'Courier New', monospace;
-            background: rgba(59,130,246,.18);
+            background: rgba(59, 130, 246, .18);
             padding: 2px 6px;
             border-radius: 5px;
             font-size: .85em;
@@ -1835,10 +1852,25 @@
         /* ═══════════════════════════════════════════
            COLOR-CODED TOASTS
         ═══════════════════════════════════════════ */
-        .toast.success { border-color: rgba(16,185,129,.4); background: linear-gradient(135deg,rgba(16,185,129,.12),var(--bg-card)); }
-        .toast.error   { border-color: rgba(239,68,68,.4);  background: linear-gradient(135deg,rgba(239,68,68,.12),var(--bg-card)); }
-        .toast.info    { border-color: rgba(59,130,246,.4); background: linear-gradient(135deg,rgba(59,130,246,.12),var(--bg-card)); }
-        .toast.warn    { border-color: rgba(245,158,11,.4); background: linear-gradient(135deg,rgba(245,158,11,.12),var(--bg-card)); }
+        .toast.success {
+            border-color: rgba(16, 185, 129, .4);
+            background: linear-gradient(135deg, rgba(16, 185, 129, .12), var(--bg-card));
+        }
+
+        .toast.error {
+            border-color: rgba(239, 68, 68, .4);
+            background: linear-gradient(135deg, rgba(239, 68, 68, .12), var(--bg-card));
+        }
+
+        .toast.info {
+            border-color: rgba(59, 130, 246, .4);
+            background: linear-gradient(135deg, rgba(59, 130, 246, .12), var(--bg-card));
+        }
+
+        .toast.warn {
+            border-color: rgba(245, 158, 11, .4);
+            background: linear-gradient(135deg, rgba(245, 158, 11, .12), var(--bg-card));
+        }
 
         /* ═══════════════════════════════════════════
            EMPTY STATE
@@ -1854,15 +1886,25 @@
             text-align: center;
             animation: fade-in .6s ease;
         }
+
         .empty-icon {
             font-size: 4rem;
             animation: float-icon 3s ease-in-out infinite;
-            filter: drop-shadow(0 8px 24px rgba(59,130,246,.4));
+            filter: drop-shadow(0 8px 24px rgba(59, 130, 246, .4));
         }
+
         @keyframes float-icon {
-            0%,100% { transform: translateY(0); }
-            50%      { transform: translateY(-10px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
+
         .empty-title {
             font-size: 1.3rem;
             font-weight: 800;
@@ -1871,21 +1913,31 @@
             background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
         .empty-sub {
             font-size: .9rem;
             color: var(--text-muted);
             max-width: 260px;
             line-height: 1.7;
         }
+
         .empty-arrow {
             font-size: 2rem;
             color: var(--accent-primary);
             opacity: .6;
             animation: bounce-down 1.5s ease-in-out infinite;
         }
+
         @keyframes bounce-down {
-            0%,100% { transform: translateY(0); }
-            50%      { transform: translateY(8px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(8px);
+            }
         }
 
         /* ═══════════════════════════════════════════
@@ -1898,29 +1950,45 @@
             padding: 20px;
             width: 100%;
         }
+
         .skeleton-row {
             display: flex;
             align-items: flex-end;
             gap: 10px;
         }
-        .skeleton-row.right { flex-direction: row-reverse; }
+
+        .skeleton-row.right {
+            flex-direction: row-reverse;
+        }
+
         .skeleton-avatar {
-            width: 30px; height: 30px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             background: var(--bg-card-hover);
             flex-shrink: 0;
             animation: shimmer 1.6s infinite;
         }
+
         .skeleton-bubble {
             height: 48px;
             border-radius: 18px;
             background: var(--bg-card-hover);
             animation: shimmer 1.6s infinite;
         }
+
         @keyframes shimmer {
-            0%   { opacity: .4; }
-            50%  { opacity: .8; }
-            100% { opacity: .4; }
+            0% {
+                opacity: .4;
+            }
+
+            50% {
+                opacity: .8;
+            }
+
+            100% {
+                opacity: .4;
+            }
         }
 
         /* ═══════════════════════════════════════════
@@ -1938,19 +2006,34 @@
             margin-bottom: 10px;
             transition: all .3s;
         }
-        .emoji-search:focus { border-color: var(--accent-primary); box-shadow: 0 0 0 3px rgba(59,130,246,.12); }
-        .emoji-search::placeholder { color: var(--text-muted); }
+
+        .emoji-search:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, .12);
+        }
+
+        .emoji-search::placeholder {
+            color: var(--text-muted);
+        }
 
         /* ═══════════════════════════════════════════
            REACTION POP ANIMATION
         ═══════════════════════════════════════════ */
         .reactions-bar span {
             display: inline-block;
-            animation: react-pop .35s cubic-bezier(.34,1.56,.64,1);
+            animation: react-pop .35s cubic-bezier(.34, 1.56, .64, 1);
         }
+
         @keyframes react-pop {
-            from { transform: scale(0); opacity: 0; }
-            to   { transform: scale(1); opacity: 1; }
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         /* ═══════════════════════════════════════════
@@ -1966,22 +2049,38 @@
             transition: opacity .2s;
             pointer-events: none;
         }
-        html[lang="ar"] .msg.mine  .swipe-reply-hint { left: -28px; }
-        html[lang="ar"] .msg.other .swipe-reply-hint { right: -28px; }
-        html[lang="en"] .msg.mine  .swipe-reply-hint { right: -28px; }
-        html[lang="en"] .msg.other .swipe-reply-hint { left: -28px; }
-        .msg.swiping .swipe-reply-hint { opacity: 1; }
+
+        html[lang="ar"] .msg.mine .swipe-reply-hint {
+            left: -28px;
+        }
+
+        html[lang="ar"] .msg.other .swipe-reply-hint {
+            right: -28px;
+        }
+
+        html[lang="en"] .msg.mine .swipe-reply-hint {
+            right: -28px;
+        }
+
+        html[lang="en"] .msg.other .swipe-reply-hint {
+            left: -28px;
+        }
+
+        .msg.swiping .swipe-reply-hint {
+            opacity: 1;
+        }
 
         /* ═══════════════════════════════════════════
            ENHANCED SCROLL FAB
         ═══════════════════════════════════════════ */
         .fab-scroll {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-card-hover)) !important;
-            box-shadow: 0 8px 32px rgba(0,0,0,.35), 0 0 0 1px var(--card-border) !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, .35), 0 0 0 1px var(--card-border) !important;
         }
+
         .fab-scroll:hover {
-            background: linear-gradient(135deg,rgba(59,130,246,.15),rgba(59,130,246,.08)) !important;
-            box-shadow: 0 12px 40px rgba(59,130,246,.25), 0 0 0 1px rgba(59,130,246,.35) !important;
+            background: linear-gradient(135deg, rgba(59, 130, 246, .15), rgba(59, 130, 246, .08)) !important;
+            box-shadow: 0 12px 40px rgba(59, 130, 246, .25), 0 0 0 1px rgba(59, 130, 246, .35) !important;
         }
     </style>
 </head>
@@ -2061,11 +2160,26 @@
             <div id="messagesArea">
                 <!-- skeleton shown while Firebase loads -->
                 <div class="skeleton-wrap" id="skeletonLoader">
-                    <div class="skeleton-row"><div class="skeleton-avatar"></div><div class="skeleton-bubble" style="width:55%"></div></div>
-                    <div class="skeleton-row right"><div class="skeleton-avatar"></div><div class="skeleton-bubble" style="width:42%"></div></div>
-                    <div class="skeleton-row"><div class="skeleton-avatar"></div><div class="skeleton-bubble" style="width:68%"></div></div>
-                    <div class="skeleton-row right"><div class="skeleton-avatar"></div><div class="skeleton-bubble" style="width:35%"></div></div>
-                    <div class="skeleton-row"><div class="skeleton-avatar"></div><div class="skeleton-bubble" style="width:50%"></div></div>
+                    <div class="skeleton-row">
+                        <div class="skeleton-avatar"></div>
+                        <div class="skeleton-bubble" style="width:55%"></div>
+                    </div>
+                    <div class="skeleton-row right">
+                        <div class="skeleton-avatar"></div>
+                        <div class="skeleton-bubble" style="width:42%"></div>
+                    </div>
+                    <div class="skeleton-row">
+                        <div class="skeleton-avatar"></div>
+                        <div class="skeleton-bubble" style="width:68%"></div>
+                    </div>
+                    <div class="skeleton-row right">
+                        <div class="skeleton-avatar"></div>
+                        <div class="skeleton-bubble" style="width:35%"></div>
+                    </div>
+                    <div class="skeleton-row">
+                        <div class="skeleton-avatar"></div>
+                        <div class="skeleton-bubble" style="width:50%"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2231,6 +2345,7 @@
         let allMessages = [];
         let typingTimer = null;
         let lastTypingTime = 0;
+        const locallyDeletedIds = new Set();
 
         const LOCAL_ID = (() => {
             let id = localStorage.getItem('chat_client_id');
@@ -2325,7 +2440,7 @@
                 gain.gain.setValueAtTime(0.18, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.28);
                 osc.start(); osc.stop(audioCtx.currentTime + 0.28);
-            } catch(e) {}
+            } catch (e) { }
         }
 
         /* ──────────────────────────────
@@ -2630,8 +2745,8 @@
             const wasAtBottom = (messagesEl.scrollHeight - messagesEl.scrollTop - messagesEl.clientHeight) < 200;
             const scrollPos = messagesEl.scrollTop;
 
-            // Filter soft-deleted messages
-            const visible = list.filter(m => !m.deleted);
+            // Filter out soft-deleted (server) AND optimistically deleted (local) messages
+            const visible = list.filter(m => !m.deleted && !locallyDeletedIds.has(m.id));
 
             // Empty state
             if (visible.length === 0) {
@@ -2854,24 +2969,41 @@
 
         window.deleteMessage = async () => {
             if (!selectedMsg) return;
+            const msgId = selectedMsg.id;
             if (!confirm(lang === 'ar' ? 'هل أنت متأكد من حذف الرسالة؟' : 'Delete this message?')) return;
-            const ref = doc(db, 'public_messages', selectedMsg.id);
+
+            const ref = doc(db, 'public_messages', msgId);
+            
+            // Optimistic UI: Hide immediately
+            locallyDeletedIds.add(msgId);
+            renderMessages(allMessages);
+            closeActions();
+
             try {
-                // Soft-delete first (needs only update permission, not delete)
+                // Try soft-delete first
                 await updateDoc(ref, { deleted: true, deletedAt: serverTimestamp() });
-                if (pinnedMsgId === selectedMsg.id) { pinnedMsgId = null; localStorage.removeItem('chat_pinned'); updatePinnedBanner(); }
-                closeActions();
-                showToast('🗑️ تم حذف الرسالة', 2000, 'success');
+                if (pinnedMsgId === msgId) { pinnedMsgId = null; localStorage.removeItem('chat_pinned'); updatePinnedBanner(); }
+                showToast('🗑️ تم حذف الرسالة بنجاح', 2200, 'success');
             } catch (updateErr) {
-                // Fallback: try hard delete
                 try {
+                    // Fallback to hard delete
                     await deleteDoc(ref);
-                    if (pinnedMsgId === selectedMsg.id) { pinnedMsgId = null; localStorage.removeItem('chat_pinned'); updatePinnedBanner(); }
-                    closeActions();
-                    showToast('🗑️ تم حذف الرسالة', 2000, 'success');
+                    if (pinnedMsgId === msgId) { pinnedMsgId = null; localStorage.removeItem('chat_pinned'); updatePinnedBanner(); }
+                    showToast('🗑️ تم الحذف نهائياً', 2200, 'success');
                 } catch (deleteErr) {
-                    console.error('Delete failed:', deleteErr);
-                    showToast('❌ فشل الحذف — تحقق من صلاحيات Firebase', 3500, 'error');
+                    // Revert optimism on failure
+                    locallyDeletedIds.delete(msgId);
+                    renderMessages(allMessages);
+                    
+                    console.error('Permission Error:', deleteErr);
+                    if (deleteErr.code === 'permission-denied') {
+                        showToast('❌ فشل بسبب الصلاحيات! يرجى مراجعة Firestore Rules', 5000, 'error');
+                        alert(lang === 'ar' ? 
+                            'خطأ في Firebase: "Permission Denied".\nيرجى فتح واجهة Firebase Console وتعديل الـ Rules للسماح بالحذف.' : 
+                            'Firebase Permission Denied.\nPlease check your Firestore Rules to allow deletion.');
+                    } else {
+                        showToast('❌ فشل الحذف: ' + deleteErr.message, 3500, 'error');
+                    }
                 }
             }
         };
@@ -2985,10 +3117,10 @@
             const ctx = canvas.getContext('2d');
             let W, H, particles = [];
             const N = 55;
-            const COLORS = ['59,130,246','139,92,246','6,182,212'];
+            const COLORS = ['59,130,246', '139,92,246', '6,182,212'];
 
             function resize() {
-                W = canvas.width  = window.innerWidth;
+                W = canvas.width = window.innerWidth;
                 H = canvas.height = window.innerHeight;
             }
             window.addEventListener('resize', resize); resize();
@@ -3018,12 +3150,12 @@
                     for (let j = i + 1; j < particles.length; j++) {
                         const dx = (particles[i].x - particles[j].x) * W;
                         const dy = (particles[i].y - particles[j].y) * H;
-                        const dist = Math.sqrt(dx*dx + dy*dy);
+                        const dist = Math.sqrt(dx * dx + dy * dy);
                         if (dist < 120) {
                             ctx.beginPath();
-                            ctx.moveTo(particles[i].x*W, particles[i].y*H);
-                            ctx.lineTo(particles[j].x*W, particles[j].y*H);
-                            ctx.strokeStyle = `rgba(${particles[i].color},${.07 * (1 - dist/120)})`;
+                            ctx.moveTo(particles[i].x * W, particles[i].y * H);
+                            ctx.lineTo(particles[j].x * W, particles[j].y * H);
+                            ctx.strokeStyle = `rgba(${particles[i].color},${.07 * (1 - dist / 120)})`;
                             ctx.lineWidth = .6;
                             ctx.stroke();
                         }
