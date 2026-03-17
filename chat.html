@@ -2630,8 +2630,11 @@
             const wasAtBottom = (messagesEl.scrollHeight - messagesEl.scrollTop - messagesEl.clientHeight) < 200;
             const scrollPos = messagesEl.scrollTop;
 
+            // Filter soft-deleted messages
+            const visible = list.filter(m => !m.deleted);
+
             // Empty state
-            if (list.length === 0) {
+            if (visible.length === 0) {
                 messagesEl.innerHTML = `
                 <div class="empty-state">
                     <div class="empty-icon">💬</div>
@@ -2646,7 +2649,7 @@
             let lastDate = '';
             let lastSender = '';
 
-            list.forEach((m, idx) => {
+            visible.forEach((m, idx) => {
                 const isMine = (currentUser && m.createdBy === currentUser.uid) || m.clientId === LOCAL_ID;
                 const dateStr = m.createdAt?.toDate ? m.createdAt.toDate().toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : '';
                 const timeStr = m.createdAt?.toDate ? m.createdAt.toDate().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' }) : '';
@@ -2852,12 +2855,25 @@
         window.deleteMessage = async () => {
             if (!selectedMsg) return;
             if (!confirm(lang === 'ar' ? 'هل أنت متأكد من حذف الرسالة؟' : 'Delete this message?')) return;
+            const ref = doc(db, 'public_messages', selectedMsg.id);
             try {
-                await deleteDoc(doc(db, 'public_messages', selectedMsg.id));
+                // Soft-delete first (needs only update permission, not delete)
+                await updateDoc(ref, { deleted: true, deletedAt: serverTimestamp() });
                 if (pinnedMsgId === selectedMsg.id) { pinnedMsgId = null; localStorage.removeItem('chat_pinned'); updatePinnedBanner(); }
                 closeActions();
                 showToast('🗑️ تم حذف الرسالة', 2000, 'success');
-            } catch (e) { showToast('❌ لا يمكن الحذف', 2800, 'error'); }
+            } catch (updateErr) {
+                // Fallback: try hard delete
+                try {
+                    await deleteDoc(ref);
+                    if (pinnedMsgId === selectedMsg.id) { pinnedMsgId = null; localStorage.removeItem('chat_pinned'); updatePinnedBanner(); }
+                    closeActions();
+                    showToast('🗑️ تم حذف الرسالة', 2000, 'success');
+                } catch (deleteErr) {
+                    console.error('Delete failed:', deleteErr);
+                    showToast('❌ فشل الحذف — تحقق من صلاحيات Firebase', 3500, 'error');
+                }
+            }
         };
 
         window.cancelReply = () => {
