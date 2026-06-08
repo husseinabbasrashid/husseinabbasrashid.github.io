@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حجز موعد — Hussein Abbas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #030712;
+            --bg-card: #0f172a;
+            --bg-card-hover: #1e293b;
+            --card-border: rgba(59, 130, 246, 0.12);
+            --text-main: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-primary: #3b82f6;
+            --accent-secondary: #06b6d4;
+            --gradient-btn: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --glow-blue: rgba(59, 130, 246, 0.35);
+            --glow-cyan: rgba(6, 182, 212, 0.25);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: 0.15s ease;
+            --transition-slow: 0.5s ease;
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+        }
+
+        body.light {
+            --bg-dark: #f0f4ff;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f1f5f9;
+            --card-border: rgba(59, 130, 246, 0.15);
+            --text-main: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        /* ── Grid Background ── */
+        .grid-bg {
+            position: fixed; inset: 0; z-index: -1;
+            background-image:
+                linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: grid-drift 60s linear infinite;
+        }
+        @keyframes grid-drift {
+            0% { background-position: 0 0; }
+            100% { background-position: 60px 60px; }
+        }
+
+        /* ── Orbs ── */
+        .orb {
+            position: fixed; border-radius: 50%; pointer-events: none; z-index: -1;
+            filter: blur(80px); opacity: 0.12;
+        }
+        .orb-1 { width: 500px; height: 500px; background: #3b82f6; top: -150px; right: -150px; animation: orb-drift 20s ease-in-out infinite alternate; }
+        .orb-2 { width: 400px; height: 400px; background: #06b6d4; bottom: -100px; left: -100px; animation: orb-drift 25s ease-in-out infinite alternate-reverse; }
+        @keyframes orb-drift {
+            from { transform: translate(0, 0) scale(1); }
+            to   { transform: translate(40px, 40px) scale(1.1); }
+        }
+
+        /* ── Custom Cursor ── */
+        .cursor-dot {
+            position: fixed; width: 6px; height: 6px;
+            background: var(--accent-primary); border-radius: 50%;
+            pointer-events: none; z-index: 100000;
+            box-shadow: 0 0 10px rgba(59,130,246,0.6);
+            transform: translate(-3px,-3px); transition: width .2s, height .2s, background .2s;
+        }
+        .cursor-outline {
+            position: fixed; width: 36px; height: 36px;
+            border: 1.5px solid rgba(59,130,246,0.5); border-radius: 50%;
+            pointer-events: none; z-index: 99999;
+            background: rgba(59,130,246,0.05);
+            transform: translate(-18px,-18px); transition: width .3s, height .3s, border-color .2s;
+        }
+        body.cursor-hover .cursor-dot { width: 8px; height: 8px; background: var(--accent-secondary); box-shadow: 0 0 14px rgba(6,182,212,.7); }
+        body.cursor-hover .cursor-outline { width: 52px; height: 52px; border-color: rgba(6,182,212,.6); background: rgba(6,182,212,.07); }
+        body.cursor-click .cursor-dot { width: 10px; height: 10px; }
+        body.cursor-click .cursor-outline { width: 26px; height: 26px; border-color: rgba(59,130,246,.9); }
+        body.cursor-text .cursor-dot { width: 2px; height: 20px; border-radius: 1px; background: var(--text-main); box-shadow: none; }
+        body.cursor-text .cursor-outline { opacity: 0; }
+        body.cursor-hidden .cursor-dot, body.cursor-hidden .cursor-outline { opacity: 0; }
+        @media (pointer: fine) { body.cursor-initialized { cursor: none !important; } }
+
+        /* ── Layout ── */
+        .container { max-width: 960px; margin: 0 auto; }
+
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 0; margin-bottom: 40px;
+            animation: fade-down .8s ease-out;
+        }
+        @keyframes fade-down { from { opacity:0; transform: translateY(-20px); } to { opacity:1; transform:translateY(0); } }
+
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 24px; background: var(--bg-card);
+            border: 1px solid var(--card-border); border-radius: var(--radius-md);
+            color: var(--text-secondary); text-decoration: none;
+            transition: all var(--transition); overflow: hidden; position: relative;
+        }
+        .back-btn::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(45deg, transparent, rgba(59,130,246,.1), transparent);
+            transform: translateX(-100%); transition: transform .5s ease;
+        }
+        .back-btn:hover::before { transform: translateX(100%); }
+        .back-btn:hover { color: var(--accent-primary); border-color: var(--accent-primary); transform: translateX(4px); box-shadow: 0 8px 25px rgba(59,130,246,.15); }
+
+        .theme-toggle {
+            width: 44px; height: 44px; border-radius: 50%;
+            background: var(--bg-card); border: 1px solid var(--card-border);
+            color: var(--text-secondary); cursor: pointer;
+            transition: all var(--transition); display: flex; align-items: center; justify-content: center;
+        }
+        .theme-toggle:hover { color: var(--accent-primary); border-color: var(--accent-primary); transform: scale(1.1); box-shadow: 0 8px 25px rgba(59,130,246,.2); }
+
+        /* ── Step Indicator ── */
+        .steps-bar {
+            display: flex; align-items: center; justify-content: center;
+            gap: 0; margin-bottom: 40px;
+            animation: fade-up .8s ease-out .2s both;
+        }
+        @keyframes fade-up { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+        .step-item { display: flex; align-items: center; gap: 10px; }
+        .step-connector { width: 60px; height: 2px; background: var(--card-border); transition: background .4s; margin: 0 4px; }
+        .step-connector.active { background: var(--accent-primary); }
+
+        .step-circle {
+            width: 38px; height: 38px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: .85rem;
+            border: 2px solid var(--card-border);
+            background: var(--bg-card); color: var(--text-muted);
+            transition: all var(--transition); position: relative;
+        }
+        .step-circle.active {
+            border-color: var(--accent-primary); background: rgba(59,130,246,.1);
+            color: var(--accent-primary); box-shadow: 0 0 0 4px rgba(59,130,246,.1);
+        }
+        .step-circle.done {
+            border-color: var(--success); background: var(--success); color: #fff;
+        }
+        .step-label { font-size: .8rem; color: var(--text-muted); font-weight: 500; transition: color .3s; white-space: nowrap; }
+        .step-item .step-circle.active ~ .step-label,
+        .step-label.active { color: var(--accent-primary); }
+        .step-label.done { color: var(--success); }
+
+        /* ── Booking Card ── */
+        .booking-card {
+            background: var(--bg-card); border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg); padding: 44px;
+            box-shadow: 0 24px 80px rgba(0,0,0,.35);
+            position: relative; overflow: hidden;
+            animation: card-in .8s ease-out .3s both;
+        }
+        @keyframes card-in { from { opacity:0; transform: translateY(30px) scale(.97); } to { opacity:1; transform:translateY(0) scale(1); } }
+        .booking-card::before {
+            content: ''; position: absolute; inset: 0; border-radius: inherit;
+            background: linear-gradient(160deg, rgba(255,255,255,.04) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        h1 {
+            font-size: 2rem; margin-bottom: 10px;
+            background: var(--gradient-btn);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: text-glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes text-glow {
+            from { filter: drop-shadow(0 0 6px rgba(59,130,246,.3)); }
+            to   { filter: drop-shadow(0 0 18px rgba(59,130,246,.6)); }
+        }
+        .subtitle { color: var(--text-secondary); margin-bottom: 36px; font-size: .95rem; }
+
+        /* ── Steps Content Panels ── */
+        .step-panel { display: none; animation: panel-in .4s ease-out; }
+        .step-panel.active { display: block; }
+        @keyframes panel-in { from { opacity:0; transform: translateY(15px); } to { opacity:1; transform:translateY(0); } }
+
+        /* ── Form Groups ── */
+        .form-grid { display: grid; gap: 22px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+        @media(max-width: 640px) { .form-row { grid-template-columns: 1fr; } }
+
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
+        label { font-weight: 600; color: var(--text-main); font-size: .93rem; display: flex; align-items: center; gap: 6px; }
+        label i { color: var(--accent-secondary); font-size: .8rem; }
+
+        input, select, textarea {
+            padding: 13px 18px; background: var(--bg-card-hover);
+            border: 1px solid var(--card-border); border-radius: var(--radius-md);
+            color: var(--text-main); font-family: inherit; font-size: 1rem;
+            transition: all var(--transition);
+        }
+        input::placeholder, textarea::placeholder { color: var(--text-muted); }
+        input:focus, select:focus, textarea:focus {
+            outline: none; border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(59,130,246,.12), 0 0 20px rgba(59,130,246,.08);
+            transform: translateY(-1px);
+        }
+        input.valid { border-color: var(--success); }
+        input.invalid, select.invalid { border-color: var(--error); }
+        .field-error { color: var(--error); font-size: .82rem; margin-top: 2px; animation: err-in .3s ease-out; }
+        @keyframes err-in { from { opacity:0; transform: translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+
+        textarea { resize: vertical; min-height: 110px; }
+
+        /* ── CALENDAR ── */
+        .calendar-wrapper {
+            background: var(--bg-card-hover); border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg); overflow: hidden;
+        }
+
+        .calendar-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 18px 24px;
+            background: linear-gradient(135deg, rgba(59,130,246,.08), rgba(6,182,212,.05));
+            border-bottom: 1px solid var(--card-border);
+        }
+        .cal-month-name {
+            font-size: 1.1rem; font-weight: 700; color: var(--text-main);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .cal-month-name i { color: var(--accent-primary); animation: pulse-icon 2s ease-in-out infinite; }
+        @keyframes pulse-icon { 0%,100%{transform:scale(1);} 50%{transform:scale(1.15);} }
+
+        .cal-nav { display: flex; gap: 8px; }
+        .cal-nav-btn {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: var(--bg-card); border: 1px solid var(--card-border);
+            color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: all var(--transition);
+        }
+        .cal-nav-btn:hover { background: var(--accent-primary); color: #fff; border-color: var(--accent-primary); transform: scale(1.1); }
+
+        .calendar-grid-wrapper { padding: 16px; }
+
+        .cal-days-header {
+            display: grid; grid-template-columns: repeat(7, 1fr);
+            gap: 4px; margin-bottom: 8px;
+        }
+        .cal-day-name {
+            text-align: center; font-size: .73rem; font-weight: 700;
+            color: var(--text-muted); padding: 6px 0; text-transform: uppercase; letter-spacing: .05em;
+        }
+        .cal-day-name.weekend { color: rgba(239,68,68,.6); }
+
+        .cal-grid {
+            display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+        }
+        .cal-day {
+            aspect-ratio: 1; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: .88rem; font-weight: 500; position: relative;
+            transition: all var(--transition); cursor: default;
+        }
+        .cal-day.other-month { opacity: .2; pointer-events: none; }
+        .cal-day.past { opacity: .3; pointer-events: none; }
+        .cal-day.available {
+            cursor: pointer; background: var(--bg-card);
+            border: 1px solid var(--card-border);
+        }
+        .cal-day.available:hover {
+            background: rgba(59,130,246,.15); border-color: var(--accent-primary);
+            color: #fff; transform: scale(1.08);
+            box-shadow: 0 4px 16px rgba(59,130,246,.2);
+        }
+        .cal-day.today {
+            border: 2px solid var(--accent-primary) !important;
+            background: rgba(59,130,246,.08) !important;
+            font-weight: 700; color: var(--accent-primary);
+        }
+        .cal-day.today::after {
+            content: ''; position: absolute; bottom: 5px;
+            width: 4px; height: 4px; border-radius: 50%; background: var(--accent-primary);
+        }
+        .cal-day.selected {
+            background: var(--gradient-btn) !important; color: #fff !important;
+            border-color: transparent !important;
+            box-shadow: 0 0 0 3px rgba(59,130,246,.25), 0 6px 20px rgba(59,130,246,.35) !important;
+            transform: scale(1.1);
+            animation: day-pop .35s cubic-bezier(.34,1.56,.64,1);
+        }
+        @keyframes day-pop {
+            0%  { transform: scale(.85); }
+            60% { transform: scale(1.18); }
+            100%{ transform: scale(1.1); }
+        }
+        .cal-day.weekend-day { color: rgba(239,68,68,.7); }
+        .cal-day.weekend-day.selected { color: #fff !important; }
+
+        .selected-date-display {
+            padding: 12px 24px; text-align: center;
+            border-top: 1px solid var(--card-border);
+            font-size: .88rem; color: var(--text-secondary);
+            min-height: 42px; transition: all .3s;
+        }
+        .selected-date-display.has-date { color: var(--accent-secondary); font-weight: 600; }
+
+        /* ── TIME PICKER ── */
+        .time-section { margin-top: 8px; }
+
+        .time-period-tabs {
+            display: flex; gap: 10px; margin-bottom: 16px;
+        }
+        .time-tab {
+            flex: 1; padding: 9px; border-radius: var(--radius-md);
+            background: var(--bg-card-hover); border: 1px solid var(--card-border);
+            color: var(--text-secondary); font-family: inherit; font-size: .85rem;
+            cursor: pointer; transition: all var(--transition); font-weight: 600;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+        }
+        .time-tab:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+        .time-tab.active { background: rgba(59,130,246,.12); border-color: var(--accent-primary); color: var(--accent-primary); }
+
+        .time-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+        }
+        @media(max-width:500px) { .time-grid { grid-template-columns: repeat(3, 1fr); } }
+
+        .time-slot {
+            padding: 11px 8px; border-radius: var(--radius-md);
+            background: var(--bg-card-hover); border: 1px solid var(--card-border);
+            text-align: center; cursor: pointer;
+            transition: all var(--transition);
+            font-size: .85rem; font-weight: 600;
+            position: relative; overflow: hidden;
+            animation: slot-in .5s ease-out both;
+        }
+        .time-slot::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,.06), transparent);
+            transform: translateX(-100%); transition: transform .5s;
+        }
+        .time-slot:hover::before { transform: translateX(100%); }
+        .time-slot:hover {
+            border-color: var(--accent-primary); background: rgba(59,130,246,.1);
+            transform: translateY(-3px); box-shadow: 0 6px 20px rgba(59,130,246,.15);
+        }
+        .time-slot.selected {
+            background: var(--gradient-btn); color: #fff;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(59,130,246,.2), 0 6px 20px rgba(59,130,246,.3);
+            transform: translateY(-2px);
+        }
+        .time-slot.disabled {
+            opacity: .3; cursor: not-allowed; pointer-events: none;
+        }
+        .time-slot .slot-period { font-size: .7rem; font-weight: 400; opacity: .75; display: block; margin-top: 2px; }
+        .time-slot.selected .slot-period { opacity: .9; }
+
+        @keyframes slot-in {
+            from { opacity:0; transform: scale(.85) translateY(10px); }
+            to   { opacity:1; transform: scale(1) translateY(0); }
+        }
+
+        .no-date-msg {
+            text-align: center; padding: 32px; color: var(--text-muted);
+            font-size: .9rem;
+        }
+        .no-date-msg i { font-size: 2rem; display: block; margin-bottom: 10px; opacity: .4; }
+
+        /* ── Booking Summary ── */
+        .summary-card {
+            background: linear-gradient(135deg, rgba(59,130,246,.06), rgba(6,182,212,.04));
+            border: 1px solid var(--card-border); border-radius: var(--radius-lg);
+            padding: 28px; margin-bottom: 24px;
+        }
+        .summary-title {
+            font-size: 1.1rem; font-weight: 700; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .summary-title i { color: var(--accent-primary); }
+
+        .summary-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+        }
+        @media(max-width:540px) { .summary-grid { grid-template-columns: 1fr; } }
+
+        .summary-item {
+            display: flex; flex-direction: column; gap: 4px;
+            background: var(--bg-card); border-radius: var(--radius-sm);
+            padding: 14px 16px; border: 1px solid var(--card-border);
+            transition: all var(--transition);
+        }
+        .summary-item:hover { border-color: var(--accent-primary); transform: translateY(-1px); }
+        .summary-item .s-label { font-size: .75rem; color: var(--text-muted); font-weight: 600; letter-spacing: .04em; display: flex; align-items: center; gap: 5px; }
+        .summary-item .s-label i { color: var(--accent-secondary); }
+        .summary-item .s-value { font-size: .95rem; font-weight: 700; color: var(--text-main); }
+        .summary-item.highlight { border-color: var(--accent-primary); background: rgba(59,130,246,.05); }
+        .summary-item.highlight .s-value { color: var(--accent-primary); }
+
+        .summary-empty {
+            text-align: center; padding: 24px; color: var(--text-muted); font-size: .88rem;
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+        }
+        .summary-empty i { font-size: 2rem; opacity: .3; }
+
+        /* ── Nav Buttons ── */
+        .step-actions {
+            display: flex; justify-content: space-between; align-items: center; gap: 16px;
+            margin-top: 32px;
+        }
+        .step-actions.first { justify-content: flex-end; }
+
+        .btn-next, .btn-prev, .btn-submit {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 13px 28px; border-radius: var(--radius-md);
+            font-family: inherit; font-size: 1rem; font-weight: 700;
+            cursor: pointer; transition: all var(--transition); border: none;
+            position: relative; overflow: hidden;
+        }
+        .btn-next, .btn-submit {
+            background: var(--gradient-btn); color: #fff;
+        }
+        .btn-next::before, .btn-submit::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,.2), transparent);
+            transform: translateX(-100%); transition: transform .5s;
+        }
+        .btn-next:hover::before, .btn-submit:hover::before { transform: translateX(100%); }
+        .btn-next:hover, .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(59,130,246,.4); }
+        .btn-next:active, .btn-submit:active { transform: translateY(0); }
+
+        .btn-prev {
+            background: var(--bg-card-hover); color: var(--text-secondary);
+            border: 1px solid var(--card-border);
+        }
+        .btn-prev:hover { border-color: var(--accent-primary); color: var(--accent-primary); transform: translateY(-1px); }
+
+        .btn-submit.loading { pointer-events: none; }
+        .btn-submit.loading::after {
+            content: ''; position: absolute; top:50%; left:50%;
+            width: 20px; height: 20px; border: 2px solid rgba(255,255,255,.3);
+            border-top-color: #fff; border-radius: 50%;
+            transform: translate(-50%,-50%); animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+        /* ── Alert ── */
+        .alert-box {
+            display: none; padding: 16px 20px; border-radius: var(--radius-md);
+            margin-bottom: 24px; align-items: center; gap: 12px;
+            border: 1px solid; animation: alert-in .4s ease-out;
+        }
+        .alert-box.show { display: flex; }
+        @keyframes alert-in { from { opacity:0; transform: translateY(-12px) scale(.97); } to { opacity:1; transform:translateY(0) scale(1); } }
+        .alert-box.success { background: rgba(16,185,129,.08); border-color: rgba(16,185,129,.4); color: var(--success); }
+        .alert-box.error   { background: rgba(239,68,68,.08);   border-color: rgba(239,68,68,.4);   color: var(--error); }
+        .alert-close { margin-right: auto; background: none; border: none; color: inherit; cursor: pointer; padding: 4px; border-radius: 4px; }
+
+        /* ── Success Screen ── */
+        .success-screen {
+            display: none; flex-direction: column; align-items: center;
+            text-align: center; padding: 40px 20px; gap: 20px;
+            animation: fade-up .6s ease-out;
+        }
+        .success-screen.show { display: flex; }
+        .success-icon-wrap {
+            width: 90px; height: 90px; border-radius: 50%;
+            background: rgba(16,185,129,.1); border: 2px solid var(--success);
+            display: flex; align-items: center; justify-content: center;
+            animation: icon-bounce .7s cubic-bezier(.34,1.56,.64,1);
+        }
+        .success-icon-wrap i { font-size: 2.5rem; color: var(--success); }
+        @keyframes icon-bounce { 0%{transform:scale(0);} 70%{transform:scale(1.15);} 100%{transform:scale(1);} }
+        .success-title { font-size: 1.6rem; font-weight: 700; color: var(--success); }
+        .success-sub { color: var(--text-secondary); max-width: 400px; line-height: 1.6; }
+        .success-detail {
+            background: var(--bg-card-hover); border: 1px solid var(--card-border);
+            border-radius: var(--radius-md); padding: 18px 24px; width: 100%;
+            max-width: 440px; text-align: right;
+        }
+        .success-detail-row { display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; border-bottom: 1px solid var(--card-border); font-size: .88rem; }
+        .success-detail-row:last-child { border: none; }
+        .success-detail-row span:first-child { color: var(--text-muted); }
+        .success-detail-row span:last-child { font-weight: 600; color: var(--text-main); }
+        .btn-new-booking { margin-top: 8px; }
+
+        /* ── My Bookings ── */
+        .bookings-section { margin-top: 50px; animation: fade-up .8s ease-out; }
+        .section-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+        .section-title i { color: var(--accent-primary); }
+        .booking-item {
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--bg-card-hover); border: 1px solid var(--card-border);
+            border-radius: var(--radius-md); padding: 18px 22px; margin-bottom: 12px;
+            transition: all var(--transition); animation: slide-in .5s ease-out both;
+        }
+        .booking-item:hover { border-color: var(--accent-primary); transform: translateX(-5px); box-shadow: 0 8px 25px rgba(59,130,246,.12); }
+        @keyframes slide-in { from { opacity:0; transform: translateX(-20px); } to { opacity:1; transform:translateX(0); } }
+        .booking-meta { color: var(--text-secondary); font-size: .85rem; margin-top: 5px; display: flex; gap: 12px; flex-wrap: wrap; }
+        .booking-meta span { display: flex; align-items: center; gap: 4px; }
+        .badge {
+            padding: 5px 13px; border-radius: 20px; font-size: .78rem; font-weight: 700;
+        }
+        .badge.pending  { background: rgba(245,158,11,.1); color: var(--warning); }
+        .badge.confirmed{ background: rgba(16,185,129,.1); color: var(--success); }
+
+        /* ── Particles ── */
+        .floating-particles { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+        .particle {
+            position: absolute; width: 3px; height: 3px;
+            background: var(--accent-primary); border-radius: 50%;
+            opacity: .35; animation: float-p 28s linear infinite;
+        }
+        .particle:nth-child(2n) { background: var(--accent-secondary); animation-duration: 34s; }
+        .particle:nth-child(3n) { background: #818cf8; animation-duration: 40s; }
+        @keyframes float-p {
+            0%  { transform: translateY(100vh); opacity: 0; }
+            10% { opacity: .5; }
+            90% { opacity: .5; }
+            100%{ transform: translateY(-120px); opacity: 0; }
+        }
+
+        /* ── Responsive ── */
+        @media(max-width:768px) {
+            .booking-card { padding: 24px; }
+            h1 { font-size: 1.5rem; }
+            .steps-bar { gap: 0; }
+            .step-connector { width: 30px; }
+            .step-label { display: none; }
+        }
+        @media(max-width:480px) {
+            body { padding: 12px; }
+            .step-actions { flex-direction: column-reverse; }
+            .btn-next, .btn-prev, .btn-submit { width: 100%; justify-content: center; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="grid-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="floating-particles" id="particles"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-right"></i>
+                العودة للرئيسية
+            </a>
+            <button class="theme-toggle" id="themeToggle" aria-label="تبديل الثيم">
+                <i class="fas fa-moon"></i>
+            </button>
+        </header>
+
+        <!-- Step Indicator -->
+        <div class="steps-bar" id="stepsBar">
+            <div class="step-item">
+                <div class="step-circle active" id="sc1">1</div>
+                <span class="step-label active" id="sl1">بياناتك</span>
+            </div>
+            <div class="step-connector" id="con1"></div>
+            <div class="step-item">
+                <div class="step-circle" id="sc2">2</div>
+                <span class="step-label" id="sl2">التاريخ</span>
+            </div>
+            <div class="step-connector" id="con2"></div>
+            <div class="step-item">
+                <div class="step-circle" id="sc3">3</div>
+                <span class="step-label" id="sl3">الوقت</span>
+            </div>
+            <div class="step-connector" id="con3"></div>
+            <div class="step-item">
+                <div class="step-circle" id="sc4">4</div>
+                <span class="step-label" id="sl4">تأكيد</span>
+            </div>
+        </div>
+
+        <!-- Booking Card -->
+        <div class="booking-card">
+            <h1>احجز موعد استشارة</h1>
+            <p class="subtitle">اختر الوقت المناسب لك وسأتواصل معك في الموعد المحدد</p>
+
+            <!-- Alert -->
+            <div class="alert-box" id="alertBox">
+                <i class="fas fa-circle-info"></i>
+                <span id="alertMsg"></span>
+                <button class="alert-close" onclick="hideAlert()"><i class="fas fa-times"></i></button>
+            </div>
+
+            <!-- ══ STEP 1: Personal Info ══ -->
+            <div class="step-panel active" id="panel1">
+                <div class="form-grid">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name"><i class="fas fa-user"></i> الاسم الكامل *</label>
+                            <input type="text" id="name" placeholder="أدخل اسمك الكامل" autocomplete="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone"><i class="fas fa-phone"></i> رقم الهاتف *</label>
+                            <input type="tel" id="phone" placeholder="+964 7XX XXX XXXX" autocomplete="tel">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email"><i class="fas fa-envelope"></i> البريد الإلكتروني *</label>
+                        <input type="email" id="email" placeholder="example@email.com" autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="service"><i class="fas fa-briefcase"></i> نوع الخدمة *</label>
+                        <select id="service">
+                            <option value="">— اختر الخدمة —</option>
+                            <option value="web-dev">🌐 تطوير موقع ويب</option>
+                            <option value="app-dev">📱 تطوير تطبيق</option>
+                            <option value="ui-design">🎨 تصميم واجهات UI/UX</option>
+                            <option value="cybersecurity">🔒 استشارة أمن سيبراني</option>
+                            <option value="consultation">💡 استشارة تقنية عامة</option>
+                            <option value="other">✨ أخرى</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="step-actions first">
+                    <button class="btn-next" onclick="goStep(2)">
+                        اختر التاريخ <i class="fas fa-arrow-left"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ══ STEP 2: Date Picker ══ -->
+            <div class="step-panel" id="panel2">
+                <div class="form-group" style="margin-bottom: 8px;">
+                    <label><i class="fas fa-calendar-alt"></i> اختر تاريخ الموعد *</label>
+                </div>
+                <div class="calendar-wrapper">
+                    <div class="calendar-header">
+                        <div class="cal-month-name">
+                            <i class="fas fa-calendar-star"></i>
+                            <span id="calMonthLabel">—</span>
+                        </div>
+                        <div class="cal-nav">
+                            <button class="cal-nav-btn" id="prevMonth" type="button" title="الشهر السابق">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                            <button class="cal-nav-btn" id="nextMonth" type="button" title="الشهر التالي">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="calendar-grid-wrapper">
+                        <div class="cal-days-header" id="calDaysHeader"></div>
+                        <div class="cal-grid" id="calGrid"></div>
+                    </div>
+                    <div class="selected-date-display" id="selectedDateDisplay">
+                        <i class="fas fa-hand-point-up"></i> انقر على يوم لتحديده
+                    </div>
+                </div>
+                <input type="hidden" id="date">
+                <div class="step-actions">
+                    <button class="btn-prev" onclick="goStep(1)"><i class="fas fa-arrow-right"></i> السابق</button>
+                    <button class="btn-next" onclick="goStep(3)">اختر الوقت <i class="fas fa-arrow-left"></i></button>
+                </div>
+            </div>
+
+            <!-- ══ STEP 3: Time Picker ══ -->
+            <div class="step-panel" id="panel3">
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label><i class="fas fa-clock"></i> اختر وقت الموعد *</label>
+                </div>
+
+                <div id="noDateMsg" class="no-date-msg" style="display:none;">
+                    <i class="fas fa-calendar-xmark"></i>
+                    يرجى اختيار التاريخ أولاً
+                </div>
+
+                <div id="timeSection" class="time-section">
+                    <div class="time-period-tabs">
+                        <button class="time-tab active" id="tabAM" onclick="showPeriod('am')">
+                            <i class="fas fa-sun"></i> صباحاً
+                        </button>
+                        <button class="time-tab" id="tabPM" onclick="showPeriod('pm')">
+                            <i class="fas fa-moon"></i> مساءً
+                        </button>
+                    </div>
+                    <div class="time-grid" id="timeGrid"></div>
+                </div>
+
+                <div class="step-actions">
+                    <button class="btn-prev" onclick="goStep(2)"><i class="fas fa-arrow-right"></i> السابق</button>
+                    <button class="btn-next" onclick="goStep(4)">مراجعة الحجز <i class="fas fa-arrow-left"></i></button>
+                </div>
+            </div>
+
+            <!-- ══ STEP 4: Summary & Submit ══ -->
+            <div class="step-panel" id="panel4">
+                <div class="summary-card">
+                    <div class="summary-title">
+                        <i class="fas fa-clipboard-check"></i>
+                        ملخص الحجز
+                    </div>
+                    <div class="summary-grid" id="summaryGrid">
+                        <div class="summary-empty">
+                            <i class="fas fa-info-circle"></i>
+                            ارجع وأكمل البيانات المطلوبة
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message"><i class="fas fa-comment-dots"></i> تفاصيل إضافية (اختياري)</label>
+                    <textarea id="message" placeholder="أخبرني المزيد عن مشروعك: الميزانية، المهلة الزمنية، أو أي متطلبات خاصة..." rows="4"></textarea>
+                </div>
+
+                <div class="step-actions">
+                    <button class="btn-prev" onclick="goStep(3)"><i class="fas fa-arrow-right"></i> السابق</button>
+                    <button class="btn-submit" id="submitBtn" onclick="submitBooking()">
+                        <i class="fas fa-calendar-check"></i> تأكيد الحجز
+                    </button>
+                </div>
+            </div>
+
+            <!-- ══ Success Screen ══ -->
+            <div class="success-screen" id="successScreen">
+                <div class="success-icon-wrap">
+                    <i class="fas fa-check"></i>
+                </div>
+                <div class="success-title">تم الحجز بنجاح! 🎉</div>
+                <p class="success-sub">شكراً لك! سأتواصل معك خلال 24 ساعة لتأكيد الموعد.</p>
+                <div class="success-detail" id="successDetail"></div>
+                <button class="btn-next btn-new-booking" onclick="resetAll()">
+                    <i class="fas fa-plus"></i> حجز موعد آخر
+                </button>
+            </div>
+        </div>
+
+        <!-- My Bookings -->
+        <div class="bookings-section" id="bookingsSection" style="display:none;">
+            <div class="section-title"><i class="fas fa-history"></i> حجوزاتي السابقة</div>
+            <div id="bookingsContainer"></div>
+        </div>
+    </div>
+
+    <script>
+    /* ══════════════════════════════════
+       STATE
+    ══════════════════════════════════ */
+    let currentStep = 1;
+    let selectedDate = null;
+    let selectedTime = null;
+    let activePeriod = 'am';
+
+    /* ══════════════════════════════════
+       PARTICLES
+    ══════════════════════════════════ */
+    (function spawnParticles() {
+        const wrap = document.getElementById('particles');
+        for (let i = 0; i < 12; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDelay = (Math.random() * 28) + 's';
+            p.style.width = p.style.height = (Math.random() * 3 + 2) + 'px';
+            wrap.appendChild(p);
+        }
+    })();
+
+    /* ══════════════════════════════════
+       CUSTOM CURSOR
+    ══════════════════════════════════ */
+    (function initCursor() {
+        const dot = document.querySelector('[data-cursor-dot]');
+        const ring = document.querySelector('[data-cursor-outline]');
+        if (!dot || !ring) return;
+        let mx = 0, my = 0, cx = 0, cy = 0;
+        document.body.classList.add('cursor-initialized');
+        function loop() {
+            cx += (mx - cx) * .12; cy += (my - cy) * .12;
+            dot.style.left = cx + 'px'; dot.style.top = cy + 'px';
+            ring.style.left = cx + 'px'; ring.style.top = cy + 'px';
+            requestAnimationFrame(loop);
+        }
+        document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+        document.addEventListener('mousedown', () => document.body.classList.add('cursor-click'));
+        document.addEventListener('mouseup',   () => document.body.classList.remove('cursor-click'));
+        document.addEventListener('mouseleave',() => document.body.classList.add('cursor-hidden'));
+        document.addEventListener('mouseenter',() => document.body.classList.remove('cursor-hidden'));
+        document.querySelectorAll('a,button,input,select,textarea,.time-slot,.cal-day,.time-tab,.cal-nav-btn').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
+        document.querySelectorAll('input,textarea,select').forEach(el => {
+            el.addEventListener('focus', () => document.body.classList.add('cursor-text'));
+            el.addEventListener('blur',  () => document.body.classList.remove('cursor-text'));
+        });
+        loop();
+    })();
+
+    /* ══════════════════════════════════
+       THEME TOGGLE
+    ══════════════════════════════════ */
+    document.getElementById('themeToggle').addEventListener('click', function() {
+        document.body.classList.toggle('light');
+        const icon = this.querySelector('i');
+        icon.className = document.body.classList.contains('light') ? 'fas fa-sun' : 'fas fa-moon';
+    });
+
+    /* ══════════════════════════════════
+       STEP MANAGER
+    ══════════════════════════════════ */
+    function goStep(n) {
+        if (n > currentStep) {
+            // Validate before advancing
+            if (!validateStep(currentStep)) return;
+        }
+
+        // Update panels
+        document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById('panel' + n).classList.add('active');
+
+        // Update step circles
+        for (let i = 1; i <= 4; i++) {
+            const sc = document.getElementById('sc' + i);
+            const sl = document.getElementById('sl' + i);
+            sc.classList.remove('active', 'done');
+            sl.classList.remove('active', 'done');
+            if (i < n) {
+                sc.classList.add('done');
+                sc.innerHTML = '<i class="fas fa-check" style="font-size:.7rem"></i>';
+                sl.classList.add('done');
+            } else if (i === n) {
+                sc.classList.add('active');
+                sc.textContent = i;
+                sl.classList.add('active');
+            } else {
+                sc.textContent = i;
+            }
+        }
+        // Connectors
+        for (let i = 1; i <= 3; i++) {
+            const con = document.getElementById('con' + i);
+            if (con) con.classList.toggle('active', i < n);
+        }
+
+        currentStep = n;
+
+        // Step-specific init
+        if (n === 3) renderTimeGrid();
+        if (n === 4) renderSummary();
+    }
+
+    /* ══════════════════════════════════
+       VALIDATION
+    ══════════════════════════════════ */
+    function validateStep(step) {
+        if (step === 1) {
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const service = document.getElementById('service').value;
+            if (name.length < 2)           { showAlert('الاسم يجب أن يكون على الأقل حرفين', 'error'); return false; }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showAlert('البريد الإلكتروني غير صحيح', 'error'); return false; }
+            if (!/^(\+964|964|0)?[7-9][0-9]{8,9}$/.test(phone.replace(/\s/g, ''))) { showAlert('رقم الهاتف غير صحيح (مثال: 07XXXXXXXXX)', 'error'); return false; }
+            if (!service) { showAlert('الرجاء اختيار نوع الخدمة', 'error'); return false; }
+        }
+        if (step === 2) {
+            if (!selectedDate) { showAlert('الرجاء اختيار تاريخ للموعد', 'error'); return false; }
+        }
+        if (step === 3) {
+            if (!selectedTime) { showAlert('الرجاء اختيار وقت للموعد', 'error'); return false; }
+        }
+        return true;
+    }
+
+    /* ══════════════════════════════════
+       CALENDAR
+    ══════════════════════════════════ */
+    let calViewDate = new Date();
+
+    const MONTHS_AR = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+    const DAYS_AR   = ['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'];
+
+    function renderCalendar() {
+        const year = calViewDate.getFullYear();
+        const month = calViewDate.getMonth();
+        document.getElementById('calMonthLabel').textContent = `${MONTHS_AR[month]} ${year}`;
+
+        // Day headers
+        const hdr = document.getElementById('calDaysHeader');
+        hdr.innerHTML = '';
+        DAYS_AR.forEach((d, i) => {
+            const el = document.createElement('div');
+            el.className = 'cal-day-name' + (i === 0 || i === 6 ? ' weekend' : '');
+            el.textContent = d;
+            hdr.appendChild(el);
+        });
+
+        const grid = document.getElementById('calGrid');
+        grid.innerHTML = '';
+
+        const today = new Date(); today.setHours(0,0,0,0);
+        const firstDay = new Date(year, month, 1);
+        const lastDay  = new Date(year, month + 1, 0);
+
+        // Pad start (week starts Sunday)
+        let startPad = firstDay.getDay();
+        for (let i = 0; i < startPad; i++) {
+            const blank = document.createElement('div');
+            blank.className = 'cal-day other-month';
+            const d = new Date(year, month, 1 - startPad + i);
+            blank.textContent = d.getDate();
+            grid.appendChild(blank);
+        }
+
+        for (let day = 1; day <= lastDay.getDate(); day++) {
+            const d = new Date(year, month, day);
+            const el = document.createElement('div');
+            el.textContent = day;
+
+            const isToday   = d.getTime() === today.getTime();
+            const isPast    = d < today;
+            const isWeekend = d.getDay() === 0 || d.getDay() === 6;
+            const isSelected = selectedDate && d.toDateString() === selectedDate.toDateString();
+
+            if (isPast) {
+                el.className = 'cal-day past';
+            } else {
+                el.className = 'cal-day available' + (isWeekend ? ' weekend-day' : '');
+                el.addEventListener('click', () => selectCalDate(d));
+            }
+            if (isToday)    el.classList.add('today');
+            if (isSelected) el.classList.add('selected');
+
+            grid.appendChild(el);
+        }
+
+        // Pad end
+        const endPad = 6 - lastDay.getDay();
+        for (let i = 1; i <= endPad; i++) {
+            const blank = document.createElement('div');
+            blank.className = 'cal-day other-month';
+            blank.textContent = i;
+            grid.appendChild(blank);
+        }
+    }
+
+    function selectCalDate(d) {
+        selectedDate = d;
+        selectedTime = null; // reset time when date changes
+        document.getElementById('date').value = d.toISOString().split('T')[0];
+
+        const disp = document.getElementById('selectedDateDisplay');
+        const dayNames = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+        disp.textContent = `✅ ${dayNames[d.getDay()]} ${d.getDate()} ${MONTHS_AR[d.getMonth()]} ${d.getFullYear()}`;
+        disp.className = 'selected-date-display has-date';
+
+        renderCalendar(); // re-render to highlight
+        hideAlert();
+    }
+
+    document.getElementById('prevMonth').addEventListener('click', () => {
+        const now = new Date(); now.setHours(0,0,0,0);
+        const first = new Date(calViewDate.getFullYear(), calViewDate.getMonth(), 1);
+        const nowFirst = new Date(now.getFullYear(), now.getMonth(), 1);
+        if (first <= nowFirst) return;
+        calViewDate.setMonth(calViewDate.getMonth() - 1);
+        renderCalendar();
+    });
+    document.getElementById('nextMonth').addEventListener('click', () => {
+        calViewDate.setMonth(calViewDate.getMonth() + 1);
+        renderCalendar();
+    });
+
+    renderCalendar();
+
+    /* ══════════════════════════════════
+       TIME SLOTS
+    ══════════════════════════════════ */
+    const AM_SLOTS = [
+        { time: '08:00', label: '8:00', period: 'ص' },
+        { time: '08:30', label: '8:30', period: 'ص' },
+        { time: '09:00', label: '9:00', period: 'ص' },
+        { time: '09:30', label: '9:30', period: 'ص' },
+        { time: '10:00', label: '10:00', period: 'ص' },
+        { time: '10:30', label: '10:30', period: 'ص' },
+        { time: '11:00', label: '11:00', period: 'ص' },
+        { time: '11:30', label: '11:30', period: 'ص' },
+    ];
+    const PM_SLOTS = [
+        { time: '12:00', label: '12:00', period: 'م' },
+        { time: '12:30', label: '12:30', period: 'م' },
+        { time: '13:00', label: '1:00',  period: 'م' },
+        { time: '13:30', label: '1:30',  period: 'م' },
+        { time: '14:00', label: '2:00',  period: 'م' },
+        { time: '14:30', label: '2:30',  period: 'م' },
+        { time: '15:00', label: '3:00',  period: 'م' },
+        { time: '15:30', label: '3:30',  period: 'م' },
+        { time: '16:00', label: '4:00',  period: 'م' },
+        { time: '16:30', label: '4:30',  period: 'م' },
+        { time: '17:00', label: '5:00',  period: 'م' },
+        { time: '17:30', label: '5:30',  period: 'م' },
+    ];
+
+    function showPeriod(period) {
+        activePeriod = period;
+        document.getElementById('tabAM').classList.toggle('active', period === 'am');
+        document.getElementById('tabPM').classList.toggle('active', period === 'pm');
+        renderTimeGrid();
+    }
+
+    function renderTimeGrid() {
+        if (!selectedDate) {
+            document.getElementById('noDateMsg').style.display = 'block';
+            document.getElementById('timeSection').style.display = 'none';
+            return;
+        }
+        document.getElementById('noDateMsg').style.display = 'none';
+        document.getElementById('timeSection').style.display = 'block';
+
+        const slots = activePeriod === 'am' ? AM_SLOTS : PM_SLOTS;
+        const grid  = document.getElementById('timeGrid');
+        const now   = new Date();
+        const isToday = selectedDate.toDateString() === now.toDateString();
+
+        grid.innerHTML = '';
+        slots.forEach((s, idx) => {
+            const [h, m] = s.time.split(':').map(Number);
+            const slotTime = new Date(selectedDate);
+            slotTime.setHours(h, m, 0, 0);
+            const isPast = isToday && slotTime <= now;
+
+            const el = document.createElement('div');
+            el.className = 'time-slot' + (isPast ? ' disabled' : '') + (s.time === selectedTime ? ' selected' : '');
+            el.style.animationDelay = (idx * 0.05) + 's';
+            el.dataset.time = s.time;
+            el.innerHTML = `${s.label}<span class="slot-period">${s.period}</span>`;
+
+            if (!isPast) {
+                el.addEventListener('click', () => {
+                    document.querySelectorAll('.time-slot').forEach(t => t.classList.remove('selected'));
+                    el.classList.add('selected');
+                    selectedTime = s.time;
+                    hideAlert();
+                    addRipple(el);
+
+                    // cursor hover update
+                    document.body.classList.add('cursor-hover');
+                    setTimeout(() => document.body.classList.remove('cursor-hover'), 200);
+                });
+            }
+            grid.appendChild(el);
+        });
+    }
+
+    function addRipple(el) {
+        const r = document.createElement('div');
+        r.style.cssText = 'position:absolute;border-radius:50%;background:rgba(255,255,255,.5);width:10px;height:10px;top:50%;left:50%;margin:-5px;transform:scale(0);animation:ripple .6s ease-out forwards;pointer-events:none';
+        el.appendChild(r);
+        setTimeout(() => r.remove(), 700);
+    }
+
+    const rippleStyle = document.createElement('style');
+    rippleStyle.textContent = '@keyframes ripple{to{transform:scale(6);opacity:0}}';
+    document.head.appendChild(rippleStyle);
+
+    /* ══════════════════════════════════
+       SUMMARY
+    ══════════════════════════════════ */
+    const SERVICE_LABELS = {
+        'web-dev':      '🌐 تطوير موقع ويب',
+        'app-dev':      '📱 تطوير تطبيق',
+        'ui-design':    '🎨 تصميم واجهات',
+        'cybersecurity':'🔒 أمن سيبراني',
+        'consultation': '💡 استشارة تقنية',
+        'other':        '✨ أخرى'
+    };
+
+    function renderSummary() {
+        const name    = document.getElementById('name').value.trim();
+        const email   = document.getElementById('email').value.trim();
+        const phone   = document.getElementById('phone').value.trim();
+        const service = document.getElementById('service').value;
+        const dayNames = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+
+        const dateStr = selectedDate
+            ? `${dayNames[selectedDate.getDay()]} ${selectedDate.getDate()} ${MONTHS_AR[selectedDate.getMonth()]} ${selectedDate.getFullYear()}`
+            : '—';
+
+        const timeStr = selectedTime
+            ? formatDisplayTime(selectedTime)
+            : '—';
+
+        const items = [
+            { icon:'fa-user',       label:'الاسم',             val: name || '—' },
+            { icon:'fa-envelope',   label:'البريد',            val: email || '—' },
+            { icon:'fa-phone',      label:'الهاتف',            val: phone || '—' },
+            { icon:'fa-briefcase',  label:'الخدمة',            val: SERVICE_LABELS[service] || '—', hi: true },
+            { icon:'fa-calendar',   label:'التاريخ',           val: dateStr, hi: true },
+            { icon:'fa-clock',      label:'الوقت',             val: timeStr, hi: true },
+        ];
+
+        const grid = document.getElementById('summaryGrid');
+        grid.innerHTML = items.map(it => `
+            <div class="summary-item${it.hi ? ' highlight' : ''}">
+                <div class="s-label"><i class="fas ${it.icon}"></i> ${it.label}</div>
+                <div class="s-value">${it.val}</div>
+            </div>
+        `).join('');
+    }
+
+    function formatDisplayTime(t) {
+        const [h, m] = t.split(':').map(Number);
+        const isAM = h < 12;
+        const h12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+        return `${h12}:${String(m).padStart(2,'0')} ${isAM ? 'صباحاً' : 'مساءً'}`;
+    }
+
+    /* ══════════════════════════════════
+       SUBMIT
+    ══════════════════════════════════ */
+    async function submitBooking() {
+        if (!validateStep(1) && currentStep === 4) return;
+
+        const submitBtn = document.getElementById('submitBtn');
+        const originalHTML = submitBtn.innerHTML;
+        submitBtn.classList.add('loading');
+        submitBtn.innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; جاري الحجز...';
+        submitBtn.disabled = true;
+
+        const bookingData = {
+            name:    document.getElementById('name').value.trim(),
+            email:   document.getElementById('email').value.trim(),
+            phone:   document.getElementById('phone').value.trim(),
+            service: document.getElementById('service').value,
+            date:    document.getElementById('date').value,
+            time:    selectedTime,
+            message: document.getElementById('message').value.trim(),
+            status:  'pending',
+            createdAt: new Date().toISOString()
+        };
+
+        try {
+            // Attempt Firebase (graceful fallback)
+            let saved = false;
+            try {
+                if (typeof firebaseConfig !== 'undefined') {
+                    const { initializeApp } = await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js');
+                    const { getFirestore, collection, addDoc } = await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js');
+                    const app = initializeApp(firebaseConfig);
+                    const db  = getFirestore(app);
+                    await addDoc(collection(db, 'bookings'), bookingData);
+                    saved = true;
+                }
+            } catch(e) { /* Firebase not configured */ }
+
+            // Fallback: localStorage
+            if (!saved) {
+                const all = JSON.parse(localStorage.getItem('ha_bookings') || '[]');
+                all.push({ ...bookingData, id: Date.now() });
+                localStorage.setItem('ha_bookings', JSON.stringify(all));
+            }
+
+            // Show success
+            showSuccess(bookingData);
+            loadMyBookings(bookingData.email);
+
+        } catch(err) {
+            console.error(err);
+            showAlert('حدث خطأ أثناء الحجز. الرجاء المحاولة مرة أخرى.', 'error');
+        } finally {
+            submitBtn.classList.remove('loading');
+            submitBtn.innerHTML = originalHTML;
+            submitBtn.disabled = false;
+        }
+    }
+
+    function showSuccess(data) {
+        // Hide form panels and stepper
+        document.getElementById('stepsBar').style.display = 'none';
+        document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+        document.querySelector('h1').style.display = 'none';
+        document.querySelector('.subtitle').style.display = 'none';
+
+        const detail = document.getElementById('successDetail');
+        detail.innerHTML = `
+            <div class="success-detail-row"><span>الاسم</span><span>${data.name}</span></div>
+            <div class="success-detail-row"><span>الخدمة</span><span>${SERVICE_LABELS[data.service] || data.service}</span></div>
+            <div class="success-detail-row"><span>التاريخ</span><span>${formatDateAr(data.date)}</span></div>
+            <div class="success-detail-row"><span>الوقت</span><span>${formatDisplayTime(data.time)}</span></div>
+            <div class="success-detail-row"><span>البريد</span><span>${data.email}</span></div>
+        `;
+
+        document.getElementById('successScreen').classList.add('show');
+    }
+
+    function formatDateAr(dateStr) {
+        const d = new Date(dateStr + 'T00:00:00');
+        const days = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+        return `${days[d.getDay()]} ${d.getDate()} ${MONTHS_AR[d.getMonth()]} ${d.getFullYear()}`;
+    }
+
+    function resetAll() {
+        // Reset state
+        selectedDate = null;
+        selectedTime = null;
+        activePeriod = 'am';
+        calViewDate  = new Date();
+        currentStep  = 1;
+
+        // Reset form fields
+        ['name','email','phone','service','date','message'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = '';
+        });
+
+        // Hide success, show form
+        document.getElementById('successScreen').classList.remove('show');
+        document.getElementById('stepsBar').style.display = 'flex';
+        document.querySelector('h1').style.display = '';
+        document.querySelector('.subtitle').style.display = '';
+
+        // Reset stepper UI
+        for (let i = 1; i <= 4; i++) {
+            const sc = document.getElementById('sc' + i);
+            const sl = document.getElementById('sl' + i);
+            sc.classList.remove('active','done');
+            sl.classList.remove('active','done');
+            sc.textContent = i;
+        }
+        for (let i = 1; i <= 3; i++) { document.getElementById('con' + i).classList.remove('active'); }
+
+        document.getElementById('sc1').classList.add('active');
+        document.getElementById('sl1').classList.add('active');
+        document.getElementById('panel1').classList.add('active');
+
+        renderCalendar();
+        const disp = document.getElementById('selectedDateDisplay');
+        disp.textContent = '⬆ انقر على يوم لتحديده';
+        disp.className = 'selected-date-display';
+        hideAlert();
+    }
+
+    /* ══════════════════════════════════
+       ALERT
+    ══════════════════════════════════ */
+    let alertTimer = null;
+    function showAlert(msg, type = 'error') {
+        const box = document.getElementById('alertBox');
+        const icon = box.querySelector('i.fas');
+        document.getElementById('alertMsg').textContent = msg;
+        box.className = 'alert-box show ' + type;
+        icon.className = 'fas ' + (type === 'success' ? 'fa-circle-check' : 'fa-circle-exclamation');
+        clearTimeout(alertTimer);
+        alertTimer = setTimeout(hideAlert, 5000);
+        box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    function hideAlert() {
+        document.getElementById('alertBox').classList.remove('show');
+    }
+
+    /* ══════════════════════════════════
+       MY BOOKINGS
+    ══════════════════════════════════ */
+    function loadMyBookings(email) {
+        try {
+            const all = JSON.parse(localStorage.getItem('ha_bookings') || '[]');
+            const mine = all.filter(b => b.email === email).slice(-5).reverse();
+            if (!mine.length) return;
+
+            const sec = document.getElementById('bookingsSection');
+            const con = document.getElementById('bookingsContainer');
+            sec.style.display = 'block';
+            con.innerHTML = mine.map((b, i) => `
+                <div class="booking-item" style="animation-delay:${i*0.1}s">
+                    <div>
+                        <div style="font-weight:700">${SERVICE_LABELS[b.service] || b.service}</div>
+                        <div class="booking-meta">
+                            <span><i class="fas fa-calendar"></i> ${formatDateAr(b.date)}</span>
+                            <span><i class="fas fa-clock"></i> ${formatDisplayTime(b.time)}</span>
+                        </div>
+                    </div>
+                    <span class="badge ${b.status}">${b.status === 'confirmed' ? '✅ مؤكد' : '⏳ قيد الانتظار'}</span>
+                </div>
+            `).join('');
+        } catch(e) {}
+    }
+
+    /* ══════════════════════════════════
+       REAL-TIME FIELD VALIDATION
+    ══════════════════════════════════ */
+    document.getElementById('name').addEventListener('blur', function() {
+        this.className = this.value.trim().length >= 2 ? 'valid' : 'invalid';
+    });
+    document.getElementById('email').addEventListener('blur', function() {
+        this.className = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value.trim()) ? 'valid' : 'invalid';
+    });
+    document.getElementById('phone').addEventListener('blur', function() {
+        this.className = /^(\+964|964|0)?[7-9][0-9]{8,9}$/.test(this.value.replace(/\s/g,'')) ? 'valid' : 'invalid';
+    });
+    </script>
+</body>
+</html>

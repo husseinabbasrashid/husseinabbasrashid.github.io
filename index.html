@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <!-- Meta Tags & SEO -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="حسين عباس - مطور ويب احترافي ومبدع رقمي. تصميم وتطوير مواقع حديثة وتطبيقات ويب تفاعلية." />
+    <meta name="keywords"
+        content="مطور ويب, تصميم الويب, تطوير الويب, React, JavaScript, UI/UX Design, Hussein Abbas" />
+    <meta name="author" content="Hussein Abbas" />
+    <meta name="language" content="ar" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#050505" />
+
+    <!-- Open Graph for Social Sharing -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="حسين عباس - مطور ويب ومبدع رقمي" />
+    <meta property="og:description" content="بنية برمجية محصّنة. واجهات ذكية. أمن سيبراني متقدم. تصميم بلا حدود" />
+    <meta property="og:url" content="https://husseinabbasrashid.github.io/" />
+    <meta property="og:image"
+        content="https://ui-avatars.com/api/?name=Hussein+Abbas&background=6366f1&color=fff&size=1200&bold=true" />
+    <meta property="og:site_name" content="Hussein Abbas Portfolio" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="حسين عباس - مطور ويب" />
+    <meta name="twitter:description" content="مطور ويب ومبدع رقمي متخصص في بناء تجارب ويب حديثة" />
+    <meta name="twitter:image"
+        content="https://ui-avatars.com/api/?name=Hussein+Abbas&background=6366f1&color=fff&size=1200&bold=true" />
+
+    <!-- Canonical & Alternate Links -->
+    <link rel="canonical" href="https://husseinabbasrashid.github.io/" />
+    <link rel="alternate" hreflang="en" href="https://husseinabbasrashid.github.io/?lang=en" />
+    <link rel="alternate" hreflang="ar" href="https://husseinabbasrashid.github.io/" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%236366f1' font-weight='bold'>H</text></svg>" />
+
+    <title>حسين عباس | مطور ويب ومبدع رقمي</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="pro_enhancements.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">تخطي إلى المحتوى</a>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Grid Background -->
+    <div class="grid-bg"></div>
+    <div class="grid-glow grid-glow-1"></div>
+    <div class="grid-glow grid-glow-2"></div>
+
+    <!-- Floating Particles -->
+    <div class="floating-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Animated Gradient Blobs -->
+    <div class="gradient-blob blob-1"></div>
+    <div class="gradient-blob blob-2"></div>
+    <div class="gradient-blob blob-3"></div>
+
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
+
+    <div id="loader">
+        <div class="loader-spinner">
+            <div class="loader-dot"></div>
+        </div>
+        <div class="loader-logo">Hussein Abbas</div>
+        <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+        <div class="loader-percent" id="loaderPercent">0%</div>
+    </div>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <nav class="floating-nav">
+        <div class="brand"><a href="#home" class="brand-link" aria-label="Hussein Abbas">Hussein<span
+                    class="dot">.</span></a></div>
+        <button class="mobile-menu-btn hover-target" id="mobileMenuBtn" aria-label="القائمة / Menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="#home" class="nav-link active hover-target" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
+            <a href="#about" class="nav-link hover-target" data-ar="عني" data-en="About">عني</a>
+            <a href="#services" class="nav-link hover-target" data-ar="الخدمات" data-en="Services">الخدمات</a>
+            <a href="#projects" class="nav-link hover-target" data-ar="المشاريع" data-en="Work">المشاريع</a>
+            <a href="#gallery" class="nav-link hover-target" data-ar="المعرض" data-en="Gallery">المعرض</a>
+            <a href="#experience" class="nav-link hover-target" data-ar="الخبرة" data-en="Experience">الخبرة</a>
+            <a href="#advanced-skills" class="nav-link hover-target" data-ar="المهارات" data-en="Skills">المهارات</a>
+            <a href="#testimonials" class="nav-link hover-target" data-ar="آراء" data-en="Reviews">آراء</a>
+        </div>
+        <div class="nav-actions">
+            <a href="booking.html" class="icon-btn hover-target" aria-label="حجز موعد / Book Appointment"
+                title="حجز موعد">
+                <i class="fas fa-calendar-check" aria-hidden="true"></i>
+            </a>
+            <a href="AI.html" class="icon-btn hover-target" aria-label="مساعد Gemini الذكي / Gemini AI Assistant"
+                title="مساعد Gemini الذكي">
+                <i class="fas fa-robot" aria-hidden="true"></i>
+            </a>
+            <button class="icon-btn hover-target" id="openChatBtn" aria-label="الدردشة العامة / Open chat">
+                <i class="fas fa-comments" aria-hidden="true"></i>
+                <span class="chat-badge" aria-hidden="true" hidden></span>
+            </button>
+            <button class="icon-btn hover-target" id="themeToggle" aria-label="تبديل الثيم / Toggle theme"
+                aria-pressed="false"><i class="fas fa-moon" aria-hidden="true"></i></button>
+            <button class="icon-btn hover-target" id="langToggle" aria-label="تبديل اللغة / Toggle language"><i
+                    class="fas fa-language" aria-hidden="true"></i></button>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <section id="home" class="hero">
+            <!-- Hero Particles -->
+            <div class="hero-particles" id="heroParticles"></div>
+
+            <!-- Profile Avatar -->
+            <div class="hero-avatar" data-aos="zoom-in">
+                <img src="image.png" alt="Hussein Abbas" loading="lazy">
+            </div>
+
+            <div class="hero-badge" data-aos="fade-down" data-ar="متاح للعمل الحر" data-en="Available for Freelance">✨
+                متاح للعمل الحر</div>
+            <h1 data-aos="fade-up" data-aos-delay="100" class="hero-title gradient-text-animated">
+                <span data-ar="أنا حسين عباس" data-en="I'm Hussein Abbas">أنا حسين عباس</span><br>
+                <span class="hero-subtitle" data-ar=" مصمم & مبرمج" data-en="Digital Creator & Dev"> مصمم & مطور</span>
+            </h1>
+            <p data-aos="fade-up" data-aos-delay="200"
+                data-ar="أحول الأفكار المعقدة إلى تجارب ويب تفاعلية وسلسة. أدمج بين جماليات التصميم وقوة الأداء البرمجي."
+                data-en="Translating complex ideas into smooth, interactive web experiences. Blending aesthetic design with powerful code performance.">
+                بنية برمجية محصّنة. واجهات ذكية. أمن سيبراني متقدم. تصميم بلا حدود
+            </p>
+            <div class="cta-group" data-aos="fade-up" data-aos-delay="300">
+                <a href="#projects" class="btn btn-primary hover-target btn-glow btn-bounce" data-ar="تصفح أعمالي"
+                    data-en="View My Work">
+                    تصفح أعمالي <i class="fas fa-arrow-left btn-icon"></i>
+                </a>
+                <a href="#contact" class="btn btn-outline hover-target hover-lift" data-ar="تواصل معي"
+                    data-en="Contact Me">
+                    تواصل معي
+                </a>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="scroll-indicator">
+                <div class="mouse"></div>
+                <span data-ar="مرر للأسفل" data-en="Scroll down">مرر للأسفل</span>
+            </div>
+        </section>
+
+        <!-- Wave Divider -->
+        <div class="wave-divider">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none">
+                <path
+                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                    class="shape-fill"></path>
+            </svg>
+        </div>
+
+        <!-- Stats Counter Section -->
+        <section class="stats-section section-fade-in" id="stats">
+            <div class="section-header compact" style="margin-top:0;margin-bottom:44px;" data-aos="fade-up">
+                <div class="section-eyebrow">إنجازاتي</div>
+                <h2 data-ar="أرقام تتحدث عن نفسها" data-en="Numbers Speak">أرقام تتحدث عن نفسها</h2>
+            </div>
+            <div class="stats-container">
+                <div class="stat-card hover-target stagger-animation" data-aos="fade-up">
+                    <div class="stat-icon"><i class="fas fa-project-diagram"></i></div>
+                    <div class="stat-number" data-target="50">0</div>
+                    <div class="stat-label" data-ar="مشروع منجز" data-en="Projects Completed">مشروع منجز</div>
+                </div>
+                <div class="stat-card hover-target stagger-animation" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="stat-number" data-target="30">0</div>
+                    <div class="stat-label" data-ar="عميل سعيد" data-en="Happy Clients">عميل سعيد</div>
+                </div>
+                <div class="stat-card hover-target stagger-animation" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-icon"><i class="fas fa-code"></i></div>
+                    <div class="stat-number" data-target="100000">0</div>
+                    <div class="stat-label" data-ar="سطر برمجي" data-en="Lines of Code">سطر برمجي</div>
+                </div>
+                <div class="stat-card hover-target stagger-animation" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-icon"><i class="fas fa-coffee"></i></div>
+                    <div class="stat-number" data-target="500">0</div>
+                    <div class="stat-label" data-ar="فنجان قهوة" data-en="Cups of Coffee">فنجان قهوة</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wave Divider -->
+        <div class="wave-divider wave-divider--flip">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none">
+                <path
+                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                    class="shape-fill"></path>
+            </svg>
+        </div>
+
+        <section id="skills" class="skills-section section-slide-left">
+            <div class="skills-marquee">
+                <div class="marquee-content">
+                    <div class="skill-tag hover-target"><i class="fab fa-html5"></i> HTML5</div>
+                    <div class="skill-tag hover-target"><i class="fab fa-css3-alt"></i> CSS3</div>
+                    <div class="skill-tag hover-target"><i class="fab fa-js"></i> JavaScript</div>
+                    <div class="skill-tag hover-target"><i class="fab fa-react"></i> React</div>
+                    <div class="skill-tag hover-target"><i class="fas fa-mobile-alt"></i> Responsive</div>
+                    <div class="skill-tag hover-target"><i class="fas fa-palette"></i> UI/UX Design</div>
+                    <div class="skill-tag hover-target"><i class="fas fa-video"></i> Video Editing</div>
+                    <div class="skill-tag hover-target"><i class="fas fa-robot"></i> AI Tools</div>
+
+                    <div class="skill-tag hover-target"><i class="fab fa-html5"></i> HTML5</div>
+                    <div class="skill-tag hover-target"><i class="fab fa-css3-alt"></i> CSS3</div>
+                    <div class="skill-tag hover-target"><i class="fab fa-js"></i> JavaScript</div>
+                    <div class="skill-tag hover-target"><i class="fab fa-react"></i> React</div>
+                    <div class="skill-tag hover-target"><i class="fas fa-mobile-alt"></i> Responsive</div>
+                    <div class="skill-tag hover-target"><i class="fas fa-palette"></i> UI/UX Design</div>
+                    <div class="skill-tag hover-target"><i class="fas fa-video"></i> Video Editing</div>
+                    <div class="skill-tag hover-target"><i class="fas fa-robot"></i> AI Tools</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section-slide-right">
+            <div class="section-header" data-aos="fade-up">
+                <div class="section-eyebrow">Portfolio</div>
+                <h2 data-ar="مختارات من أعمالي" data-en="Selected Work">مختارات من أعمالي</h2>
+                <p data-ar="مشاريع مبتكرة تم تنفيذها بأحدث التقنيات"
+                    data-en="Innovative projects built with latest technologies">مشاريع مبتكرة تم تنفيذها بأحدث التقنيات
+                </p>
+                <div class="section-divider">
+                    <div class="section-divider-line"></div>
+                    <div class="section-divider-bar"></div>
+                    <div class="section-divider-line"></div>
+                </div>
+            </div>
+
+            <div class="bento-grid">
+                <!-- Project 1 - Large -->
+                <div class="bento-card large hover-target card-3d hover-lift" data-aos="fade-up">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
+                        class="project-image" alt="Data Analytics Dashboard" loading="lazy">
+                    <div class="project-overlay"></div>
+                    <span class="project-category">Dashboard</span>
+                    <div class="view-icon"><i class="fas fa-external-link-alt"></i></div>
+                    <div class="card-content">
+                        <div class="tech-stack">
+                            <span class="tech-badge">React</span>
+                            <span class="tech-badge">AI</span>
+                            <span class="tech-badge">Charts</span>
+                        </div>
+                        <h3 data-ar="منصة التحليلات الذكية" data-en="Smart Analytics Platform">منصة التحليلات الذكية
+                        </h3>
+                        <p data-ar="نظام متكامل لتحليل البيانات بالذكاء الاصطناعي مع لوحات معلومات تفاعلية ومت تقارير ذكية."
+                            data-en="Complete AI-powered data analytics platform with interactive dashboards and smart reports.">
+                            نظام متكامل لتحليل البيانات بالذكاء الاصطناعي مع لوحات معلومات تفاعلية.</p>
+                        <a href="#" class="card-link hover-target"><i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="bento-card hover-target hover-lift" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80"
+                        class="project-image" alt="Mobile App" loading="lazy">
+                    <div class="project-overlay"></div>
+                    <span class="project-category">Mobile</span>
+                    <div class="view-icon"><i class="fas fa-external-link-alt"></i></div>
+                    <div class="card-content">
+                        <div class="tech-stack">
+                            <span class="tech-badge">Flutter</span>
+                            <span class="tech-badge">UI/UX</span>
+                        </div>
+                        <h3 data-ar="تطبيق التوصيل الذكي" data-en="Smart Delivery App">تطبيق التوصيل الذكي</h3>
+                        <p data-ar="تطبيق جوال متكامل للتوصيل مع واجهة مستخدم عصرية وسلسة."
+                            data-en="Complete mobile delivery app with modern and smooth UI.">تطبيق جوال متكامل للتوصيل
+                            مع واجهة عصرية.</p>
+                        <a href="#" class="card-link hover-target"><i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="bento-card hover-target" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
+                        class="project-image" alt="Business Dashboard" loading="lazy">
+                    <div class="project-overlay"></div>
+                    <span class="project-category">SaaS</span>
+                    <div class="view-icon"><i class="fas fa-external-link-alt"></i></div>
+                    <div class="card-content">
+                        <div class="tech-stack">
+                            <span class="tech-badge">Vue.js</span>
+                            <span class="tech-badge">Firebase</span>
+                        </div>
+                        <h3 data-ar="نظام إدارة الأعمال" data-en="Business Management System">نظام إدارة الأعمال</h3>
+                        <p data-ar="منصة شاملة لإدارة المشاريع والفرق والعملاء."
+                            data-en="Comprehensive platform for managing projects, teams and clients.">منصة شاملة لإدارة
+                            المشاريع والفرق.</p>
+                        <a href="#" class="card-link hover-target"><i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project 4 - Large -->
+                <div class="bento-card large hover-target" data-aos="fade-up" data-aos-delay="300">
+                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=1200&q=80"
+                        class="project-image" alt="E-Learning Platform" loading="lazy">
+                    <div class="project-overlay"></div>
+                    <span class="project-category">E-Learning</span>
+                    <div class="view-icon"><i class="fas fa-external-link-alt"></i></div>
+                    <div class="card-content">
+                        <div class="tech-stack">
+                            <span class="tech-badge">Next.js</span>
+                            <span class="tech-badge">Video</span>
+                            <span class="tech-badge">AI</span>
+                        </div>
+                        <h3 data-ar="منصة التعليم الذكي" data-en="Smart Learning Platform">منصة التعليم الذكي</h3>
+                        <p data-ar="منصة تعليمية متكاملة مع فيديوهات تفاعلية وتوصيات ذكية بالذكاء الاصطناعي."
+                            data-en="Complete e-learning platform with interactive videos and AI-powered recommendations.">
+                            منصة تعليمية متكاملة مع فيديوهات ذكية.</p>
+                        <a href="#" class="card-link hover-target"><i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Gallery Section -->
+        <section id="gallery">
+            <div class="section-header" data-aos="fade-up">
+                <div class="section-eyebrow">Gallery</div>
+                <h2 data-ar="معرض الأعمال" data-en="Portfolio Gallery">معرض الأعمال</h2>
+                <p data-ar="مختارات من أفضل ما أنجزت" data-en="Showcase of my best work">مختارات من أفضل ما أنجزت</p>
+                <div class="section-divider">
+                    <div class="section-divider-line"></div>
+                    <div class="section-divider-bar"></div>
+                    <div class="section-divider-line"></div>
+                </div>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item hover-target" data-aos="zoom-in" onclick="openModal(0)">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=500&q=80"
+                        alt="Gallery 1" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h3 data-ar="لوحة إدارة البيانات" data-en="Data Dashboard">لوحة إدارة البيانات</h3>
+                        <p data-ar="نظام متكامل لتصور البيانات" data-en="Integrated data visualization system">نظام
+                            متكامل لتصور البيانات</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item hover-target" data-aos="zoom-in" data-aos-delay="100" onclick="openModal(1)">
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=500&q=80"
+                        alt="Gallery 2">
+                    <div class="gallery-overlay">
+                        <h3 data-ar="تطبيق التوصيل الذكي" data-en="Smart Delivery App">تطبيق التوصيل الذكي</h3>
+                        <p data-ar="منصة توصيل حديثة وقابلة للتوسع" data-en="Modern scalable delivery platform">منصة
+                            توصيل حديثة وقابلة للتوسع</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item hover-target" data-aos="zoom-in" data-aos-delay="200" onclick="openModal(2)">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=500&q=80"
+                        alt="Gallery 3">
+                    <div class="gallery-overlay">
+                        <h3 data-ar="محتوى تعليمي" data-en="Educational Content">محتوى تعليمي</h3>
+                        <p data-ar="سلسلة فيديوهات تعليمية احترافية" data-en="Professional educational video series">
+                            سلسلة فيديوهات تعليمية احترافية</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item hover-target" data-aos="zoom-in" data-aos-delay="300" onclick="openModal(3)">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=500&q=80"
+                        alt="Gallery 4">
+                    <div class="gallery-overlay">
+                        <h3 data-ar="تحليل ذكي" data-en="Smart Analytics">تحليل ذكي</h3>
+                        <p data-ar="منصة تحليل بيانات بتقنيات AI" data-en="AI-powered data analytics platform">منصة
+                            تحليل بيانات بتقنيات AI</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item hover-target" data-aos="zoom-in" data-aos-delay="400" onclick="openModal(4)">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=500&q=80"
+                        alt="Gallery 5">
+                    <div class="gallery-overlay">
+                        <h3 data-ar="تطبيق التسويق" data-en="Marketing App">تطبيق التسويق</h3>
+                        <p data-ar="أداة تسويقية شاملة وفعالة" data-en="Comprehensive marketing automation tool">أداة
+                            تسويقية شاملة وفعالة</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item hover-target" data-aos="zoom-in" data-aos-delay="500" onclick="openModal(5)">
+                    <img src="imagesD.jpg" alt="Gallery 6">
+                    <div class="gallery-overlay">
+                        <h3 data-ar="تطبيق الشبكة الاجتماعية" data-en="Social Network">تطبيق الشبكة الاجتماعية</h3>
+                        <p data-ar="منصة تواصل اجتماعية مبتكرة" data-en="Innovative social networking platform">منصة
+                            تواصل اجتماعية مبتكرة</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Timeline Section -->
+        <section id="experience">
+            <div class="section-header" data-aos="fade-up">
+                <div class="section-eyebrow">Experience</div>
+                <h2 data-ar="خبراتي وتجاربي" data-en="My Experience">خبراتي وتجاربي</h2>
+                <p data-ar="رحلتي المهنية والإنجازات" data-en="My professional journey">رحلتي المهنية والإنجازات</p>
+                <div class="section-divider">
+                    <div class="section-divider-line"></div>
+                    <div class="section-divider-bar"></div>
+                    <div class="section-divider-line"></div>
+                </div>
+            </div>
+
+            <div class="experience-container">
+                <div class="timeline">
+                    <div class="experience-item">
+                        <div class="exp-dot"></div>
+                        <div class="exp-content" data-aos="fade-up">
+                            <div class="exp-year">2023 - الحالي</div>
+                            <div class="exp-title" data-ar="مطور ويب أول" data-en="Senior Web Developer">مطور ويب أول
+                            </div>
+                            <div class="exp-company" data-ar="شركة تقنية عالمية" data-en="Global Tech Company">شركة
+                                تقنية عالمية</div>
+                            <div class="exp-description"
+                                data-ar="قيادة فريق تطوير الويب، بناء تطبيقات ويب متقدمة، وتحسين الأداء."
+                                data-en="Leading web development team, building advanced web applications, and performance optimization.">
+                                قيادة فريق تطوير الويب، بناء تطبيقات ويب متقدمة، وتحسين الأداء.</div>
+                        </div>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="exp-dot"></div>
+                        <div class="exp-content" data-aos="fade-up">
+                            <div class="exp-year">2021 - 2023</div>
+                            <div class="exp-title" data-ar="مطور ويب متوسط" data-en="Mid-level Web Developer">مطور ويب
+                                متوسط</div>
+                            <div class="exp-company" data-ar="استوديو تصميم رقمي" data-en="Digital Design Studio">
+                                استوديو تصميم رقمي</div>
+                            <div class="exp-description"
+                                data-ar="تطوير مواقع ويب عصرية، تصميم واجهات مستخدم، وتطبيقات تفاعلية."
+                                data-en="Developing modern websites, UI design, and interactive applications.">تطوير
+                                مواقع ويب عصرية، تصميم واجهات مستخدم، وتطبيقات تفاعلية.</div>
+                        </div>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="exp-dot"></div>
+                        <div class="exp-content" data-aos="fade-up">
+                            <div class="exp-year">2020 - 2021</div>
+                            <div class="exp-title" data-ar="متدرب تطوير حر" data-en="Freelance Intern Developer">متدرب
+                                تطوير حر</div>
+                            <div class="exp-company" data-ar="عمل حر ومشاريع شخصية"
+                                data-en="Freelance & Personal Projects">عمل حر ومشاريع شخصية</div>
+                            <div class="exp-description"
+                                data-ar="تطوير مشاريع عملاء متعددة، تعلم تقنيات جديدة، وبناء محفظة أعمال."
+                                data-en="Delivering multiple client projects, learning new technologies, and building portfolio.">
+                                تطوير مشاريع عملاء متعددة، تعلم تقنيات جديدة، وبناء محفظة أعمال.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enhanced Skills Section -->
+        <section id="advanced-skills">
+            <div class="section-header" data-aos="fade-up">
+                <div class="section-eyebrow">Skills</div>
+                <h2 data-ar="مهاراتي التقنية" data-en="Technical Skills">مهاراتي التقنية</h2>
+                <p data-ar="المهارات والأدوات التي أتقنها" data-en="Technologies and tools I master">المهارات والأدوات
+                    التي أتقنها</p>
+                <div class="section-divider">
+                    <div class="section-divider-line"></div>
+                    <div class="section-divider-bar"></div>
+                    <div class="section-divider-line"></div>
+                </div>
+            </div>
+
+            <div class="skills-detailed">
+                <div class="skill-box hover-target" data-aos="fade-up">
+                    <div class="skill-icon"><i class="fab fa-html5"></i></div>
+                    <div class="skill-name">HTML5</div>
+                    <div class="skill-level" data-ar="متقدم جداً" data-en="Expert">متقدم جداً</div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" style="width: 95%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-box hover-target" data-aos="fade-up" data-aos-delay="100">
+                    <div class="skill-icon"><i class="fab fa-css3-alt"></i></div>
+                    <div class="skill-name">CSS3 & SCSS</div>
+                    <div class="skill-level" data-ar="متقدم جداً" data-en="Expert">متقدم جداً</div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" style="width: 90%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-box hover-target" data-aos="fade-up" data-aos-delay="200">
+                    <div class="skill-icon"><i class="fab fa-js"></i></div>
+                    <div class="skill-name">JavaScript</div>
+                    <div class="skill-level" data-ar="متقدم جداً" data-en="Expert">متقدم جداً</div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" style="width: 92%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-box hover-target" data-aos="fade-up" data-aos-delay="300">
+                    <div class="skill-icon"><i class="fab fa-react"></i></div>
+                    <div class="skill-name">React.js</div>
+                    <div class="skill-level" data-ar="متقدم جداً" data-en="Advanced">متقدم جداً</div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" style="width: 88%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-box hover-target" data-aos="fade-up" data-aos-delay="400">
+                    <div class="skill-icon"><i class="fab fa-node-js"></i></div>
+                    <div class="skill-name">Node.js</div>
+                    <div class="skill-level" data-ar="متقدم" data-en="Advanced">متقدم</div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" style="width: 80%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-box hover-target" data-aos="fade-up" data-aos-delay="500">
+                    <div class="skill-icon"><i class="fas fa-database"></i></div>
+                    <div class="skill-name">Firebase</div>
+                    <div class="skill-level" data-ar="متقدم" data-en="Advanced">متقدم</div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" style="width: 85%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-box hover-target" data-aos="fade-up" data-aos-delay="600">
+                    <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <div class="skill-name" data-ar="تصميم متجاوب" data-en="Responsive Design">تصميم متجاوب</div>
+                    <div class="skill-level" data-ar="خبير" data-en="Expert">خبير</div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" style="width: 95%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-box hover-target" data-aos="fade-up" data-aos-delay="700">
+                    <div class="skill-icon"><i class="fas fa-palette"></i></div>
+                    <div class="skill-name">UI/UX Design</div>
+                    <div class="skill-level" data-ar="متقدم" data-en="Advanced">متقدم</div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" style="width: 82%;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services">
+            <div class="section-header" data-aos="fade-up">
+                <div class="section-eyebrow">Services</div>
+                <h2 data-ar="خدماتي المميزة" data-en="My Services">خدماتي المميزة</h2>
+                <p data-ar="أقدم حلولاً متكاملة تناسب احتياجاتك"
+                    data-en="I provide integrated solutions tailored to your needs">أقدم حلولاً متكاملة تناسب احتياجاتك
+                </p>
+                <div class="section-divider">
+                    <div class="section-divider-line"></div>
+                    <div class="section-divider-bar"></div>
+                    <div class="section-divider-line"></div>
+                </div>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card spotlight-card" data-aos="fade-up">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3 class="service-title" data-ar="تطوير المواقع" data-en="Web Development">تطوير المواقع</h3>
+                    <p class="service-desc"
+                        data-ar="تصميم وتطوير مواقع ويب عصرية ومتجاوبة بأحدث التقنيات. من المواقع الثابتة إلى التطبيقات الويب المعقدة."
+                        data-en="Modern responsive websites using latest technologies. From static sites to complex web applications.">
+                        تصميم وتطوير مواقع ويب عصرية ومتجاوبة بأحدث التقنيات.</p>
+                </div>
+
+                <div class="service-card spotlight-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3 class="service-title" data-ar="تصميم UI/UX" data-en="UI/UX Design">تصميم UI/UX</h3>
+                    <p class="service-desc"
+                        data-ar="تصميم واجهات مستخدم جذابة وسهلة الاستخدام. تجربة مستخدم استثنائية تحول الزوار إلى عملاء."
+                        data-en="Attractive and user-friendly interface design. Exceptional UX that converts visitors to customers.">
+                        تصميم واجهات مستخدم جذابة وسهلة الاستخدام.</p>
+                </div>
+
+                <div class="service-card spotlight-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="service-title" data-ar="تطبيقات الويب" data-en="Web Applications">تطبيقات الويب</h3>
+                    <p class="service-desc"
+                        data-ar="بناء تطبيقات ويب تفاعلية وقابلة للتوسع. حلول متقدمة تنمو مع عملك واحتياجاتك."
+                        data-en="Interactive and scalable web applications. Advanced solutions that grow with your business.">
+                        بناء تطبيقات ويب تفاعلية وقابلة للتوسع.</p>
+                </div>
+
+                <div class="service-card spotlight-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="service-title" data-ar="تحسين الأداء" data-en="Performance">تحسين الأداء</h3>
+                    <p class="service-desc"
+                        data-ar="تحسين سرعة网站 وأدائها. تقنيات متقدمة لتحسين تجربة المستخدم وترتيب محركات البحث."
+                        data-en="Website speed and performance optimization. Advanced techniques for better UX and SEO.">
+                        تحسين سرعة الموقع وأدائه.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials">
+            <div class="section-header" data-aos="fade-up">
+                <div class="section-eyebrow">Testimonials</div>
+                <h2 data-ar="آراء العملاء" data-en="Testimonials">آراء العملاء</h2>
+                <p data-ar="ما يقوله عملائي عن تجربتي" data-en="What my clients say about working with me">ما يقوله
+                    عملائي عن تجربتي</p>
+                <div class="section-divider">
+                    <div class="section-divider-line"></div>
+                    <div class="section-divider-bar"></div>
+                    <div class="section-divider-line"></div>
+                </div>
+            </div>
+
+            <div class="testimonials-container">
+                <div class="testimonial-slider">
+                    <div class="testimonial-card neon-card" data-aos="fade-up">
+                        <span class="testimonial-quote">"</span>
+                        <p class="testimonial-text" data-ar="تصميم حلو"
+                            data-en="Wonderful experience! Our website became very professional and fast. Thank you for the excellent work.">
+                            تجربة رائعة! يااقوى مصمم </p>
+                        <div class="testimonial-author">
+                            <img src="https://ui-avatars.com/api/?name=Ahmed+Ali&background=6366f1&color=fff"
+                                alt="Client 1" class="testimonial-avatar" loading="lazy">
+                            <div class="testimonial-info">
+                                <h4>أحمد علي</h4>
+                                <p data-ar="مدير شركة تقنية" data-en="Tech Company Manager">مدير شركة تقنية</p>
+                                <div class="testimonial-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card neon-card" data-aos="fade-up" data-aos-delay="100">
+                        <span class="testimonial-quote">"</span>
+                        <p class="testimonial-text"
+                            data-ar="عمل متقن وتصميم مذهل. أنصح به بشدة لكل من يريد موقعاً احترافياً."
+                            data-en="Excellent work and amazing design. Highly recommend to anyone wanting a professional website.">
+                            عمل متقن وتصميم مذهل.</p>
+                        <div class="testimonial-author">
+                            <img src="https://ui-avatars.com/api/?name=Sara+Mohammed&background=8b5cf6&color=fff"
+                                alt="Client 2" class="testimonial-avatar" loading="lazy">
+                            <div class="testimonial-info">
+                                <h4>سارة محمد</h4>
+                                <p data-ar="صاحبة متجر إلكتروني" data-en="E-commerce Owner">صاحبة متجر إلكتروني</p>
+                                <div class="testimonial-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card neon-card" data-aos="fade-up" data-aos-delay="200">
+                        <span class="testimonial-quote">"</span>
+                        <p class="testimonial-text"
+                            data-ar="موقعنا الجديد زاد مبيعاتنا بشكل ملحوظ. شكراً على الاحتراف والالتزام بالمواعيد."
+                            data-en="Our new website significantly increased our sales. Thank you for professionalism and timeliness.">
+                            واحد عراق</p>
+                        <div class="testimonial-author">
+                            <img src="https://ui-avatars.com/api/?name=Omar+Khalid&background=ec4899&color=fff"
+                                alt="Client 3" class="testimonial-avatar" loading="lazy">
+                            <div class="testimonial-info">
+                                <h4>عمر خالد</h4>
+                                <p data-ar="رائد أعمال" data-en="Entrepreneur">رائد أعمال</p>
+                                <div class="testimonial-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="cv-section cv-section--simple" data-aos="zoom-in">
+                <h2 data-ar="تريد معرفة المزيد؟" data-en="Want to know more?">تريد معرفة المزيد؟</h2>
+                <p data-ar="قم بتحميل سيرتي الذاتية للاطلاع على تفاصيل خبراتي."
+                    data-en="Download my resume to see detailed experience.">قم بتحميل سيرتي الذاتية للاطلاع على تفاصيل
+                    خبراتي.</p>
+
+                <a href="https://drive.google.com/uc?export=download&id=1LOfwv0CsKubXtEOxZvlWLcm696kdMZ6m"
+                    class="btn btn-primary hover-target" target="_blank">
+                    <i class="fas fa-download"></i> <span data-ar="تحميل السيرة الذاتية" data-en="Download Resume">تحميل
+                        السيرة الذاتية</span>
+                </a>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="section-header" data-aos="fade-up">
+                <div class="section-eyebrow">Contact</div>
+                <h2 data-ar="تواصل معي" data-en="Get In Touch">تواصل معي</h2>
+                <p data-ar="لديك مشروع؟ دعنا نتحدث!" data-en="Have a project? Let's talk!">لديك مشروع؟ دعنا نتحدث!</p>
+                <div class="section-divider">
+                    <div class="section-divider-line"></div>
+                    <div class="section-divider-bar"></div>
+                    <div class="section-divider-line"></div>
+                </div>
+            </div>
+
+            <!-- Glassmorphic Contact Form -->
+            <div class="contact-form-section">
+                <form class="contact-form" data-aos="fade-up" id="contactForm">
+                    <div class="form-group">
+                        <label for="name" data-ar="الاسم" data-en="Name">الاسم</label>
+                        <input type="text" id="name" class="form-control" required placeholder="أدخل اسمك">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" data-ar="البريد الإلكتروني" data-en="Email">البريد الإلكتروني</label>
+                        <input type="email" id="email" class="form-control" required placeholder="example@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject" data-ar="الموضوع" data-en="Subject">الموضوع</label>
+                        <input type="text" id="subject" class="form-control" required placeholder="موضوع الرسالة">
+                    </div>
+                    <div class="form-group">
+                        <label for="message" data-ar="الرسالة" data-en="Message">الرسالة</label>
+                        <textarea id="message" class="form-control" required
+                            placeholder="اكتب رسالتك هنا..."></textarea>
+                    </div>
+                    <button type="submit" class="form-submit hover-target" id="submitBtn">
+                        <i class="fas fa-paper-plane"></i> <span data-ar="إرسال الرسالة" data-en="Send Message">إرسال
+                            الرسالة</span>
+                    </button>
+                    <div class="form-feedback" id="formFeedback"
+                        style="display:none; margin-top:15px; padding:12px 15px; border-radius:8px; text-align:center; font-weight:600;">
+                    </div>
+                </form>
+            </div>
+
+            <!-- Social Links -->
+            <div class="section-header compact" data-aos="fade-up">
+                <div class="section-eyebrow">Social</div>
+                <h2 data-ar="أو تواصل عبر" data-en="Or Connect Via">أو تواصل عبر</h2>
+                <p data-ar="اختر الطريقة الأنسب للتواصل المباشر معي" data-en="Choose the best way to reach me directly">
+                    اختر الطريقة الأنسب للتواصل المباشر معي
+                </p>
+            </div>
+            <div class="social-grid">
+                <a href="https://t.me/telhussein" target="_blank" class="social-card hover-target"
+                    data-platform="telegram" aria-label="Telegram">
+                    <span class="card-icon"><i class="fab fa-telegram-plane"></i></span>
+                    <span class="card-shine"></span>
+                    <span class="card-glow"></span>
+                    <span class="card-tooltip">تيليجرام</span>
+                </a>
+                <a href="mailto:huseinabbas49039@gmail.com" class="social-card hover-target" data-platform="email"
+                    aria-label="Email">
+                    <span class="card-icon"><i class="fas fa-envelope"></i></span>
+                    <span class="card-shine"></span>
+                    <span class="card-glow"></span>
+                    <span class="card-tooltip">البريد الإلكتروني</span>
+                </a>
+                <a href="https://wa.me/9647763001120" target="_blank" class="social-card hover-target"
+                    data-platform="whatsapp" aria-label="WhatsApp">
+                    <span class="card-icon"><i class="fab fa-whatsapp"></i></span>
+                    <span class="card-shine"></span>
+                    <span class="card-glow"></span>
+                    <span class="card-tooltip">واتساب</span>
+                </a>
+                <a href="https://www.instagram.com/hussein.abbas0" target="_blank" class="social-card hover-target"
+                    data-platform="instagram" aria-label="Instagram">
+                    <span class="card-icon"><i class="fab fa-instagram"></i></span>
+                    <span class="card-shine"></span>
+                    <span class="card-glow"></span>
+                    <span class="card-tooltip">إنستغرام</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top hover-target" id="backToTop" aria-label="العودة للأعلى / Back to top">
+        <span class="btt-arrow"><i class="fas fa-arrow-up"></i></span>
+        <span class="btt-ring">
+            <svg viewBox="0 0 48 48">
+                <circle cx="24" cy="24" r="21"/>
+            </svg>
+        </span>
+    </button>
+
+    <!-- Gallery Modal -->
+    <div class="modal" id="galleryModal">
+        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="" class="modal-image">
+            <div class="modal-text">
+                <h2 id="modalTitle"></h2>
+                <p id="modalDescription"></p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <!-- Brand Section -->
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <div class="footer-logo-icon">H</div>
+                    <span class="footer-logo-text">Hussein Abbas</span>
+                </div>
+                <p class="footer-desc">مطور ويب ومبدع رقمي متخصص في بناء تجارب ويب تفاعلية وحديثة.</p>
+                <p class="footer-desc-en">Web Developer & Digital Creator specialized in building modern interactive web
+                    experiences.</p>
+                <div class="footer-social">
+                    <a href="https://t.me/telhussein" target="_blank" class="footer-social-link" aria-label="Telegram">
+                        <i class="fab fa-telegram-plane"></i>
+                    </a>
+                    <a href="https://wa.me/9647763001120" target="_blank" class="footer-social-link"
+                        aria-label="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="https://www.instagram.com/hussein.abbas0" target="_blank" class="footer-social-link"
+                        aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="mailto:huseinabbas49039@gmail.com" class="footer-social-link" aria-label="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-column">
+                <h3 data-ar="روابط سريعة" data-en="Quick Links">روابط سريعة</h3>
+                <ul class="footer-links">
+                    <li><a href="#home" data-ar="الرئيسية" data-en="Home">الرئيسية</a></li>
+                    <li><a href="#services" data-ar="الخدمات" data-en="Services">الخدمات</a></li>
+                    <li><a href="#projects" data-ar="المشاريع" data-en="Projects">المشاريع</a></li>
+                    <li><a href="#gallery" data-ar="المعرض" data-en="Gallery">المعرض</a></li>
+                    <li><a href="#experience" data-ar="الخبرة" data-en="Experience">الخبرة</a></li>
+                    <li><a href="#advanced-skills" data-ar="المهارات" data-en="Skills">المهارات</a></li>
+                </ul>
+            </div>
+
+            <!-- Services -->
+            <div class="footer-column">
+                <h3 data-ar="الخدمات" data-en="Services">الخدمات</h3>
+                <ul class="footer-links">
+                    <li><a href="#services" data-ar="تطوير المواقع" data-en="Web Development">تطوير المواقع</a></li>
+                    <li><a href="#services" data-ar="تصميم UI/UX" data-en="UI/UX Design">تصميم UI/UX</a></li>
+                    <li><a href="#services" data-ar="تطبيقات الويب" data-en="Web Apps">تطبيقات الويب</a></li>
+                    <li><a href="#services" data-ar="استشارات تقنية" data-en="Tech Consulting">استشارات تقنية</a></li>
+                    <li><a href="#services" data-ar="تحسين الأداء" data-en="Performance">تحسين الأداء</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="footer-column">
+                <h3 data-ar="تواصل معي" data-en="Contact Me">تواصل معي</h3>
+                <ul class="footer-contact-list">
+                    <li class="footer-contact-item">
+                        <div class="footer-contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="footer-contact-text">
+                            <a href="mailto:huseinabbas49039@gmail.com">huseinabbas49039@gmail.com</a>
+                        </div>
+                    </li>
+                    <li class="footer-contact-item">
+                        <div class="footer-contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="footer-contact-text">
+                            <a href="https://wa.me/9647763001120" target="_blank">+964 776 300 1120</a>
+                        </div>
+                    </li>
+                    <li class="footer-contact-item">
+                        <div class="footer-contact-icon">
+                            <i class="fab fa-telegram"></i>
+                        </div>
+                        <div class="footer-contact-text">
+                            <a href="https://t.me/telhussein" target="_blank">@telhussein</a>
+                        </div>
+                    </li>
+                    <li class="footer-contact-item">
+                        <div class="footer-contact-icon">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <div class="footer-contact-text">
+                            <a href="https://www.instagram.com/hussein.abbas0" target="_blank">@hussein.abbas0</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; <span id="year"></span> <span data-ar="حسين عباس. جميع الحقوق محفوظة."
+                    data-en="Hussein Abbas. All rights reserved.">حسين عباس. جميع الحقوق محفوظة.</span></p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Loader percent counter
+        (function() {
+            const pct = document.getElementById('loaderPercent');
+            if (!pct) return;
+            let val = 0;
+            const iv = setInterval(() => {
+                val += Math.floor(Math.random() * 12) + 3;
+                if (val >= 90) { val = 90; clearInterval(iv); }
+                pct.textContent = val + '%';
+            }, 80);
+            window.addEventListener('load', () => {
+                clearInterval(iv);
+                if (pct) pct.textContent = '100%';
+            });
+        })();
+        
+        // Scroll progress for back-to-top ring
+        (function() {
+            const btt = document.getElementById('backToTop');
+            window.addEventListener('scroll', () => {
+                const h = document.documentElement;
+                const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+                if (btt) btt.style.setProperty('--scroll-pct', pct);
+            }, { passive: true });
+        })();
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
+    <script src="main.js" defer></script>
+</body>
+
+</html>

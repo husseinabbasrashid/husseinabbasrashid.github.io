@@ -1,0 +1,77 @@
+/* Hacker/Matrix Theme Override */
+:root {
+    --bg-dark: #000000 !important;
+    --bg-card: #0a0a0a !important;
+    --bg-card-hover: #111111 !important;
+    --card-border: rgba(0, 255, 65, 0.2) !important;
+    --card-border-hover: rgba(0, 255, 65, 0.4) !important;
+    
+    --text-main: #00ff41 !important;
+    --text-secondary: #00cc33 !important;
+    --text-muted: #008822 !important;
+
+    --accent-primary: #00ff41 !important;
+    --accent-secondary: #00cc33 !important;
+    --accent-tertiary: #00ff88 !important;
+    --accent-copper: #00dd55 !important;
+    
+    --accent-glow: rgba(0, 255, 65, 0.5) !important;
+    --success: #00ff41 !important;
+    --info: #00ff41 !important;
+    
+    --gradient-warm: linear-gradient(135deg, #00ff41 0%, #00cc33 50%, #00ff88 100%) !important;
+    --gradient-gold: linear-gradient(135deg, #00ff41 0%, #00cc33 100%) !important;
+    --gradient-text: linear-gradient(135deg, #00ff41 0%, #00cc33 100%) !important;
+    --gradient-hero: linear-gradient(135deg, #00ff41 0%, #00cc33 50%, #00ff88 100%) !important;
+    --gradient-btn: linear-gradient(135deg, #00ff41 0%, #00cc33 100%) !important;
+}
+
+body {
+    font-family: 'Courier New', monospace !important;
+    text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
+}
+
+.hero h1 {
+    font-family: 'Courier New', monospace !important;
+    text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41, 0 0 30px #00ff41 !important;
+    animation: textGlitch 3s infinite;
+}
+
+@keyframes textGlitch {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+.grid-bg {
+    background-image: 
+        linear-gradient(rgba(0, 255, 65, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 65, 0.1) 1px, transparent 1px) !important;
+}
+
+.floating-nav {
+    background: rgba(0, 0, 0, 0.95) !important;
+    border: 1px solid rgba(0, 255, 65, 0.3) !important;
+    box-shadow: 0 12px 45px rgba(0, 255, 65, 0.3), 
+                0 0 0 1px rgba(0, 255, 65, 0.2) inset,
+                0 0 30px rgba(0, 255, 65, 0.2) !important;
+}
+
+.hero-avatar {
+    box-shadow: 0 35px 70px -18px rgba(0, 255, 65, 0.7),
+                0 0 0 1px rgba(0, 255, 65, 0.3) inset,
+                0 0 60px rgba(0, 255, 65, 0.5) !important;
+    border: 2px solid rgba(0, 255, 65, 0.3) !important;
+}
+
+.btn-primary {
+    color: #000 !important;
+    box-shadow: 0 12px 35px -5px rgba(0, 255, 65, 0.6) !important;
+}
+
+.bento-card:hover,
+.service-card:hover,
+.stat-card:hover {
+    box-shadow: 0 30px 80px -20px rgba(0, 255, 65, 0.6),
+                0 0 0 1px rgba(0, 255, 65, 0.4) inset,
+                0 0 50px rgba(0, 255, 65, 0.3) !important;
+}
