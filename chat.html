@@ -1787,6 +1787,32 @@
         /* ═══════════════════════════════════════════
            PARTICLES CANVAS
         ═══════════════════════════════════════════ */
+        /* Refined public room presentation */
+        body { background-image: radial-gradient(ellipse at 50% -25%, rgba(59,130,246,.16), transparent 58%); }
+        header { padding: 0 22px; background: linear-gradient(180deg, rgba(3,7,18,.94), rgba(3,7,18,.78)); }
+        .header-inner { min-height: 76px; max-width: 960px; }
+        .header-start { gap: 12px; }
+        .back-btn { border: 1px solid var(--card-border); background: rgba(255,255,255,.035); }
+        .brand-info h1 { font-size: 1.1rem; }
+        .status-badge { transition: background .2s, color .2s; }
+        .status-badge.is-offline { color: #fbbf24; background: rgba(245,158,11,.1); border-color: rgba(245,158,11,.24); }
+        .header-end { gap: 7px; }
+        .main-wrap { max-width: 960px; }
+        #messagesArea { padding: 24px clamp(14px, 3.5vw, 36px) 30px; gap: 6px; }
+        .composer-wrap { background: linear-gradient(180deg, rgba(3,7,18,.82), var(--composer-bg)); }
+        .composer-inner { max-width: 960px; padding: 14px 22px calc(12px + env(safe-area-inset-bottom)); }
+        .input-bar { gap: 9px; background: rgba(15,23,42,.76); border-radius: 22px; padding: 9px 12px; }
+        body.light .input-bar { background: rgba(255,255,255,.93); }
+        #messageInput { min-height: 42px; }
+        #userName { width: 96px; }
+        .composer-hints { display: flex; align-items: center; gap: 14px; padding: 9px 6px 0; color: var(--text-muted); font-size: .68rem; }
+        .composer-hints > span { display: inline-flex; align-items: center; gap: 4px; }
+        .composer-hints kbd { padding: 2px 5px; border: 1px solid var(--card-border); border-radius: 5px; background: var(--bg-card); color: var(--text-secondary); font: inherit; font-size: .64rem; font-weight: 600; }
+        .composer-hints .composer-private { margin-inline-start: auto; }
+        .composer-private i { color: #34d399; }
+        @media(max-width:768px) { header { padding: 0 12px; } .header-inner { min-height: 68px; } .composer-inner { padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); } .composer-hints { gap: 8px; font-size: .63rem; } }
+        @media(max-width:520px) { .header-end { gap: 1px; } .header-end .icon-btn { width: 34px; height: 36px; font-size: .9rem; } .brand-info h1 { font-size: .98rem; } .composer-hints { justify-content: space-between; gap: 5px; } .composer-hints .composer-private { display: none; } #userName { width: 62px; padding-inline: 5px; } }
+
         #particleCanvas {
             position: fixed;
             inset: 0;
@@ -2103,7 +2129,7 @@
                 </a>
                 <div class="brand-info">
                     <h1 id="roomTitle">نقاش عام</h1>
-                    <div class="status-badge">
+                    <div class="status-badge" id="connectionBadge">
                         <span class="status-dot"></span>
                         <span id="statusText">متصل</span>
                     </div>
@@ -2228,6 +2254,11 @@
                     <button type="submit" id="sendBtn" class="send-btn">
                         <i class="fas fa-paper-plane"></i>
                     </button>
+                </div>
+                <div class="composer-hints" aria-label="اختصارات الدردشة">
+                    <span><kbd>Enter</kbd> <span data-ar="للإرسال" data-en="to send">للإرسال</span></span>
+                    <span><kbd>Shift</kbd> + <kbd>Enter</kbd> <span data-ar="لسطر جديد" data-en="for new line">لسطر جديد</span></span>
+                    <span class="composer-private"><i class="fas fa-lock" aria-hidden="true"></i> <span data-ar="لا تشارك معلوماتك الخاصة" data-en="Keep personal info private">لا تشارك معلوماتك الخاصة</span></span>
                 </div>
             </form>
         </div>
@@ -2461,7 +2492,11 @@
             document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
             langLabel.textContent = l === 'ar' ? 'ع' : 'EN';
             document.getElementById('roomTitle').textContent = l === 'ar' ? 'نقاش عام' : 'Public Chat';
-            document.getElementById('statusText').textContent = l === 'ar' ? 'متصل' : 'Online';
+            const statusLabel = document.getElementById('statusText');
+            statusLabel.textContent = currentUser ? (l === 'ar' ? 'متصل' : 'Connected') : (l === 'ar' ? 'جارٍ الاتصال' : 'Connecting');
+            document.querySelectorAll('.composer-hints [data-ar]').forEach(el => {
+                el.textContent = l === 'ar' ? el.dataset.ar : el.dataset.en;
+            });
             messageInput.placeholder = l === 'ar' ? 'اكتب رسالتك...' : 'Type a message...';
             userNameInput.placeholder = l === 'ar' ? 'اسمك' : 'Name';
         }
@@ -2718,6 +2753,10 @@
             currentUser = user;
             const dot = document.querySelector('.status-dot');
             if (dot) dot.style.background = user ? '#10b981' : '#f59e0b';
+            const badge = document.getElementById('connectionBadge');
+            const statusText = document.getElementById('statusText');
+            badge?.classList.toggle('is-offline', !user);
+            if (statusText) statusText.textContent = user ? (lang === 'ar' ? 'متصل' : 'Connected') : (lang === 'ar' ? 'جارٍ الاتصال' : 'Connecting');
         });
 
         /* ──────────────────────────────
