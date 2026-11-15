@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday, Zahra</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff4f1;--surface:#ffffff;--ink:#3a1530;--soft:#7a4a6a;--rose:#c2255c;--gold:#e8a33d;--line:#f0d3d6;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d0c1a;--surface:#2b1226;--ink:#fbe9ee;--soft:#d3a6bb;--rose:#ff6b9a;--gold:#ffc15e;--line:#4a2342;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1d0c1a;--surface:#2b1226;--ink:#fbe9ee;--soft:#d3a6bb;--rose:#ff6b9a;--gold:#ffc15e;--line:#4a2342;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.7 "DM Sans",system-ui,sans-serif;overflow-x:hidden}
+main{max-width:640px;margin:0 auto;padding:0 1.4rem 4rem}
+section{padding:2.5rem 0}
+.hero{min-height:90vh;display:flex;flex-direction:column;justify-content:center;text-align:center;gap:1rem}
+h1{font:600 clamp(2.6rem,11vw,4.6rem)/1.05 "Fraunces",Georgia,serif;margin:0;letter-spacing:-.02em}
+h2{font:600 1.8rem "Fraunces",Georgia,serif;margin:0 0 .4rem;text-align:center}
+.sub{font:italic 400 1.25rem "Fraunces",Georgia,serif;color:var(--soft);margin:0}
+.hint{color:var(--soft);text-align:center;margin:0 0 1rem;font-size:.95rem}
+.clock{margin:1rem auto 0;padding:1.3rem 1.2rem;border:1px solid var(--line);border-radius:18px;background:var(--surface);width:100%}
+.clock b{display:block;font:600 clamp(1.8rem,8.5vw,3rem)/1.1 "Fraunces",Georgia,serif;color:var(--rose);font-variant-numeric:tabular-nums}
+.clock span{color:var(--soft);font-size:.95rem}
+.candle{margin:1.2rem auto 0;display:flex;flex-direction:column;align-items:center;gap:.9rem}
+.cake{position:relative;width:64px;height:92px;cursor:pointer;background:none;border:0;padding:0}
+.wax{position:absolute;bottom:0;left:0;right:0;height:56px;background:var(--rose);border-radius:10px 10px 6px 6px}
+.stick{position:absolute;left:29px;bottom:56px;width:6px;height:28px;background:var(--gold);border-radius:3px}
+.flame{position:absolute;left:25px;bottom:84px;width:14px;height:22px;background:var(--gold);border-radius:50% 50% 50% 50%/65% 65% 35% 35%;box-shadow:0 0 18px 6px color-mix(in srgb,var(--gold) 55%,transparent);animation:flick .5s ease-in-out infinite alternate;transition:opacity .4s,transform .4s;transform-origin:50% 100%}
+.out .flame{opacity:0;transform:scale(.2)}
+@keyframes flick{to{transform:scale(1.08,.94) rotate(3deg)}}
+button.pill{font:500 1rem "DM Sans",system-ui,sans-serif;color:#fff;background:var(--rose);border:0;border-radius:999px;padding:.8rem 1.6rem;cursor:pointer}
+button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.pill:active{transform:scale(.97)}
+.hidden{display:none}
+.show{animation:rise .6s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}}
+.balloons{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem .6rem;margin:1.2rem 0}
+.bal{width:76px;height:96px;border:0;cursor:pointer;border-radius:50% 50% 50% 50%/58% 58% 42% 42%;position:relative;animation:bob 3s ease-in-out infinite;transition:transform .15s;color:#fff;font-size:1.5rem}
+.bal::after{content:"";position:absolute;left:50%;bottom:-26px;width:1px;height:26px;background:var(--soft)}
+.bal:nth-child(2){animation-delay:-.6s}.bal:nth-child(3){animation-delay:-1.2s}.bal:nth-child(4){animation-delay:-1.8s}.bal:nth-child(5){animation-delay:-2.4s}
+@keyframes bob{50%{transform:translateY(-10px)}}
+.bal.pop{animation:none;transform:scale(0);opacity:0;transition:transform .25s,opacity .25s}
+.reasons{display:grid;gap:.6rem;margin-top:1rem}
+.reasons div{padding:.85rem 1.1rem;border-left:3px solid var(--gold);background:var(--surface);border-radius:0 12px 12px 0;animation:rise .5s ease both}
+.env{display:block;margin:1.2rem auto;width:150px;height:104px;background:var(--rose);border:0;border-radius:8px;position:relative;cursor:pointer;font-size:2.2rem;color:#fff;animation:bob 2.4s ease-in-out infinite}
+.env::before{content:"";position:absolute;inset:0;border-radius:8px;background:linear-gradient(160deg,transparent 49%,rgba(0,0,0,.18) 50%) top/100% 55% no-repeat}
+.env span{position:relative}
+.letter{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:1.6rem 1.4rem;margin-top:1rem}
+.letter p{margin:0 0 1.1rem}
+.wishes{list-style:none;padding:0;margin:1rem 0;display:grid;gap:.5rem}
+.wishes li{padding:.7rem 1rem;border-left:3px solid var(--gold);background:var(--bg);border-radius:0 12px 12px 0}
+.sign{font:italic 400 1.3rem "Fraunces",Georgia,serif;color:var(--rose);margin:0}
+.more{text-align:center;margin-top:1.4rem}
+canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
+.heart{position:fixed;pointer-events:none;z-index:6;font-size:1.6rem;animation:float 1.4s ease-out forwards}
+@keyframes float{to{transform:translateY(-120px) scale(1.4);opacity:0}}
+@media (prefers-reduced-motion:reduce){.flame,.bal,.env{animation:none}}
+</style>
+</head>
+<body>
+<canvas id="c" aria-hidden="true"></canvas>
+<main>
+<section class="hero">
+  <p class="sub">Today is all yours</p>
+  <h1>Happy 23rd Birthday, Zahra</h1>
+  <div class="clock">
+    <b id="sec">725,846,400</b>
+    <span>seconds since you came into the world, and counting</span>
+  </div>
+  <div class="candle" id="candle">
+    <button class="cake" id="cake" type="button" aria-label="Blow out the candle"><div class="flame"></div><div class="stick"></div><div class="wax"></div></button>
+    <button class="pill" id="blow" type="button">Make a wish &amp; blow out the candle</button>
+  </div>
+  <p class="hint">Tap anywhere on the page to send hearts 💗</p>
+</section>
+
+<section id="balloonSec" class="hidden">
+  <h2>Pop the balloons</h2>
+  <p class="hint" id="count">Each one holds something I love about you. 0 of 5 popped.</p>
+  <div class="balloons" id="balloons"></div>
+  <div class="reasons" id="reasons"></div>
+</section>
+
+<section id="envSec" class="hidden">
+  <h2>One more thing</h2>
+  <p class="hint">I wrote you a letter. Tap to open it.</p>
+  <button class="env" id="env" type="button" aria-label="Open the letter"><span>💌</span></button>
+  <div class="letter hidden" id="letter">
+    <p>Zahra, my love,</p>
+    <p>Today you turn 23, and I wanted to write you something more than a quick “happy birthday,” because you deserve much more than that.</p>
+    <p>23 years. 8,401 days. 201,624 hours. 12,097,440 minutes. And every one of them was slowly getting the world ready for the day you’d walk into my life and make it so much brighter.</p>
+    <p>I don’t know how to explain what you mean to me. You are the person I want to tell everything to, the one who makes my bad days easier and my good days better. Your smile is my favorite thing to look at, and your laugh can fix my mood in a second. Being with you feels like home.</p>
+    <p>I’m proud of who you are and everything you’ve become, and I’m excited for everything you’re still going to achieve. You have so much light in you, and I hope you never doubt it.</p>
+    <p>On your birthday, I wish you:</p>
+    <ul class="wishes">
+      <li>A year full of joy and laughter</li>
+      <li>Dreams that finally come true</li>
+      <li>Peace in your heart</li>
+      <li>Every happiness you deserve, and more</li>
+    </ul>
+    <p>Thank you for being you, for being patient with me, and for loving me the way you do. I promise to stand by you, support you, and celebrate you, today and every day after.</p>
+    <p class="sign">I love you, now and always. Happy birthday, Zahra. 🤍</p>
+    <div class="more"><button class="pill" id="again" type="button">Celebrate again 🎉</button></div>
+  </div>
+</section>
+</main>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+  var start=725846400,t0=Date.now(),el=$("sec");
+  setInterval(function(){el.textContent=(start+Math.floor((Date.now()-t0)/1000)).toLocaleString("en-US")},250);
+
+  var cv=$("c"),cx=cv.getContext("2d"),P=[],raf=0;
+  function size(){cv.width=innerWidth;cv.height=innerHeight}
+  size();addEventListener("resize",size);
+  var cols=["#ff6b9a","#ffc15e","#c2255c","#ffffff","#8fd3c7"];
+  function burst(x,y,n){
+    if(reduce)return;
+    for(var i=0;i<n;i++)P.push({x:x,y:y,vx:(Math.random()-.5)*14,vy:Math.random()*-13-3,s:4+Math.random()*6,r:Math.random()*6,vr:(Math.random()-.5)*.4,c:cols[i%cols.length],l:0});
+    if(!raf)raf=requestAnimationFrame(step);
+  }
+  function step(){
+    cx.clearRect(0,0,cv.width,cv.height);
+    P=P.filter(function(p){return p.y<cv.height+20&&p.l<260});
+    P.forEach(function(p){p.vy+=.28;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;p.l++;
+      cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillStyle=p.c;cx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);cx.restore()});
+    raf=P.length?requestAnimationFrame(step):0;
+  }
+
+  // hearts on tap
+  var emo=["💗","💖","💕","❤️","🌸"];
+  addEventListener("pointerdown",function(e){
+    if(reduce)return;
+    var h=document.createElement("div");h.className="heart";
+    h.textContent=emo[Math.floor(Math.random()*emo.length)];
+    h.style.left=(e.clientX-12)+"px";h.style.top=(e.clientY-12)+"px";
+    document.body.appendChild(h);setTimeout(function(){h.remove()},1400);
+  });
+
+  function reveal(id){var s=$(id);s.classList.remove("hidden");s.classList.add("show");
+    setTimeout(function(){s.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"})},80)}
+
+  // candle
+  var candle=$("candle"),blown=false;
+  function blow(){
+    if(blown)return;blown=true;
+    candle.classList.add("out");
+    $("blow").textContent="Your wish is on its way ✨";
+    burst(innerWidth/2,innerHeight*.4,160);
+    setTimeout(function(){reveal("balloonSec")},900);
+  }
+  $("blow").addEventListener("click",blow);
+  $("cake").addEventListener("click",blow);
+
+  // balloons
+  var msgs=["Your smile makes my whole day better.","Your laugh can fix my mood in a second.","You make my bad days easier and my good days better.","Being with you feels like home.","You have so much light in you."];
+  var colors=["#c2255c","#e8a33d","#7b5ea7","#2a9d8f","#e76f51"];
+  var emojis=["💗","☀️","🌙","🏡","✨"];
+  var box=$("balloons"),popped=0;
+  msgs.forEach(function(m,i){
+    var b=document.createElement("button");b.className="bal";b.type="button";
+    b.style.background=colors[i];b.textContent=emojis[i];b.setAttribute("aria-label","Pop balloon "+(i+1));
+    b.addEventListener("click",function(e){
+      if(b.classList.contains("pop"))return;
+      b.classList.add("pop");popped++;
+      burst(e.clientX,e.clientY,30);
+      var d=document.createElement("div");d.textContent=m;$("reasons").appendChild(d);
+      $("count").textContent="Each one holds something I love about you. "+popped+" of 5 popped.";
+      if(popped===5){$("count").textContent="That’s only a few of the reasons.";setTimeout(function(){reveal("envSec")},1200)}
+    });
+    box.appendChild(b);
+  });
+
+  // letter
+  $("env").addEventListener("click",function(){
+    $("env").classList.add("hidden");$("env").previousElementSibling.classList.add("hidden");
+    var l=$("letter");l.classList.remove("hidden");l.classList.add("show");
+    burst(innerWidth/2,innerHeight*.35,100);
+    setTimeout(function(){l.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"})},80);
+  });
+  $("again").addEventListener("click",function(){
+    burst(innerWidth/2,innerHeight*.5,220);
+    setTimeout(function(){burst(innerWidth*.2,innerHeight*.5,100);burst(innerWidth*.8,innerHeight*.5,100)},300);
+  });
+})();
+</script>
+</body>
+</html>
