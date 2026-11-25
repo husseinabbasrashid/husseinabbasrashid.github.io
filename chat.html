@@ -2200,18 +2200,24 @@
         .dashboard-right { right:24px; }
         .dash-topline { display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,.38); padding-bottom:8px; margin-bottom:12px; letter-spacing:.09em; font-size:8px; }
         .dash-mark { display:inline-flex; align-items:center; gap:6px; }
-        .dash-mark i { width:6px; height:6px; border-radius:50%; background:#f2f3f5; box-shadow:0 0 8px #fff; }
+        .dash-mark i { width:6px; height:6px; border-radius:50%; background:#f2f3f5; box-shadow:0 0 8px #fff; animation: monitor-beacon 1.4s ease-in-out infinite; }
         .dash-title { font:600 15px/1.45 var(--font-family); color:#fff; margin-bottom:3px; }
         .dash-caption { color:rgba(220,223,228,.58); font-size:8px; letter-spacing:.08em; margin-bottom:12px; }
         .dash-rows { border-top:1px solid rgba(255,255,255,.2); margin-top:10px; }
         .dash-row { display:flex; justify-content:space-between; gap:10px; padding:7px 0; border-bottom:1px solid rgba(255,255,255,.12); font-size:9px; }
         .dash-row b { color:#fff; font-weight:500; }
         .dash-chart { display:block; width:100%; height:66px; margin:8px 0 3px; border:1px solid rgba(255,255,255,.2); background:linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px); background-size:18px 18px; }
-        .dash-chart path { fill:none; stroke:#e9ebee; stroke-width:1.2; opacity:.85; }
-        .dash-chart .dash-chart-dim { stroke:#858990; opacity:.7; }
+        .dash-chart path { fill:none; stroke:#e9ebee; stroke-width:1.2; opacity:.85; stroke-dasharray:1; animation: chart-trace 5s ease-in-out infinite; }
+        .dash-chart .dash-chart-dim { stroke:#858990; opacity:.7; animation-delay:-2.5s; animation-duration:6.5s; }
         .dash-footer { display:flex; justify-content:space-between; padding-top:9px; color:rgba(230,232,235,.48); font-size:8px; border-top:1px solid rgba(255,255,255,.18); }
         .dash-spectrum { display:flex; align-items:flex-end; height:34px; gap:4px; margin:8px 0; border-bottom:1px solid rgba(255,255,255,.25); }
-        .dash-spectrum i { flex:1; height:var(--h); background:linear-gradient(0deg,rgba(220,223,227,.12),rgba(245,246,248,.78)); border-top:1px solid #fff; }
+        .dash-spectrum i { flex:1; height:var(--h); transform-origin:center bottom; background:linear-gradient(0deg,rgba(220,223,227,.12),rgba(245,246,248,.78)); border-top:1px solid #fff; animation:spectrum-pulse 1.15s ease-in-out infinite alternate; }
+        .dash-spectrum i:nth-child(3n + 1) { animation-delay:-.35s; }
+        .dash-spectrum i:nth-child(3n + 2) { animation-delay:-.8s; }
+        .dash-spectrum i:nth-child(3n) { animation-delay:-.15s; }
+        @keyframes monitor-beacon { 0%,100% { opacity:.45; box-shadow:0 0 4px rgba(255,255,255,.35); } 50% { opacity:1; box-shadow:0 0 13px rgba(255,255,255,.95); } }
+        @keyframes chart-trace { 0% { stroke-dashoffset:1; opacity:.3; } 48%,78% { stroke-dashoffset:0; opacity:.95; } 100% { stroke-dashoffset:-1; opacity:.35; } }
+        @keyframes spectrum-pulse { from { transform:scaleY(.56); filter:brightness(.65); } to { transform:scaleY(1); filter:brightness(1.35); } }
         @media(max-width:1500px) { .dashboard-panel { display:none; } #worldGlobeCanvas { left:39%; opacity:.6; } }
         .main-wrap { position: relative; z-index: 1; }
         @media(max-width: 700px) {
@@ -2252,8 +2258,8 @@
         <div class="dash-title">خريطة الاتصال العالمية</div>
         <div class="dash-caption">GLOBAL CHAT / ORBITAL VIEW</div>
         <svg class="dash-chart" viewBox="0 0 220 66" preserveAspectRatio="none">
-            <path d="M4 48 C20 44 22 20 40 28 S65 54 82 39 S108 13 123 28 S147 52 163 34 S190 18 216 24" />
-            <path class="dash-chart-dim" d="M4 54 C24 50 28 39 43 43 S63 27 79 32 S105 47 121 42 S147 23 165 29 S194 46 216 38" />
+            <path pathLength="1" d="M4 48 C20 44 22 20 40 28 S65 54 82 39 S108 13 123 28 S147 52 163 34 S190 18 216 24" />
+            <path pathLength="1" class="dash-chart-dim" d="M4 54 C24 50 28 39 43 43 S63 27 79 32 S105 47 121 42 S147 23 165 29 S194 46 216 38" />
         </svg>
         <div class="dash-rows">
             <div class="dash-row"><span>نظام الإحداثيات</span><b>LAT / LON</b></div>
@@ -2274,8 +2280,8 @@
             <i style="--h:38%"></i><i style="--h:63%"></i><i style="--h:46%"></i><i style="--h:78%"></i><i style="--h:53%"></i><i style="--h:90%"></i><i style="--h:58%"></i><i style="--h:72%"></i><i style="--h:42%"></i><i style="--h:66%"></i><i style="--h:34%"></i><i style="--h:57%"></i>
         </div>
         <svg class="dash-chart" viewBox="0 0 220 66" preserveAspectRatio="none">
-            <path d="M4 49 C22 46 27 19 44 28 S67 55 83 43 S108 21 124 33 S149 47 165 30 S193 22 216 19" />
-            <path class="dash-chart-dim" d="M4 54 C20 51 35 42 49 45 S71 33 86 38 S109 48 126 43 S152 28 170 34 S194 44 216 36" />
+            <path pathLength="1" d="M4 49 C22 46 27 19 44 28 S67 55 83 43 S108 21 124 33 S149 47 165 30 S193 22 216 19" />
+            <path pathLength="1" class="dash-chart-dim" d="M4 54 C20 51 35 42 49 45 S71 33 86 38 S109 48 126 43 S152 28 170 34 S194 44 216 36" />
         </svg>
         <div class="dash-footer"><span>GEOGRAPHIC GRID</span><span>GRAYSCALE</span></div>
     </aside>
@@ -3479,7 +3485,6 @@
             const ctx = canvas?.getContext('2d');
             if (!canvas || !ctx) return;
 
-            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
             const land = [
                 [[-168,70],[-145,72],[-128,58],[-124,48],[-111,48],[-102,27],[-92,18],[-82,24],[-80,32],[-67,46],[-57,53],[-75,61],[-95,72],[-125,74],[-145,70]],
                 [[-81,12],[-68,9],[-52,-2],[-45,-10],[-50,-22],[-58,-34],[-68,-54],[-75,-42],[-79,-18],[-81,2]],
@@ -3674,8 +3679,9 @@
                 ctx.fillText('GLOBAL MAP VIEW', cx, cy + radius * 1.32);
 
                 if (!document.hidden) {
-                    if (!reducedMotion.matches) rotation += .0032;
-                    huePhase += reducedMotion.matches ? .003 : .012;
+                    // Keep the rotation legible at a glance; pause automatically when the tab is hidden.
+                    rotation += .008;
+                    huePhase += .02;
                     raf = requestAnimationFrame(draw);
                 }
             }
