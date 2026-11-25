@@ -1492,6 +1492,10 @@ body.light .cursor-spotlight {
 .home-back-top.is-visible { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
 .home-back-top:hover { background: var(--bg-surface-hover); }
 
+@media (max-width: 640px) {
+    .home-back-top { inset-inline-end: max(14px, env(safe-area-inset-right)); bottom: max(14px, env(safe-area-inset-bottom)); width: 44px; height: 44px; border-radius: 14px; }
+}
+
 @media (max-width: 600px) {
     .hero-signal { gap: 7px; margin-top: 16px; padding-inline: 10px; }
     .hero-signal > span { padding: 7px 10px; font-size: .73rem; }
@@ -1499,6 +1503,7 @@ body.light .cursor-spotlight {
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .hero-signal > span, .cta-group .btn-whatsapp, .home-back-top { transition: none !important; }
     .grid-bg          { animation: none; }
     .grid-glow,
     .grid-glow-1,

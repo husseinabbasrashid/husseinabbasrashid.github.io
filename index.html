@@ -289,7 +289,7 @@
                         <p data-ar="نظام متكامل لتحليل البيانات بالذكاء الاصطناعي مع لوحات معلومات تفاعلية ومت تقارير ذكية."
                             data-en="Complete AI-powered data analytics platform with interactive dashboards and smart reports.">
                             نظام متكامل لتحليل البيانات بالذكاء الاصطناعي مع لوحات معلومات تفاعلية.</p>
-                        <a href="#" class="card-link hover-target"><i class="fas fa-arrow-left"></i></a>
+                        <a href="booking.html" class="card-link hover-target" aria-label="احجز مشروعاً مشابهاً"><i class="fas fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                 </div>
 
@@ -309,7 +309,7 @@
                         <p data-ar="تطبيق جوال متكامل للتوصيل مع واجهة مستخدم عصرية وسلسة."
                             data-en="Complete mobile delivery app with modern and smooth UI.">تطبيق جوال متكامل للتوصيل
                             مع واجهة عصرية.</p>
-                        <a href="#" class="card-link hover-target"><i class="fas fa-arrow-left"></i></a>
+                        <a href="booking.html" class="card-link hover-target" aria-label="احجز مشروعاً مشابهاً"><i class="fas fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                 </div>
 
@@ -329,7 +329,7 @@
                         <p data-ar="منصة شاملة لإدارة المشاريع والفرق والعملاء."
                             data-en="Comprehensive platform for managing projects, teams and clients.">منصة شاملة لإدارة
                             المشاريع والفرق.</p>
-                        <a href="#" class="card-link hover-target"><i class="fas fa-arrow-left"></i></a>
+                        <a href="booking.html" class="card-link hover-target" aria-label="احجز مشروعاً مشابهاً"><i class="fas fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                 </div>
 
@@ -350,7 +350,7 @@
                         <p data-ar="منصة تعليمية متكاملة مع فيديوهات تفاعلية وتوصيات ذكية بالذكاء الاصطناعي."
                             data-en="Complete e-learning platform with interactive videos and AI-powered recommendations.">
                             منصة تعليمية متكاملة مع فيديوهات ذكية.</p>
-                        <a href="#" class="card-link hover-target"><i class="fas fa-arrow-left"></i></a>
+                        <a href="booking.html" class="card-link hover-target" aria-label="احجز مشروعاً مشابهاً"><i class="fas fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>
@@ -985,19 +985,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 
     <script src="main.js" defer></script>
-    <script>
-        jQuery(function ($) {
-            $(window).on('scroll', function () {
-                $('#homeBackTop').toggleClass('is-visible', window.scrollY > 520);
-            });
-            $('#homeBackTop').on('click', function () {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        });
-    </script>
     <button class="home-back-top" id="homeBackTop" type="button" aria-label="العودة إلى أعلى الصفحة">
         <i class="fas fa-arrow-up" aria-hidden="true"></i>
     </button>
+    <script>
+        jQuery(function ($) {
+            const $backToTop = $('#homeBackTop');
+            const updateBackToTop = () => $backToTop.toggleClass('is-visible', window.scrollY > 520);
+            $(window).on('scroll.homeBackToTop', updateBackToTop);
+            $backToTop.on('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+            updateBackToTop();
+        });
+    </script>
 </body>
 
 </html>
