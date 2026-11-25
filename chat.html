@@ -18,28 +18,28 @@
        ROOT VARIABLES
     ═══════════════════════════════════════════ */
         :root {
-            --bg-dark: #03145f;
-            --bg-card: #071d68;
-            --bg-card-hover: #0d2b82;
-            --card-border: rgba(102, 180, 255, 0.16);
-            --card-border-hover: rgba(82, 204, 255, 0.34);
+            --bg-dark: #050505;
+            --bg-card: #111214;
+            --bg-card-hover: #1b1c1f;
+            --card-border: rgba(255, 255, 255, 0.13);
+            --card-border-hover: rgba(255, 255, 255, 0.3);
             --text-main: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
-            --accent-primary: #41a8ff;
-            --accent-secondary: #32d9ff;
-            --accent-tertiary: #3974ff;
-            --accent-glow: rgba(25, 163, 255, 0.48);
-            --gradient-warm: linear-gradient(135deg, #1d63ed 0%, #13c8f5 100%);
-            --gradient-gold: linear-gradient(135deg, #d9f3ff 0%, #67caff 55%, #43a6ff 100%);
-            --gradient-btn: linear-gradient(135deg, #2575f5 0%, #0750dc 100%);
-            --header-bg: rgba(2, 17, 72, 0.9);
-            --composer-bg: rgba(2, 17, 72, 0.96);
+            --text-secondary: #b9bcc2;
+            --text-muted: #858991;
+            --accent-primary: #f3f4f6;
+            --accent-secondary: #b8bdc5;
+            --accent-tertiary: #888d95;
+            --accent-glow: rgba(255, 255, 255, 0.28);
+            --gradient-warm: linear-gradient(135deg, #f5f6f7 0%, #9499a1 100%);
+            --gradient-gold: linear-gradient(135deg, #ffffff 0%, #c4c7cc 55%, #8e9299 100%);
+            --gradient-btn: linear-gradient(135deg, #e8e9eb 0%, #a7abb1 100%);
+            --header-bg: rgba(5, 5, 6, 0.94);
+            --composer-bg: rgba(5, 5, 6, 0.98);
             --font-family: 'IBM Plex Sans Arabic', sans-serif;
             --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
             --radius: 16px;
-            --mine-color: #1269ec;
-            --other-color: #092978;
+            --mine-color: #34363a;
+            --other-color: #17181b;
         }
 
         body.light {
@@ -2149,59 +2149,76 @@
             box-shadow: 0 12px 40px rgba(59, 130, 246, .25), 0 0 0 1px rgba(59, 130, 246, .35) !important;
         }
 
-        /* Royal-blue luminous chat theme inspired by the supplied reference */
-        body:not(.light) {
-            background: radial-gradient(ellipse at 50% 42%, #0b36a5 0%, #082a83 42%, #03145f 100%);
-        }
-        body.light {
-            background: radial-gradient(ellipse at 50% 42%, #e8f6ff 0%, #f0f5ff 52%, #e5edff 100%);
-        }
+        /* Monochrome command-center theme inspired by the supplied dashboard */
+        body:not(.light) { background: radial-gradient(ellipse at 42% 50%, #151617 0%, #090a0b 44%, #030303 100%); }
+        body.light { background: radial-gradient(ellipse at 42% 50%, #f0f0f0 0%, #e2e3e5 52%, #d3d5d8 100%); }
         .grid-bg {
-            background-image:
-                radial-gradient(ellipse at 50% 42%, transparent 0%, rgba(1, 13, 65, .18) 72%),
-                linear-gradient(rgba(126, 204, 255, .018) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(126, 204, 255, .018) 1px, transparent 1px);
-            background-size: auto, 64px 64px, 64px 64px;
+            background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+            background-size: 42px 42px;
         }
-        .glow-orb { opacity: .15; filter: blur(100px); }
-        .glow-orb-1 { background: #087cff; }
-        .glow-orb-2 { background: #123fff; }
-        .glow-orb-3 { background: #00d9ff; opacity: .1; }
-        .blue-ribbon {
-            position: fixed;
-            z-index: 0;
-            pointer-events: none;
-            width: min(900px, 92vw);
-            height: min(390px, 44vh);
-            min-height: 240px;
-            top: 34%;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: .27;
-        }
-        .blue-ribbon svg { width: 100%; height: 100%; overflow: visible; }
-        .blue-ribbon .ribbon-glow { fill: none; stroke: #057dff; stroke-width: 24; stroke-linecap: round; opacity: .56; filter: url(#ribbonBlur); }
-        .blue-ribbon .ribbon-line { fill: none; stroke: url(#ribbonGradient); stroke-width: 7; stroke-linecap: round; filter: url(#ribbonGlow); }
-        header { background: linear-gradient(180deg, rgba(2, 17, 72, .96), rgba(3, 24, 91, .8)); border-bottom-color: rgba(91, 187, 255, .18); }
-        .composer-wrap { background: linear-gradient(180deg, rgba(3, 29, 101, .78), var(--composer-bg)); border-top-color: rgba(65, 168, 255, .2); }
-        .input-bar { background: linear-gradient(135deg, rgba(5, 31, 104, .88), rgba(8, 42, 127, .91)); box-shadow: 0 0 0 1px rgba(77, 173, 255, .24) inset, 0 12px 38px rgba(0, 9, 48, .34); }
-        .input-bar::before { background: linear-gradient(135deg, rgba(54, 142, 255, .52), rgba(0, 220, 255, .4), rgba(55, 105, 255, .48)); }
-        .input-bar:focus-within { box-shadow: 0 0 0 1px rgba(70, 194, 255, .52) inset, 0 0 34px rgba(0, 167, 255, .22), 0 12px 38px rgba(0, 9, 48, .4); }
-        .msg.mine .bubble { background: linear-gradient(135deg, rgba(23, 105, 237, .82), rgba(11, 78, 193, .9)); box-shadow: 0 0 0 1px rgba(114, 199, 255, .28) inset, 0 8px 28px rgba(0, 20, 92, .26); }
-        .msg.other .bubble { background: linear-gradient(135deg, rgba(7, 32, 104, .86), rgba(9, 42, 125, .9)); box-shadow: 0 0 0 1px rgba(106, 184, 255, .16) inset, 0 6px 24px rgba(0, 12, 63, .24); }
-        .icon-btn:hover { color: #5ce3ff; }
-        .room-modal-card { background: rgba(5, 24, 87, .97); border-color: rgba(91, 187, 255, .24); }
-        .room-modal-card input, .room-modal-actions button { background-color: rgba(12, 42, 120, .82); }
+        .glow-orb { opacity: .055; filter: blur(115px); background: #fff; }
+        .glow-orb-1 { background: #d9dde2; }
+        .glow-orb-2 { background: #7c8188; }
+        .glow-orb-3 { background: #fff; opacity: .035; }
+        .blue-ribbon { display: none; }
+        #worldGlobeCanvas { width: min(78vh, 720px); height: min(78vh, 720px); left: 40%; top: 50%; opacity: .86; mix-blend-mode: screen; }
+        header { background: linear-gradient(180deg, rgba(5,5,6,.98), rgba(12,12,13,.94)); border-bottom-color: rgba(255,255,255,.16); }
+        .composer-wrap { background: linear-gradient(180deg, rgba(8,8,9,.9), rgba(4,4,5,.99)); border-top-color: rgba(255,255,255,.18); }
+        .input-bar { background: linear-gradient(135deg, rgba(27,28,30,.95), rgba(13,14,15,.97)); box-shadow: 0 0 0 1px rgba(255,255,255,.18) inset, 0 12px 38px rgba(0,0,0,.5); }
+        .input-bar::before { background: linear-gradient(135deg, rgba(255,255,255,.42), rgba(165,170,178,.24), rgba(255,255,255,.4)); }
+        .input-bar:focus-within { box-shadow: 0 0 0 1px rgba(255,255,255,.42) inset, 0 0 30px rgba(255,255,255,.12), 0 12px 38px rgba(0,0,0,.5); }
+        .msg.mine .bubble { background: linear-gradient(135deg, rgba(74,76,80,.96), rgba(43,45,48,.98)); box-shadow: 0 0 0 1px rgba(255,255,255,.22) inset, 0 8px 26px rgba(0,0,0,.35); }
+        .msg.other .bubble { background: linear-gradient(135deg, rgba(23,24,26,.96), rgba(36,37,39,.98)); box-shadow: 0 0 0 1px rgba(255,255,255,.13) inset, 0 6px 24px rgba(0,0,0,.36); }
+        .icon-btn:hover { color: #fff; }
+        .room-modal-card { background: rgba(14,15,16,.98); border-color: rgba(255,255,255,.2); }
+        .room-modal-card input, .room-modal-actions button { background-color: #202124; }
+        .send-btn { color: #111 !important; }
+        .send-btn { background: linear-gradient(145deg, #f3f4f5, #999da4) !important; box-shadow: 0 0 0 1px rgba(255,255,255,.4) inset, 0 6px 20px rgba(255,255,255,.15) !important; }
+        .send-btn:hover { box-shadow: 0 0 0 1px rgba(255,255,255,.72) inset, 0 10px 28px rgba(255,255,255,.2) !important; }
+        .attach-btn, .emoji-trigger { color: #d8dadd; }
+        .attach-btn { background: rgba(255,255,255,.09); }
+        #onlineBadge i { color: #e6e7e9 !important; }
+        #pinnedBanner { background: linear-gradient(135deg, rgba(255,255,255,.055), rgba(255,255,255,.02)); }
+        .room-modal-actions .room-primary { background: #e5e6e8; color: #111; }
+        .status-badge { color: #d8dadd; background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.14); }
+        .status-dot { color: #eee; background: #eee; box-shadow: 0 0 8px rgba(255,255,255,.55); }
+        .online-badge, .msg-counter { color: #e1e3e6; background: rgba(255,255,255,.055); border-color: rgba(255,255,255,.17); }
         .main-wrap { position: relative; z-index: 1; }
-        body.light .blue-ribbon { opacity: .12; }
-        .blue-ribbon { opacity: .08; }
-        body.light #worldGlobeCanvas { opacity: .16; mix-blend-mode: multiply; }
+        #particleCanvas { opacity: .24; }
+        .dashboard-panel {
+            position: fixed; z-index: 0; top: 50%; transform: translateY(-50%);
+            width: 236px; padding: 16px 15px 13px; color: rgba(245,246,248,.82);
+            border: 1px solid rgba(235,238,242,.46); background: rgba(5,5,6,.73);
+            box-shadow: 0 12px 40px rgba(0,0,0,.32), 0 0 24px rgba(255,255,255,.035) inset;
+            font: 10px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace;
+            backdrop-filter: blur(5px); pointer-events: none;
+        }
+        .dashboard-panel::before, .dashboard-panel::after { content:''; position:absolute; width:12px; height:12px; border-color:#f1f2f4; opacity:.82; }
+        .dashboard-panel::before { top:-1px; left:-1px; border-top:1px solid; border-left:1px solid; }
+        .dashboard-panel::after { bottom:-1px; right:-1px; border-bottom:1px solid; border-right:1px solid; }
+        .dashboard-left { left:24px; }
+        .dashboard-right { right:24px; }
+        .dash-topline { display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,.38); padding-bottom:8px; margin-bottom:12px; letter-spacing:.09em; font-size:8px; }
+        .dash-mark { display:inline-flex; align-items:center; gap:6px; }
+        .dash-mark i { width:6px; height:6px; border-radius:50%; background:#f2f3f5; box-shadow:0 0 8px #fff; }
+        .dash-title { font:600 15px/1.45 var(--font-family); color:#fff; margin-bottom:3px; }
+        .dash-caption { color:rgba(220,223,228,.58); font-size:8px; letter-spacing:.08em; margin-bottom:12px; }
+        .dash-rows { border-top:1px solid rgba(255,255,255,.2); margin-top:10px; }
+        .dash-row { display:flex; justify-content:space-between; gap:10px; padding:7px 0; border-bottom:1px solid rgba(255,255,255,.12); font-size:9px; }
+        .dash-row b { color:#fff; font-weight:500; }
+        .dash-chart { display:block; width:100%; height:66px; margin:8px 0 3px; border:1px solid rgba(255,255,255,.2); background:linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px); background-size:18px 18px; }
+        .dash-chart path { fill:none; stroke:#e9ebee; stroke-width:1.2; opacity:.85; }
+        .dash-chart .dash-chart-dim { stroke:#858990; opacity:.7; }
+        .dash-footer { display:flex; justify-content:space-between; padding-top:9px; color:rgba(230,232,235,.48); font-size:8px; border-top:1px solid rgba(255,255,255,.18); }
+        .dash-spectrum { display:flex; align-items:flex-end; height:34px; gap:4px; margin:8px 0; border-bottom:1px solid rgba(255,255,255,.25); }
+        .dash-spectrum i { flex:1; height:var(--h); background:linear-gradient(0deg,rgba(220,223,227,.12),rgba(245,246,248,.78)); border-top:1px solid #fff; }
+        @media(max-width:1500px) { .dashboard-panel { display:none; } #worldGlobeCanvas { left:39%; opacity:.6; } }
+        .main-wrap { position: relative; z-index: 1; }
         @media(max-width: 700px) {
-            #worldGlobeCanvas { width: 96vw; height: 96vw; top: 50%; opacity: .24; }
-            .blue-ribbon { display: none; }
+            #worldGlobeCanvas { width: 94vw; height: 94vw; left:50%; top:52%; opacity:.12; }
         }
         @media(prefers-reduced-motion: reduce) {
-            #worldGlobeCanvas { opacity: .18; }
+            #worldGlobeCanvas { opacity: .42; }
         }
     </style>
 </head>
@@ -2230,6 +2247,38 @@
             <path class="ribbon-line" d="M95 285 C 50 195, 65 95, 160 64 C 245 36, 313 82, 341 154 C 369 226, 442 277, 531 238 C 605 205, 621 130, 704 147 C 780 163, 815 238, 776 307" />
         </svg>
     </div>
+    <aside class="dashboard-panel dashboard-left" aria-hidden="true">
+        <div class="dash-topline"><span class="dash-mark"><i></i> DATA VISUALIZATION LAB</span><span>01 / GEO</span></div>
+        <div class="dash-title">خريطة الاتصال العالمية</div>
+        <div class="dash-caption">GLOBAL CHAT / ORBITAL VIEW</div>
+        <svg class="dash-chart" viewBox="0 0 220 66" preserveAspectRatio="none">
+            <path d="M4 48 C20 44 22 20 40 28 S65 54 82 39 S108 13 123 28 S147 52 163 34 S190 18 216 24" />
+            <path class="dash-chart-dim" d="M4 54 C24 50 28 39 43 43 S63 27 79 32 S105 47 121 42 S147 23 165 29 S194 46 216 38" />
+        </svg>
+        <div class="dash-rows">
+            <div class="dash-row"><span>نظام الإحداثيات</span><b>LAT / LON</b></div>
+            <div class="dash-row"><span>خطوط الشبكة</span><b>24°</b></div>
+            <div class="dash-row"><span>عرض الكرة</span><b>ROTATING</b></div>
+        </div>
+        <div class="dash-footer"><span>WORLD MAP</span><span>MONO / 01</span></div>
+    </aside>
+    <aside class="dashboard-panel dashboard-right" aria-hidden="true">
+        <div class="dash-topline"><span class="dash-mark"><i></i> ORBITAL MONITOR</span><span>02 / MAP</span></div>
+        <div class="dash-title">مؤشرات الخريطة</div>
+        <div class="dash-caption">ILLUSTRATIVE INTERFACE / NOT LIVE DATA</div>
+        <div class="dash-rows">
+            <div class="dash-row"><span>المدار</span><b>ACTIVE VIEW</b></div>
+            <div class="dash-row"><span>حدود اليابسة</span><b>OUTLINE</b></div>
+        </div>
+        <div class="dash-spectrum" aria-hidden="true">
+            <i style="--h:38%"></i><i style="--h:63%"></i><i style="--h:46%"></i><i style="--h:78%"></i><i style="--h:53%"></i><i style="--h:90%"></i><i style="--h:58%"></i><i style="--h:72%"></i><i style="--h:42%"></i><i style="--h:66%"></i><i style="--h:34%"></i><i style="--h:57%"></i>
+        </div>
+        <svg class="dash-chart" viewBox="0 0 220 66" preserveAspectRatio="none">
+            <path d="M4 49 C22 46 27 19 44 28 S67 55 83 43 S108 21 124 33 S149 47 165 30 S193 22 216 19" />
+            <path class="dash-chart-dim" d="M4 54 C20 51 35 42 49 45 S71 33 86 38 S109 48 126 43 S152 28 170 34 S194 44 216 36" />
+        </svg>
+        <div class="dash-footer"><span>GEOGRAPHIC GRID</span><span>GRAYSCALE</span></div>
+    </aside>
 
     <!-- ═══ HEADER ═══ -->
     <header>
@@ -3459,6 +3508,24 @@
             ];
             const hubs = [[-74,40],[-3,52],[31,30],[55,25],[77,28],[103,1],[121,31],[151,-34],[-46,-23]];
             let width = 0, height = 0, rotation = 0, huePhase = 0, raf = 0, lastFrame = 0;
+            const landDots = [];
+
+            function pointInPolygon(lon, lat, polygon) {
+                let inside = false;
+                for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+                    const [xi, yi] = polygon[i], [xj, yj] = polygon[j];
+                    const crosses = ((yi > lat) !== (yj > lat)) &&
+                        (lon < (xj - xi) * (lat - yi) / ((yj - yi) || .0001) + xi);
+                    if (crosses) inside = !inside;
+                }
+                return inside;
+            }
+
+            for (let lat = -56; lat <= 80; lat += 4) {
+                for (let lon = -176; lon <= 176; lon += 4) {
+                    if (land.some(polygon => pointInPolygon(lon, lat, polygon))) landDots.push([lon, lat]);
+                }
+            }
 
             function resize() {
                 const rect = canvas.getBoundingClientRect();
@@ -3507,26 +3574,26 @@
                 ctx.clearRect(0, 0, width, height);
                 const cx = width / 2, cy = height / 2;
                 const radius = Math.min(width, height) * .335;
-                const hue = (190 + Math.sin(huePhase) * 35 + 360) % 360;
+                const shimmer = .5 + (Math.sin(huePhase) + 1) * .18;
 
                 // Halo and globe shell
                 const halo = ctx.createRadialGradient(cx, cy, radius * .45, cx, cy, radius * 1.55);
-                halo.addColorStop(0, `hsla(${hue}, 96%, 54%, .16)`);
-                halo.addColorStop(.58, `hsla(${(hue + 28) % 360}, 100%, 52%, .07)`);
-                halo.addColorStop(1, 'rgba(0, 10, 55, 0)');
+                halo.addColorStop(0, 'rgba(255,255,255,.19)');
+                halo.addColorStop(.58, 'rgba(215,220,226,.075)');
+                halo.addColorStop(1, 'rgba(0,0,0,0)');
                 ctx.fillStyle = halo;
                 ctx.beginPath(); ctx.arc(cx, cy, radius * 1.55, 0, Math.PI * 2); ctx.fill();
 
                 const shell = ctx.createRadialGradient(cx - radius * .34, cy - radius * .38, radius * .04, cx, cy, radius * 1.03);
-                shell.addColorStop(0, 'rgba(19, 83, 169, .23)');
-                shell.addColorStop(.72, 'rgba(3, 20, 78, .2)');
-                shell.addColorStop(1, 'rgba(0, 13, 63, .5)');
+                shell.addColorStop(0, 'rgba(238,240,243,.15)');
+                shell.addColorStop(.72, 'rgba(116,120,126,.09)');
+                shell.addColorStop(1, 'rgba(0,0,0,.34)');
                 ctx.fillStyle = shell;
                 ctx.beginPath(); ctx.arc(cx, cy, radius, 0, Math.PI * 2); ctx.fill();
 
                 // Fine outer rings and radar ticks
                 ctx.save();
-                ctx.strokeStyle = `hsla(${hue}, 95%, 70%, .27)`;
+                ctx.strokeStyle = 'rgba(245,246,248,.43)';
                 ctx.lineWidth = 1;
                 ctx.beginPath(); ctx.arc(cx, cy, radius * 1.07, 0, Math.PI * 2); ctx.stroke();
                 ctx.setLineDash([2, 7]);
@@ -3539,7 +3606,7 @@
                     ctx.beginPath();
                     ctx.moveTo(cx + Math.cos(a) * inner, cy + Math.sin(a) * inner);
                     ctx.lineTo(cx + Math.cos(a) * outer, cy + Math.sin(a) * outer);
-                    ctx.strokeStyle = `hsla(${(hue + i * 2) % 360}, 95%, 70%, ${i % 6 === 0 ? .48 : .2})`;
+                    ctx.strokeStyle = `rgba(244,246,248,${i % 6 === 0 ? .67 : .28})`;
                     ctx.stroke();
                 }
                 ctx.restore();
@@ -3547,28 +3614,35 @@
                 // Clip all map lines to the visible hemisphere
                 ctx.save();
                 ctx.beginPath(); ctx.arc(cx, cy, radius * .995, 0, Math.PI * 2); ctx.clip();
-                ctx.strokeStyle = 'rgba(112, 190, 255, .18)';
+                ctx.strokeStyle = 'rgba(235,238,242,.32)';
                 ctx.lineWidth = .7;
                 for (let latitude = -60; latitude <= 60; latitude += 20) {
                     const line = [];
                     for (let longitude = -180; longitude <= 180; longitude += 6) line.push([longitude, latitude]);
-                    strokeGeoLine(line, cx, cy, radius, 'rgba(115, 190, 255, .2)', .65);
+                    strokeGeoLine(line, cx, cy, radius, 'rgba(235,238,242,.29)', .72);
                 }
                 for (let longitude = -160; longitude <= 180; longitude += 20) {
                     const line = [];
                     for (let latitude = -88; latitude <= 88; latitude += 4) line.push([longitude, latitude]);
-                    strokeGeoLine(line, cx, cy, radius, 'rgba(115, 190, 255, .19)', .65);
+                    strokeGeoLine(line, cx, cy, radius, 'rgba(235,238,242,.27)', .72);
                 }
 
-                // Simplified continental outlines and animated country divisions
+                // Dotted land mesh, simplified outlines and animated grayscale borders
+                landDots.forEach((point, index) => {
+                    const p = project(point[0], point[1], cx, cy, radius);
+                    if (p.z <= 0.035) return;
+                    ctx.globalAlpha = .22 + (Math.sin(huePhase * 1.8 + index * .37) + 1) * .19;
+                    ctx.beginPath(); ctx.arc(p.x, p.y, .65 + (index % 3) * .12, 0, Math.PI * 2);
+                    ctx.fillStyle = '#f5f6f7'; ctx.fill();
+                });
+                ctx.globalAlpha = 1;
                 land.forEach((continent, index) => {
-                    const landHue = (hue + index * 19 + 360) % 360;
                     strokeGeoLine(continent, cx, cy, radius,
-                        `hsla(${landHue}, 100%, ${62 + Math.sin(huePhase + index) * 7}%, .8)`, 1.8, true);
+                        `rgba(248,249,250,${.78 + Math.sin(huePhase + index) * .1})`, 2.05, true);
                 });
                 borders.forEach((line, index) => {
                     strokeGeoLine(line, cx, cy, radius,
-                        `hsla(${(hue + 18 + index * 4) % 360}, 100%, 72%, .58)`, .8);
+                        `rgba(215,219,224,${.48 + Math.sin(huePhase * 1.4 + index) * .12})`, .95);
                 });
 
                 // Pulsing connection hubs
@@ -3577,26 +3651,26 @@
                     if (p.z <= 0.04) return;
                     const pulse = .55 + (Math.sin(huePhase * 2.3 + index) + 1) * .45;
                     ctx.beginPath(); ctx.arc(p.x, p.y, 2 + pulse * 2, 0, Math.PI * 2);
-                    ctx.fillStyle = `hsla(${(hue + index * 17) % 360}, 100%, 72%, .9)`; ctx.fill();
+                    ctx.fillStyle = `rgba(255,255,255,${.75 + pulse * .2})`; ctx.fill();
                     ctx.beginPath(); ctx.arc(p.x, p.y, 5 + pulse * 5, 0, Math.PI * 2);
-                    ctx.strokeStyle = `hsla(${hue}, 100%, 70%, ${.42 * pulse})`; ctx.lineWidth = .8; ctx.stroke();
+                    ctx.strokeStyle = `rgba(255,255,255,${.24 + .32 * pulse})`; ctx.lineWidth = .8; ctx.stroke();
                 });
                 ctx.restore();
 
                 // Edge glow and subtle HUD readouts
                 ctx.beginPath(); ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-                ctx.strokeStyle = `hsla(${hue}, 100%, 72%, .66)`; ctx.lineWidth = 1.25;
-                ctx.shadowColor = `hsl(${hue}, 100%, 65%)`; ctx.shadowBlur = 14; ctx.stroke(); ctx.shadowBlur = 0;
-                ctx.fillStyle = `hsla(${hue}, 90%, 84%, .7)`;
-                ctx.font = '600 9px ui-monospace, monospace';
+                ctx.strokeStyle = `rgba(255,255,255,${.72 + shimmer * .16})`; ctx.lineWidth = 1.6;
+                ctx.shadowColor = 'rgba(255,255,255,.9)'; ctx.shadowBlur = 20; ctx.stroke(); ctx.shadowBlur = 0;
+                ctx.fillStyle = 'rgba(248,249,250,.88)';
+                ctx.font = '600 10px ui-monospace, monospace';
                 ctx.textAlign = 'left'; ctx.fillText('WORLD MAP / ORBIT', width * .07, height * .16);
                 ctx.textAlign = 'right'; ctx.fillText('LAT / LON GRID', width * .93, height * .16);
-                ctx.textAlign = 'left'; ctx.fillStyle = 'rgba(153, 210, 255, .54)';
+                ctx.textAlign = 'left'; ctx.fillStyle = 'rgba(235,237,240,.78)';
                 ctx.fillText(`ROT ${String(Math.round((rotation * 180 / Math.PI + 360) % 360)).padStart(3, '0')}°`, width * .07, height * .86);
                 ctx.textAlign = 'right'; ctx.fillText('GEO / VIEW 01', width * .93, height * .86);
                 ctx.textAlign = 'center';
-                ctx.fillStyle = `hsla(${hue}, 100%, 82%, .68)`;
-                ctx.font = '700 8px ui-monospace, monospace';
+                ctx.fillStyle = 'rgba(245,246,247,.82)';
+                ctx.font = '700 9px ui-monospace, monospace';
                 ctx.fillText('GLOBAL MAP VIEW', cx, cy + radius * 1.32);
 
                 if (!document.hidden) {
@@ -3624,7 +3698,7 @@
             const ctx = canvas.getContext('2d');
             let W, H, particles = [];
             const N = 55;
-            const COLORS = ['59,130,246', '139,92,246', '6,182,212'];
+            const COLORS = ['238,240,243', '174,178,184', '255,255,255'];
 
             function resize() {
                 W = canvas.width = window.innerWidth;
