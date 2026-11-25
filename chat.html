@@ -18,28 +18,28 @@
        ROOT VARIABLES
     ═══════════════════════════════════════════ */
         :root {
-            --bg-dark: #030712;
-            --bg-card: #0f172a;
-            --bg-card-hover: #1e293b;
-            --card-border: rgba(59, 130, 246, 0.1);
-            --card-border-hover: rgba(59, 130, 246, 0.25);
+            --bg-dark: #03145f;
+            --bg-card: #071d68;
+            --bg-card-hover: #0d2b82;
+            --card-border: rgba(102, 180, 255, 0.16);
+            --card-border-hover: rgba(82, 204, 255, 0.34);
             --text-main: #f1f5f9;
             --text-secondary: #94a3b8;
             --text-muted: #64748b;
-            --accent-primary: #3b82f6;
-            --accent-secondary: #06b6d4;
-            --accent-tertiary: #8b5cf6;
-            --accent-glow: rgba(59, 130, 246, 0.4);
-            --gradient-warm: linear-gradient(135deg, #3b82f6 0%, #06b6d4 50%, #8b5cf6 100%);
-            --gradient-gold: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
-            --gradient-btn: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            --header-bg: rgba(3, 7, 18, 0.88);
-            --composer-bg: rgba(3, 7, 18, 0.95);
+            --accent-primary: #41a8ff;
+            --accent-secondary: #32d9ff;
+            --accent-tertiary: #3974ff;
+            --accent-glow: rgba(25, 163, 255, 0.48);
+            --gradient-warm: linear-gradient(135deg, #1d63ed 0%, #13c8f5 100%);
+            --gradient-gold: linear-gradient(135deg, #d9f3ff 0%, #67caff 55%, #43a6ff 100%);
+            --gradient-btn: linear-gradient(135deg, #2575f5 0%, #0750dc 100%);
+            --header-bg: rgba(2, 17, 72, 0.9);
+            --composer-bg: rgba(2, 17, 72, 0.96);
             --font-family: 'IBM Plex Sans Arabic', sans-serif;
             --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
             --radius: 16px;
-            --mine-color: #3b82f6;
-            --other-color: #1e293b;
+            --mine-color: #1269ec;
+            --other-color: #092978;
         }
 
         body.light {
@@ -1508,9 +1508,9 @@
 
         .room-modal-card h2 { margin: 0 0 8px; font-size: 1.15rem; }
         .room-modal-card p { margin: 0 0 16px; color: var(--text-secondary); font-size: .88rem; line-height: 1.6; }
-        .room-modal-card input { width: 100%; min-height: 46px; border: 1px solid var(--card-border); border-radius: 12px; background: var(--bg-card-hover); color: var(--text-primary); padding: 10px 12px; font: inherit; }
+        .room-modal-card input { width: 100%; min-height: 46px; border: 1px solid var(--card-border); border-radius: 12px; background: var(--bg-card-hover); color: var(--text-main); padding: 10px 12px; font: inherit; }
         .room-modal-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 12px; }
-        .room-modal-actions button { flex: 1; min-height: 42px; border: 1px solid var(--card-border); border-radius: 12px; background: var(--bg-card-hover); color: var(--text-primary); font: inherit; font-weight: 700; cursor: pointer; }
+        .room-modal-actions button { flex: 1; min-height: 42px; border: 1px solid var(--card-border); border-radius: 12px; background: var(--bg-card-hover); color: var(--text-main); font: inherit; font-weight: 700; cursor: pointer; }
         .room-modal-actions .room-primary { background: var(--accent-primary); color: #fff; border-color: transparent; }
         .room-code-result { display: none; margin-top: 16px; padding: 14px; border-radius: 14px; border: 1px dashed var(--accent-primary); text-align: center; }
         .room-code-result.visible { display: block; }
@@ -2135,6 +2135,52 @@
             background: linear-gradient(135deg, rgba(59, 130, 246, .15), rgba(59, 130, 246, .08)) !important;
             box-shadow: 0 12px 40px rgba(59, 130, 246, .25), 0 0 0 1px rgba(59, 130, 246, .35) !important;
         }
+
+        /* Royal-blue luminous chat theme inspired by the supplied reference */
+        body:not(.light) {
+            background: radial-gradient(ellipse at 50% 42%, #0b36a5 0%, #082a83 42%, #03145f 100%);
+        }
+        body.light {
+            background: radial-gradient(ellipse at 50% 42%, #e8f6ff 0%, #f0f5ff 52%, #e5edff 100%);
+        }
+        .grid-bg {
+            background-image:
+                radial-gradient(ellipse at 50% 42%, transparent 0%, rgba(1, 13, 65, .18) 72%),
+                linear-gradient(rgba(126, 204, 255, .018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(126, 204, 255, .018) 1px, transparent 1px);
+            background-size: auto, 64px 64px, 64px 64px;
+        }
+        .glow-orb { opacity: .15; filter: blur(100px); }
+        .glow-orb-1 { background: #087cff; }
+        .glow-orb-2 { background: #123fff; }
+        .glow-orb-3 { background: #00d9ff; opacity: .1; }
+        .blue-ribbon {
+            position: fixed;
+            z-index: 0;
+            pointer-events: none;
+            width: min(900px, 92vw);
+            height: min(390px, 44vh);
+            min-height: 240px;
+            top: 34%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: .27;
+        }
+        .blue-ribbon svg { width: 100%; height: 100%; overflow: visible; }
+        .blue-ribbon .ribbon-glow { fill: none; stroke: #057dff; stroke-width: 24; stroke-linecap: round; opacity: .56; filter: url(#ribbonBlur); }
+        .blue-ribbon .ribbon-line { fill: none; stroke: url(#ribbonGradient); stroke-width: 7; stroke-linecap: round; filter: url(#ribbonGlow); }
+        header { background: linear-gradient(180deg, rgba(2, 17, 72, .96), rgba(3, 24, 91, .8)); border-bottom-color: rgba(91, 187, 255, .18); }
+        .composer-wrap { background: linear-gradient(180deg, rgba(3, 29, 101, .78), var(--composer-bg)); border-top-color: rgba(65, 168, 255, .2); }
+        .input-bar { background: linear-gradient(135deg, rgba(5, 31, 104, .88), rgba(8, 42, 127, .91)); box-shadow: 0 0 0 1px rgba(77, 173, 255, .24) inset, 0 12px 38px rgba(0, 9, 48, .34); }
+        .input-bar::before { background: linear-gradient(135deg, rgba(54, 142, 255, .52), rgba(0, 220, 255, .4), rgba(55, 105, 255, .48)); }
+        .input-bar:focus-within { box-shadow: 0 0 0 1px rgba(70, 194, 255, .52) inset, 0 0 34px rgba(0, 167, 255, .22), 0 12px 38px rgba(0, 9, 48, .4); }
+        .msg.mine .bubble { background: linear-gradient(135deg, rgba(23, 105, 237, .82), rgba(11, 78, 193, .9)); box-shadow: 0 0 0 1px rgba(114, 199, 255, .28) inset, 0 8px 28px rgba(0, 20, 92, .26); }
+        .msg.other .bubble { background: linear-gradient(135deg, rgba(7, 32, 104, .86), rgba(9, 42, 125, .9)); box-shadow: 0 0 0 1px rgba(106, 184, 255, .16) inset, 0 6px 24px rgba(0, 12, 63, .24); }
+        .icon-btn:hover { color: #5ce3ff; }
+        .room-modal-card { background: rgba(5, 24, 87, .97); border-color: rgba(91, 187, 255, .24); }
+        .room-modal-card input, .room-modal-actions button { background-color: rgba(12, 42, 120, .82); }
+        .main-wrap { position: relative; z-index: 1; }
+        body.light .blue-ribbon { opacity: .12; }
     </style>
 </head>
 
@@ -2146,6 +2192,21 @@
     <div class="glow-orb glow-orb-1"></div>
     <div class="glow-orb glow-orb-2"></div>
     <div class="glow-orb glow-orb-3"></div>
+    <div class="blue-ribbon" aria-hidden="true">
+        <svg viewBox="0 0 900 390" role="presentation">
+            <defs>
+                <linearGradient id="ribbonGradient" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#00dcff" />
+                    <stop offset=".46" stop-color="#197dff" />
+                    <stop offset="1" stop-color="#51e6ff" />
+                </linearGradient>
+                <filter id="ribbonBlur" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="15" /></filter>
+                <filter id="ribbonGlow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5" result="blur" /><feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
+            </defs>
+            <path class="ribbon-glow" d="M95 285 C 50 195, 65 95, 160 64 C 245 36, 313 82, 341 154 C 369 226, 442 277, 531 238 C 605 205, 621 130, 704 147 C 780 163, 815 238, 776 307" />
+            <path class="ribbon-line" d="M95 285 C 50 195, 65 95, 160 64 C 245 36, 313 82, 341 154 C 369 226, 442 277, 531 238 C 605 205, 621 130, 704 147 C 780 163, 815 238, 776 307" />
+        </svg>
+    </div>
 
     <!-- ═══ HEADER ═══ -->
     <header>
