@@ -1490,6 +1490,32 @@
             animation: fade-in .2s;
         }
 
+        .room-modal-overlay {
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+        }
+
+        .room-modal-card {
+            width: min(100%, 440px);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--card-border);
+            border-radius: 22px;
+            padding: 22px;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, .42);
+        }
+
+        .room-modal-card h2 { margin: 0 0 8px; font-size: 1.15rem; }
+        .room-modal-card p { margin: 0 0 16px; color: var(--text-secondary); font-size: .88rem; line-height: 1.6; }
+        .room-modal-card input { width: 100%; min-height: 46px; border: 1px solid var(--card-border); border-radius: 12px; background: var(--bg-card-hover); color: var(--text-primary); padding: 10px 12px; font: inherit; }
+        .room-modal-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 12px; }
+        .room-modal-actions button { flex: 1; min-height: 42px; border: 1px solid var(--card-border); border-radius: 12px; background: var(--bg-card-hover); color: var(--text-primary); font: inherit; font-weight: 700; cursor: pointer; }
+        .room-modal-actions .room-primary { background: var(--accent-primary); color: #fff; border-color: transparent; }
+        .room-code-result { display: none; margin-top: 16px; padding: 14px; border-radius: 14px; border: 1px dashed var(--accent-primary); text-align: center; }
+        .room-code-result.visible { display: block; }
+        .room-code-value { display: block; margin: 8px 0; font: 800 1.2rem/1.5 ui-monospace, monospace; letter-spacing: .08em; overflow-wrap: anywhere; }
+
         .action-menu {
             background: var(--bg-card);
             border: 1px solid var(--card-border);
@@ -2144,6 +2170,9 @@
                 <button id="searchBtn" class="icon-btn" data-tip="بحث">
                     <i class="fas fa-magnifying-glass"></i>
                 </button>
+                <button id="privateRoomBtn" class="icon-btn" data-tip="غرفة خاصة" aria-label="غرفة خاصة">
+                    <i class="fas fa-lock"></i>
+                </button>
                 <button id="translateBtn" class="icon-btn" data-tip="ترجمة">
                     <i class="fas fa-language"></i>
                 </button>
@@ -2279,6 +2308,26 @@
     </div>
 
     <!-- ═══ ACTION MODAL ═══ -->
+    <div id="roomModal" class="modal-overlay room-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="roomModalTitle">
+        <div class="room-modal-card">
+            <h2 id="roomModalTitle">غرفة خاصة برمز</h2>
+            <p id="roomModalHelp">أنشئ غرفة وشارك رمزها مع من تريد. كل من يملك الرمز يستطيع الدخول.</p>
+            <label for="roomCodeInput" id="roomCodeLabel">رمز الغرفة</label>
+            <input id="roomCodeInput" type="text" maxlength="14" autocomplete="off" placeholder="XXXX-XXXX-XXXX" dir="ltr">
+            <div class="room-modal-actions">
+                <button id="joinRoomBtn" type="button">دخول بالرمز</button>
+                <button id="createRoomBtn" class="room-primary" type="button">إنشاء غرفة ورمز</button>
+            </div>
+            <div id="roomCodeResult" class="room-code-result" aria-live="polite">
+                <span id="roomCodeResultLabel">رمز مشاركة الغرفة (احتفظ به):</span>
+                <strong id="roomCodeValue" class="room-code-value"></strong>
+                <div class="room-modal-actions"><button id="copyRoomCodeBtn" type="button">نسخ الرمز</button></div>
+            </div>
+            <div class="room-modal-actions"><button id="closeRoomModalBtn" type="button">إغلاق</button><button id="leaveRoomBtn" type="button">العودة للنقاش العام</button></div>
+        </div>
+    </div>
+
+    <!-- ═══ ACTION MODAL ═══ -->
     <div id="actionModal" class="modal-overlay">
         <div class="action-menu">
             <div class="sheet-handle"></div>
@@ -2336,7 +2385,7 @@
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js';
         import {
-            getFirestore, collection, addDoc, serverTimestamp, query,
+            getFirestore, collection, addDoc, setDoc, serverTimestamp, query,
             orderBy, onSnapshot, limit, doc, updateDoc, deleteDoc, getDoc
         }
             from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js';
@@ -2358,7 +2407,11 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
-        const msgsCol = collection(db, 'public_messages');
+        const PUBLIC_MESSAGES = collection(db, 'public_messages');
+        let activeRoomCode = localStorage.getItem('chat_private_room') || null;
+        let msgsCol = activeRoomCode
+            ? collection(db, 'private_rooms', activeRoomCode, 'messages')
+            : PUBLIC_MESSAGES;
 
         // Public endpoint for the Cloudflare Worker proxy (never put the ImgBB API key here).
         const IMAGE_UPLOAD_ENDPOINT = 'https://shy-wind-4be6.line97717.workers.dev/upload';
@@ -2418,6 +2471,9 @@
         const imgThumb = document.getElementById('imgThumb');
         const imgPreviewNm = document.getElementById('imgPreviewName');
         const actionModal = document.getElementById('actionModal');
+        const roomModal = document.getElementById('roomModal');
+        const roomCodeInput = document.getElementById('roomCodeInput');
+        const roomCodeResult = document.getElementById('roomCodeResult');
         const deleteBtn = document.getElementById('deleteBtn');
         const pinBtn = document.getElementById('pinBtn');
         const replyPreview = document.getElementById('replyPreview');
@@ -2495,7 +2551,9 @@
             document.documentElement.lang = l;
             document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
             langLabel.textContent = l === 'ar' ? 'ع' : 'EN';
-            document.getElementById('roomTitle').textContent = l === 'ar' ? 'نقاش عام' : 'Public Chat';
+            document.getElementById('roomTitle').textContent = activeRoomCode
+                ? (l === 'ar' ? 'غرفة خاصة 🔒' : 'Private Room 🔒')
+                : (l === 'ar' ? 'نقاش عام' : 'Public Chat');
             const statusLabel = document.getElementById('statusText');
             statusLabel.textContent = currentUser ? (l === 'ar' ? 'متصل' : 'Connected') : (l === 'ar' ? 'جارٍ الاتصال' : 'Connecting');
             document.querySelectorAll('.composer-hints [data-ar]').forEach(el => {
@@ -2503,6 +2561,102 @@
             });
             messageInput.placeholder = l === 'ar' ? 'اكتب رسالتك...' : 'Type a message...';
             userNameInput.placeholder = l === 'ar' ? 'اسمك' : 'Name';
+            document.getElementById('privateRoomBtn').title = l === 'ar' ? 'غرفة خاصة' : 'Private room';
+            document.getElementById('roomModalTitle').textContent = l === 'ar' ? 'غرفة خاصة برمز' : 'Private room with a code';
+            document.getElementById('roomModalHelp').textContent = l === 'ar'
+                ? 'أنشئ غرفة وشارك رمزها مع من تريد. كل من يملك الرمز يستطيع الدخول.'
+                : 'Create a room and share its code. Anyone with the code can join.';
+            document.getElementById('roomCodeLabel').textContent = l === 'ar' ? 'رمز الغرفة' : 'Room code';
+            roomCodeInput.placeholder = l === 'ar' ? 'XXXX-XXXX-XXXX' : 'XXXX-XXXX-XXXX';
+            document.getElementById('joinRoomBtn').textContent = l === 'ar' ? 'دخول بالرمز' : 'Join with code';
+            document.getElementById('createRoomBtn').textContent = l === 'ar' ? 'إنشاء غرفة ورمز' : 'Create room and code';
+            document.getElementById('roomCodeResultLabel').textContent = l === 'ar' ? 'رمز مشاركة الغرفة (احتفظ به):' : 'Room sharing code (keep it safe):';
+            document.getElementById('copyRoomCodeBtn').textContent = l === 'ar' ? 'نسخ الرمز' : 'Copy code';
+            document.getElementById('closeRoomModalBtn').textContent = l === 'ar' ? 'إغلاق' : 'Close';
+            document.getElementById('leaveRoomBtn').textContent = l === 'ar' ? 'العودة للنقاش العام' : 'Return to public chat';
+        }
+
+        const privateRoomBtn = document.getElementById('privateRoomBtn');
+        privateRoomBtn.addEventListener('click', () => {
+            roomCodeResult.classList.remove('visible');
+            roomCodeInput.value = '';
+            roomModal.classList.add('open');
+        });
+        document.getElementById('closeRoomModalBtn').addEventListener('click', () => roomModal.classList.remove('open'));
+        roomModal.addEventListener('click', e => { if (e.target === roomModal) roomModal.classList.remove('open'); });
+        document.getElementById('createRoomBtn').addEventListener('click', createPrivateRoom);
+        document.getElementById('joinRoomBtn').addEventListener('click', joinPrivateRoom);
+        document.getElementById('leaveRoomBtn').addEventListener('click', leavePrivateRoom);
+        document.getElementById('copyRoomCodeBtn').addEventListener('click', async () => {
+            const code = document.getElementById('roomCodeValue').textContent;
+            try {
+                await navigator.clipboard.writeText(code);
+                showToast(lang === 'ar' ? 'تم نسخ رمز الغرفة' : 'Room code copied', 2200, 'success');
+            } catch { showToast(lang === 'ar' ? 'انسخ الرمز يدوياً' : 'Copy the code manually', 2600, 'warn'); }
+        });
+
+        const ROOM_CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        function generateRoomCode() {
+            const bytes = crypto.getRandomValues(new Uint8Array(12));
+            return Array.from(bytes, b => ROOM_CODE_ALPHABET[b % ROOM_CODE_ALPHABET.length]).join('');
+        }
+
+        async function createPrivateRoom() {
+            if (!currentUser) {
+                showToast(lang === 'ar' ? 'انتظر اتصال Firebase ثم حاول مجدداً' : 'Wait for Firebase to connect, then try again', 3000, 'warn');
+                return;
+            }
+            const code = generateRoomCode();
+            try {
+                await setDoc(doc(db, 'private_rooms', code), { createdBy: currentUser.uid, createdAt: serverTimestamp() });
+                await enterPrivateRoom(code);
+                document.getElementById('roomCodeValue').textContent = code.match(/.{1,4}/g).join('-');
+                roomCodeResult.classList.add('visible');
+            } catch (err) {
+                console.error(err);
+                showToast(lang === 'ar' ? 'تعذر إنشاء الغرفة. قد تحتاج قواعد Firestore إلى تحديث.' : 'Could not create the room. Firestore rules may need updating.', 4200, 'error');
+            }
+        }
+
+        async function joinPrivateRoom() {
+            if (!currentUser) {
+                showToast(lang === 'ar' ? 'انتظر اتصال Firebase ثم حاول مجدداً' : 'Wait for Firebase to connect, then try again', 3000, 'warn');
+                return;
+            }
+            const code = roomCodeInput.value.toUpperCase().replace(/[^A-Z2-9]/g, '');
+            if (code.length !== 12) {
+                showToast(lang === 'ar' ? 'تأكد من إدخال رمز الغرفة كاملاً' : 'Enter the complete room code', 2800, 'warn');
+                return;
+            }
+            try {
+                const room = await getDoc(doc(db, 'private_rooms', code));
+                if (!room.exists()) {
+                    showToast(lang === 'ar' ? 'الرمز غير صحيح أو الغرفة غير موجودة' : 'Invalid code or room not found', 3000, 'error');
+                    return;
+                }
+                await enterPrivateRoom(code);
+                roomModal.classList.remove('open');
+            } catch (err) {
+                console.error(err);
+                showToast(lang === 'ar' ? 'تعذر فتح الغرفة. تحقق من قواعد Firestore.' : 'Could not open room. Check Firestore rules.', 4000, 'error');
+            }
+        }
+
+        async function enterPrivateRoom(code) {
+            activeRoomCode = code;
+            msgsCol = collection(db, 'private_rooms', code, 'messages');
+            localStorage.setItem('chat_private_room', code);
+            applyLang(lang);
+            if (currentUser) listenToCurrentRoom();
+        }
+
+        function leavePrivateRoom() {
+            activeRoomCode = null;
+            msgsCol = PUBLIC_MESSAGES;
+            localStorage.removeItem('chat_private_room');
+            roomModal.classList.remove('open');
+            applyLang(lang);
+            if (currentUser) listenToCurrentRoom();
         }
 
         /* ──────────────────────────────
@@ -2784,28 +2938,38 @@
             const statusText = document.getElementById('statusText');
             badge?.classList.toggle('is-offline', !user);
             if (statusText) statusText.textContent = user ? (lang === 'ar' ? 'متصل' : 'Connected') : (lang === 'ar' ? 'جارٍ الاتصال' : 'Connecting');
+            if (user) listenToCurrentRoom();
         });
 
         /* ──────────────────────────────
            RENDER MESSAGES
         ────────────────────────────── */
         let firstLoad = true;
-        const q = query(msgsCol, orderBy('createdAt', 'asc'), limit(200));
-        onSnapshot(q, snap => {
-            const prevLen = allMessages.length;
+        let stopMessagesListener = null;
+        function listenToCurrentRoom() {
+            if (stopMessagesListener) stopMessagesListener();
+            firstLoad = true;
             allMessages = [];
-            snap.forEach(d => allMessages.push({ id: d.id, ...d.data() }));
-            // Remove skeleton on first real load
-            if (firstLoad) {
-                const sk = document.getElementById('skeletonLoader');
-                if (sk) sk.remove();
-                firstLoad = false;
-            }
-            // Play sound for new incoming messages
-            if (!firstLoad && allMessages.length > prevLen) playReceiveSound();
-            renderMessages(allMessages);
-            msgCountEl.textContent = allMessages.length;
-        }, err => console.error(err));
+            locallyDeletedIds.clear();
+            messagesEl.innerHTML = '<div class="skeleton-wrap"><div class="skeleton-row"><div class="skeleton-avatar"></div><div class="skeleton-bubble" style="width:55%"></div></div></div>';
+            const q = query(msgsCol, orderBy('createdAt', 'asc'), limit(200));
+            stopMessagesListener = onSnapshot(q, snap => {
+                const wasInitial = firstLoad;
+                const prevLen = allMessages.length;
+                allMessages = [];
+                snap.forEach(d => allMessages.push({ id: d.id, ...d.data() }));
+                if (firstLoad) {
+                    firstLoad = false;
+                    if (!activeRoomCode) document.getElementById('skeletonLoader')?.remove();
+                }
+                if (!wasInitial && allMessages.length > prevLen) playReceiveSound();
+                renderMessages(allMessages);
+                msgCountEl.textContent = allMessages.length;
+            }, err => {
+                console.error(err);
+                messagesEl.innerHTML = `<div class="empty-state"><div class="empty-icon">🔒</div><div class="empty-title">${lang === 'ar' ? 'تعذر فتح الغرفة' : 'Could not open room'}</div><div class="empty-sub">${lang === 'ar' ? 'تأكد من الرمز ومن إعداد قواعد Firestore للغرف الخاصة.' : 'Check the code and Firestore rules for private rooms.'}</div></div>`;
+            });
+        }
 
         function renderMessages(list) {
             const wasAtBottom = (messagesEl.scrollHeight - messagesEl.scrollTop - messagesEl.clientHeight) < 200;
@@ -2999,7 +3163,7 @@
 
         window.addReaction = async (emoji) => {
             if (!selectedMsg) return;
-            const docRef = doc(db, 'public_messages', selectedMsg.id);
+            const docRef = doc(msgsCol, selectedMsg.id);
             const cur = selectedMsg.reactions?.[LOCAL_ID];
             try {
                 await updateDoc(docRef, { [`reactions.${LOCAL_ID}`]: cur === emoji ? null : emoji });
@@ -3038,7 +3202,7 @@
             const msgId = selectedMsg.id;
             if (!confirm(lang === 'ar' ? 'هل أنت متأكد من حذف الرسالة؟' : 'Delete this message?')) return;
 
-            const ref = doc(db, 'public_messages', msgId);
+            const ref = doc(msgsCol, msgId);
 
             // Optimistic UI: Hide immediately
             locallyDeletedIds.add(msgId);
