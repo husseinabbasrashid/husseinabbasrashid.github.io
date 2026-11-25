@@ -2179,6 +2179,60 @@
         .attach-btn { background: rgba(255,255,255,.09); }
         #onlineBadge i { color: #e6e7e9 !important; }
         #pinnedBanner { background: linear-gradient(135deg, rgba(255,255,255,.055), rgba(255,255,255,.02)); }
+        /* Refined monochrome composer controls */
+        .input-bar {
+            min-height: 68px; gap: 9px; padding: 8px 10px; border-radius: 21px;
+            border: 1px solid rgba(255,255,255,.16);
+            background: linear-gradient(145deg, rgba(24,25,27,.98), rgba(10,11,12,.98));
+            box-shadow: 0 14px 38px rgba(0,0,0,.48), 0 1px 0 rgba(255,255,255,.04) inset;
+            transform: none;
+        }
+        .input-bar::before { background: linear-gradient(110deg, rgba(255,255,255,.52), rgba(255,255,255,.08), rgba(255,255,255,.34)); }
+        .input-bar:focus-within { transform:none; border-color:rgba(255,255,255,.38); box-shadow:0 0 0 1px rgba(255,255,255,.12), 0 14px 40px rgba(0,0,0,.5); }
+        #userName {
+            width:84px; height:42px; padding:0 10px; border:1px solid rgba(255,255,255,.15);
+            border-radius:13px; color:#f5f5f6; background:rgba(255,255,255,.055);
+            box-shadow:none; font-size:.82rem; font-weight:600; cursor:text;
+        }
+        #userName:focus { transform:none; background:rgba(255,255,255,.1); box-shadow:0 0 0 2px rgba(255,255,255,.18); }
+        #messageInput { min-width:0; min-height:42px; align-self:center; padding:10px 12px; color:#f4f4f5; font-size:.92rem; }
+        #messageInput::placeholder { color:#a6a8ad; opacity:.86; }
+        .emoji-trigger, .attach-btn {
+            width:40px; height:40px; flex:0 0 40px; border:1px solid rgba(255,255,255,.15);
+            border-radius:13px; background:rgba(255,255,255,.055); color:#e6e7e9;
+            box-shadow:0 1px 0 rgba(255,255,255,.04) inset; transition:background .2s, color .2s, border-color .2s, transform .2s;
+        }
+        .emoji-trigger { font-size:1.15rem; }
+        .emoji-trigger:hover, .attach-btn:hover { color:#111; background:#f0f1f2; border-color:#fff; transform:translateY(-2px); box-shadow:0 6px 16px rgba(255,255,255,.12); }
+        .attach-btn { font-size:1rem; }
+        .attach-btn.has-file { color:#111; background:#dfe1e4; border-color:#fff; animation:none; }
+        .send-btn {
+            width:46px; height:46px; color:#111 !important; border:1px solid rgba(255,255,255,.7);
+            background:linear-gradient(145deg,#fff,#c5c7cb) !important;
+            box-shadow:0 5px 17px rgba(255,255,255,.15), 0 1px 0 rgba(255,255,255,.6) inset !important;
+            font-size:.98rem;
+        }
+        .send-btn:hover { transform:translateY(-2px); box-shadow:0 9px 22px rgba(255,255,255,.22), 0 1px 0 rgba(255,255,255,.75) inset !important; }
+        .send-btn:active { transform:translateY(0) scale(.97); }
+        .send-btn:hover i { transform:translateX(-2px); }
+        .char-count {
+            align-self:center; min-width:38px; padding:5px 7px; border:1px solid rgba(255,255,255,.1);
+            border-radius:9px; background:rgba(255,255,255,.045); color:#a7a9ae;
+            font-size:.65rem; font-variant-numeric:tabular-nums; text-align:center;
+        }
+        .char-count.warn { color:#eee; border-color:rgba(255,255,255,.24); }
+        .composer-hints { color:rgba(220,222,225,.57); }
+        .composer-hints kbd { background:rgba(255,255,255,.055); border-color:rgba(255,255,255,.14); color:#d9dade; }
+        .input-bar :focus-visible { outline:2px solid rgba(255,255,255,.65); outline-offset:2px; }
+        @media(max-width:520px) {
+            .input-bar { min-height:58px; gap:5px; padding:6px; border-radius:18px; }
+            #userName { width:62px; height:38px; padding:0 5px; font-size:.74rem; }
+            #messageInput { min-height:38px; padding:8px 5px; font-size:.85rem; }
+            .emoji-trigger, .attach-btn { width:35px; height:35px; flex-basis:35px; border-radius:11px; }
+            .send-btn { width:42px; height:42px; }
+            .char-count { min-width:32px; padding:4px 5px; }
+        }
+        @media(max-width:390px) { .char-count { display:none; } }
         .room-modal-actions .room-primary { background: #e5e6e8; color: #111; }
         .status-badge { color: #d8dadd; background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.14); }
         .status-dot { color: #eee; background: #eee; box-shadow: 0 0 8px rgba(255,255,255,.55); }
@@ -2412,15 +2466,15 @@
             <!-- Input bar -->
             <form id="chatForm" onsubmit="return false;">
                 <div class="input-bar">
-                    <input type="text" id="userName" placeholder="اسمك" maxlength="15" autocomplete="off">
-                    <button type="button" class="emoji-trigger" id="emojiTrigger" title="إيموجي">😊</button>
+                    <input type="text" id="userName" placeholder="اسمك" maxlength="15" autocomplete="off" aria-label="اسمك في المحادثة">
+                    <button type="button" class="emoji-trigger" id="emojiTrigger" title="إيموجي" aria-label="اختيار إيموجي">😊</button>
                     <input type="file" id="imageInput" accept="image/*" style="display:none;">
-                    <button type="button" class="attach-btn" id="triggerFileBtn">
+                    <button type="button" class="attach-btn" id="triggerFileBtn" title="إرفاق صورة" aria-label="إرفاق صورة">
                         <i class="fas fa-image"></i>
                     </button>
-                    <textarea id="messageInput" placeholder="اكتب رسالتك..." rows="1" maxlength="1000"></textarea>
+                    <textarea id="messageInput" placeholder="اكتب رسالتك..." rows="1" maxlength="1000" aria-label="اكتب رسالتك"></textarea>
                     <span class="char-count" id="charCount">1000</span>
-                    <button type="submit" id="sendBtn" class="send-btn">
+                    <button type="submit" id="sendBtn" class="send-btn" title="إرسال" aria-label="إرسال الرسالة">
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </div>
