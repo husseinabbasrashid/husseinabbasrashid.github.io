@@ -2342,8 +2342,6 @@
             from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js';
         import { getAuth, signInAnonymously, onAuthStateChanged }
             from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js';
-        import { getStorage, ref as sRef, uploadBytes, getDownloadURL }
-            from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js';
 
         /* ──────────────────────────────
            FIREBASE CONFIG
@@ -2360,8 +2358,11 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
-        const storage = getStorage(app);
         const msgsCol = collection(db, 'public_messages');
+
+        // Public endpoint for the Cloudflare Worker proxy (never put the ImgBB API key here).
+        const IMAGE_UPLOAD_ENDPOINT = 'https://shy-wind-4be6.line97717.workers.dev/upload';
+        const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
         /* ──────────────────────────────
            STATE
@@ -2679,6 +2680,16 @@
         imageInput.addEventListener('change', () => {
             const file = imageInput.files[0];
             if (!file) return;
+            if (!file.type.startsWith('image/')) {
+                window.removeImage();
+                showToast(lang === 'ar' ? 'اختر ملف صورة صالحاً' : 'Choose a valid image file', 3000, 'error');
+                return;
+            }
+            if (file.size > MAX_IMAGE_SIZE) {
+                window.removeImage();
+                showToast(lang === 'ar' ? 'حجم الصورة يجب ألا يتجاوز 5 ميغابايت' : 'Image must be 5 MB or smaller', 3500, 'warn');
+                return;
+            }
             triggerFile.classList.add('has-file');
             imgThumb.src = URL.createObjectURL(file);
             imgPreviewNm.textContent = file.name;
@@ -2687,6 +2698,7 @@
             messageInput.focus();
         });
         window.removeImage = () => {
+            if (imgThumb.src.startsWith('blob:')) URL.revokeObjectURL(imgThumb.src);
             imageInput.value = '';
             triggerFile.classList.remove('has-file');
             imgPreviewBar.classList.remove('visible');
@@ -2712,8 +2724,20 @@
             try {
                 let imageUrl = null;
                 if (file) {
-                    const snap = await uploadBytes(sRef(storage, 'chat_images/' + Date.now() + '_' + file.name), file);
-                    imageUrl = await getDownloadURL(snap.ref);
+                    if (IMAGE_UPLOAD_ENDPOINT.includes('YOUR-WORKER')) {
+                        throw new Error('Image upload endpoint is not configured yet.');
+                    }
+                    const uploadData = new FormData();
+                    uploadData.append('image', file, file.name);
+                    const response = await fetch(IMAGE_UPLOAD_ENDPOINT, {
+                        method: 'POST',
+                        body: uploadData
+                    });
+                    const uploaded = await response.json();
+                    if (!response.ok || !uploaded.url) {
+                        throw new Error(uploaded.error || 'Image upload failed.');
+                    }
+                    imageUrl = uploaded.url;
                 }
                 const msgData = {
                     name, text, imageUrl,
