@@ -11,15 +11,15 @@
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Noto+Kufi+Arabic:wght@400;600;700&display=swap');
         
         :root {
-            --bg: #02060f;
-            --bg-card: rgba(8, 15, 30, 0.8);
-            --bg-card2: rgba(12, 20, 40, 0.7);
-            --muted: #6b82a0;
-            --accent: #3b82f6;
-            --accent-v: #8b5cf6;
-            --text: #f0f6ff;
-            --text-2: #8ba5c9;
-            --border: rgba(59, 130, 246, 0.14);
+            --bg: #141414;
+            --bg-card: rgba(32,36,40, 0.8);
+            --bg-card2: rgba(42,48,54, 0.7);
+            --muted: #909aa4;
+            --accent: #b7c1ca;
+            --accent-v: #87929e;
+            --text: #e2e7ec;
+            --text-2: #bac3cc;
+            --border: rgba(183,193,202, 0.14);
             --border-t: rgba(255, 255, 255, 0.07);
             --max: 1100px;
             font-family: 'Noto Kufi Arabic', 'Space Grotesk', sans-serif;
@@ -30,8 +30,8 @@
         body {
             background: var(--bg);
             background-image: 
-                radial-gradient(ellipse 80% 60% at 30% 20%, rgba(59,130,246,0.07) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 50% at 75% 70%, rgba(139,92,246,0.05) 0%, transparent 55%);
+                radial-gradient(ellipse 80% 60% at 30% 20%, rgba(183,193,202,0.07) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 75% 70%, rgba(135,146,158,0.05) 0%, transparent 55%);
             color: var(--text);
             margin: 0;
             min-height: 100vh;
@@ -41,7 +41,7 @@
         header {
             padding: 16px 24px;
             border-bottom: 1px solid var(--border);
-            background: rgba(2, 6, 15, 0.6);
+            background: rgba(20,20,20, 0.6);
             backdrop-filter: blur(20px);
             position: sticky;
             top: 0;
@@ -67,7 +67,7 @@
             font-size: 1.3rem;
             font-weight: 700;
             letter-spacing: -0.4px;
-            background: linear-gradient(135deg, #f0f6ff, #93c5fd);
+            background: linear-gradient(135deg, #e2e7ec, #c8d0d8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -83,7 +83,7 @@
             transition: border-color 0.2s ease;
         }
         
-        .msg:hover { border-color: rgba(59,130,246,0.25); }
+        .msg:hover { border-color: rgba(183,193,202,0.25); }
         
         button {
             background: linear-gradient(135deg, var(--accent), var(--accent-v));
@@ -96,10 +96,10 @@
             font-size: 0.85rem;
             font-weight: 600;
             transition: all 0.25s ease;
-            box-shadow: 0 4px 12px -2px rgba(59,130,246,0.4);
+            box-shadow: 0 4px 12px -2px rgba(183,193,202,0.4);
         }
         
-        button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px -4px rgba(59,130,246,0.5); }
+        button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px -4px rgba(183,193,202,0.5); }
         
         .danger { background: linear-gradient(135deg, #ef4444, #dc2626) !important; box-shadow: 0 4px 12px -2px rgba(239,68,68,0.4) !important; }
         .danger:hover { box-shadow: 0 8px 20px -4px rgba(239,68,68,0.5) !important; }
@@ -118,8 +118,8 @@
         
         input.secret:focus {
             outline: none;
-            border-color: rgba(59,130,246,0.5);
-            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+            border-color: rgba(183,193,202,0.5);
+            box-shadow: 0 0 0 3px rgba(183,193,202,0.1);
         }
         
         input.secret::placeholder { color: var(--muted); }
@@ -132,12 +132,12 @@
         a:hover { opacity: 0.8; }
         
         code {
-            background: rgba(59,130,246,0.1);
-            border: 1px solid rgba(59,130,246,0.2);
+            background: rgba(183,193,202,0.1);
+            border: 1px solid rgba(183,193,202,0.2);
             border-radius: 6px;
             padding: 2px 8px;
             font-size: 0.82rem;
-            color: #93c5fd;
+            color: #c8d0d8;
             font-family: 'Fira Code', monospace;
         }
         
@@ -154,7 +154,7 @@
         .admin-logo {
             width: 36px;
             height: 36px;
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            background: linear-gradient(135deg, #b7c1ca, #65717d);
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -164,9 +164,10 @@
             font-size: 1rem;
             color: white;
             flex-shrink: 0;
-            box-shadow: 0 4px 12px -2px rgba(59,130,246,0.5);
+            box-shadow: 0 4px 12px -2px rgba(183,193,202,0.5);
         }
     </style>
+    <link rel="stylesheet" href="brand-theme.css?v=1">
 </head>
 <body>
     <header>
@@ -231,7 +232,7 @@
             msgsList.innerHTML = '';
             list.forEach(m=>{
                 const div = document.createElement('div'); div.className='msg';
-                const pinned = m.pinned ? '<strong style="color:#ffd54d">[مثبت]</strong> ' : '';
+                const pinned = m.pinned ? '<strong style="color:#c5ced7">[مثبت]</strong> ' : '';
                 const reports = m._reports || 0;
                 div.innerHTML = `<div><strong>${m.name||'مستخدم'}</strong> ${pinned}<span class="muted">${m.time||''}</span></div><div style="margin-top:6px">${m.text}</div><div class="actions"><button class="pinBtn" data-id="${m.id}">${m.pinned?'إلغاء تثبيت':'تثبيت'}</button><button class="delBtn danger" data-id="${m.id}">حذف</button><button class="viewReports" data-id="${m.id}">التقارير (${reports})</button></div>`;
                 msgsList.appendChild(div);
