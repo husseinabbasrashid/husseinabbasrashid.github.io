@@ -1,0 +1,180 @@
+/* Hussein Abbas visual identity — Orbit monochrome palette */
+:root {
+    --brand-ink: #141414;
+    --brand-charcoal: #24292e;
+    --brand-steel-dark: #353d43;
+    --brand-steel: #59636e;
+    --brand-slate: #87929e;
+    --brand-silver: #b7c1ca;
+    --brand-frost: #dce3eb;
+    --bs-primary: #87929e;
+    --bs-primary-rgb: 135, 146, 158;
+    --bs-info: #b7c1ca;
+    --bs-info-rgb: 183, 193, 202;
+    --bs-link-color: #b7c1ca;
+    --bs-link-hover-color: #dce3eb;
+    --bs-focus-ring-color: rgba(183, 193, 202, .25);
+
+    --bg-dark: #141414;
+    --bg: #141414;
+    --bg-2: #202428;
+    --bg-3: #2a3036;
+    --bg-4: #353d43;
+    --bg-surface: #202428;
+    --bg-surface-2: #2a3036;
+    --bg-surface-hover: #353d43;
+    --bg-card: #202428;
+    --bg-card2: rgba(42, 48, 54, .82);
+    --bg-card-hover: #353d43;
+    --bg-overlay: rgba(20, 20, 20, .9);
+
+    --text: #e2e7ec;
+    --text-main: #e2e7ec;
+    --text-2: #bac3cc;
+    --text-secondary: #bac3cc;
+    --text-3: #87929e;
+    --text-muted: #87929e;
+
+    --accent: #b7c1ca;
+    --accent-v: #87929e;
+    --accent-primary: #b7c1ca;
+    --accent-bright: #dce3eb;
+    --accent-secondary: #a5afb9;
+    --accent-tertiary: #87929e;
+    --accent-cyan: #b7c1ca;
+    --accent-violet: #87929e;
+    --accent-sky: #c5ced7;
+    --accent-teal: #9da7b1;
+    --blue: #b7c1ca;
+    --blue-d: #8995a1;
+    --cyan: #b7c1ca;
+    --violet: #87929e;
+    --muted: #87929e;
+
+    --border: rgba(190, 200, 210, .15);
+    --border-hi: rgba(210, 218, 226, .3);
+    --border-subtle: rgba(190, 200, 210, .08);
+    --border-default: rgba(190, 200, 210, .15);
+    --border-strong: rgba(210, 218, 226, .26);
+    --border-bright: rgba(220, 227, 235, .42);
+    --card-border: rgba(190, 200, 210, .15);
+    --card-border-hover: rgba(220, 227, 235, .3);
+
+    --gradient-brand: linear-gradient(135deg, #59636e 0%, #b7c1ca 52%, #dce3eb 100%);
+    --gradient-blue: linear-gradient(135deg, #b7c1ca 0%, #8995a1 100%);
+    --gradient-cyan: linear-gradient(135deg, #a5afb9 0%, #dce3eb 100%);
+    --gradient-violet: linear-gradient(135deg, #87929e 0%, #c5ced7 100%);
+    --gradient-text: linear-gradient(140deg, #e2e7ec 0%, #aeb8c2 100%);
+    --gradient-hero: linear-gradient(135deg, #59636e 0%, #aeb8c2 52%, #dce3eb 100%);
+    --gradient-btn: linear-gradient(135deg, #dce3eb 0%, #aeb8c2 100%);
+    --gradient-mesh:
+        radial-gradient(ellipse 80% 60% at 30% 20%, rgba(183, 193, 202, .1) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 75% 70%, rgba(135, 146, 158, .08) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 40% at 60% 10%, rgba(220, 227, 235, .05) 0%, transparent 50%);
+    --gradient-warm: var(--gradient-brand);
+    --gradient-gold: var(--gradient-blue);
+    --glow-blue: rgba(183, 193, 202, .26);
+    --glow-blue-soft: rgba(183, 193, 202, .1);
+    --glow-cyan: rgba(183, 193, 202, .18);
+    --glow-violet: rgba(135, 146, 158, .16);
+    --glow-mixed: rgba(183, 193, 202, .14);
+    --shadow-glow-sm: 0 0 10px rgba(183, 193, 202, .12);
+    --card-shadow-hover: 0 12px 36px -8px rgba(183, 193, 202, .2), 0 8px 28px -4px rgba(0, 0, 0, .48);
+    --grad-blue: linear-gradient(135deg, #b7c1ca, #8995a1);
+    --grad-gem: linear-gradient(135deg, #59636e 0%, #aeb8c2 52%, #dce3eb 100%);
+    --grad-msg: linear-gradient(135deg, #8995a1 0%, #c5ced7 100%);
+    --shadow-glow: 0 0 20px rgba(183, 193, 202, .2), 0 0 44px rgba(220, 227, 235, .08);
+
+    /* The standalone keeps its story, while its colors join the site identity. */
+    --bg: #141414;
+    --paper: #24292e;
+    --ink: #e2e7ec;
+    --rose: #b7c1ca;
+    --rose2: #87929e;
+    --gold: #c5ced7;
+    --line: rgba(210, 218, 226, .17);
+    --nav: rgba(20, 20, 20, .84);
+    --shadow: 0 22px 70px rgba(0, 0, 0, .35);
+}
+
+body.light {
+    --bg-dark: #f1f3f5;
+    --bg: #f1f3f5;
+    --bg-2: #f8f9fa;
+    --bg-3: #e9edf1;
+    --bg-4: #dce2e8;
+    --bg-surface: #fff;
+    --bg-surface-2: #f8f9fa;
+    --bg-surface-hover: #e9edf1;
+    --bg-card: #fff;
+    --bg-card2: rgba(248, 249, 250, .92);
+    --bg-card-hover: #e9edf1;
+    --text: #24292e;
+    --text-main: #24292e;
+    --text-2: #59636e;
+    --text-secondary: #59636e;
+    --text-3: #77818b;
+    --text-muted: #77818b;
+    --accent: #59636e;
+    --accent-v: #87929e;
+    --accent-primary: #59636e;
+    --accent-bright: #353d43;
+    --accent-secondary: #77818b;
+    --accent-tertiary: #87929e;
+    --blue: #59636e;
+    --blue-d: #353d43;
+    --cyan: #77818b;
+    --violet: #87929e;
+    --border: rgba(75, 86, 97, .16);
+    --border-hi: rgba(75, 86, 97, .3);
+    --card-border: rgba(75, 86, 97, .16);
+    --gradient-btn: linear-gradient(135deg, #59636e, #353d43);
+    --gradient-brand: linear-gradient(135deg, #59636e, #87929e, #b7c1ca);
+    --gradient-text: linear-gradient(135deg, #353d43, #77818b);
+    --gradient-warm: var(--gradient-brand);
+    --gradient-gold: var(--gradient-blue);
+    --glow-blue: rgba(89, 99, 110, .2);
+    --glow-blue-soft: rgba(89, 99, 110, .08);
+    --glow-cyan: rgba(119, 129, 139, .13);
+    --glow-violet: rgba(135, 146, 158, .12);
+    --bg-paper: #fff;
+    --bs-primary: #59636e;
+    --bs-primary-rgb: 89, 99, 110;
+    --bs-info: #77818b;
+    --bs-info-rgb: 119, 129, 139;
+    --bs-link-color: #59636e;
+    --bs-link-hover-color: #353d43;
+    --bs-focus-ring-color: rgba(89, 99, 110, .22);
+}
+
+:root[data-theme="light"] {
+    --bg: #f1f3f5;
+    --paper: #fff;
+    --ink: #24292e;
+    --muted: #68727d;
+    --rose: #59636e;
+    --rose2: #87929e;
+    --gold: #aeb8c2;
+    --line: rgba(75, 86, 97, .16);
+    --nav: rgba(255, 255, 255, .84);
+    --shadow: 0 22px 70px rgba(20, 20, 20, .1);
+}
+
+:root[data-theme="dark"] {
+    --bg: #141414;
+    --paper: #24292e;
+    --ink: #e2e7ec;
+    --muted: #aeb8c2;
+    --rose: #b7c1ca;
+    --rose2: #87929e;
+    --gold: #c5ced7;
+    --line: rgba(210, 218, 226, .17);
+    --nav: rgba(20, 20, 20, .84);
+}
+
+::selection { color: #141414; background: #c5ced7; }
+:focus-visible { outline-color: #b7c1ca; }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto !important; }
+}
